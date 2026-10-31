@@ -24,7 +24,7 @@ rădăcină și în `docs/ATF_Architecture.md`.
 ```mermaid
 %%{init: {"themeVariables":{"fontSize":"15px"},"themeCSS":".nodeLabel, .nodeLabel p { font-size: 15px !important; line-height: 1.35 !important; } .edgeLabel, .edgeLabel p { font-size: 12px !important; font-weight: 400 !important; line-height: 1.2 !important; } .edgeLabel .labelBkg, .edgeLabel p { background: transparent !important; } .edgeLabel foreignObject { transform: translateY(-18px); overflow: visible; } .node rect { rx: 6px; ry: 6px; }","flowchart":{"curve":"linear","nodeSpacing":24,"rankSpacing":40,"padding":10,"diagramPadding":16}}}%%
 flowchart LR
-    Core["Core"] -->|alimentează| Validation["Validation"]
+    Core["Core JAR"] -->|alimentează| Validation["Validation"]
     Tests["Reporting tests"] -. fixtures .-> Validation
     Validation -->|calculează| Decision["Verdict typed"]
     Decision -->|publică| Sink["Sink"]
@@ -297,7 +297,7 @@ Limitele implementării rămân explicite:
 
 - `AMBIGUOUS` există în enum, dar evaluatorul nu îl produce.
 - Run ledger, lifecycle, review/state, reporting și regression delta rămân în [feedback-ul AI](../docs/feedback/README_AI_Evaluation.md).
-- Modelele țintă și deciziile de boundary sunt în [designul AI](../docs/ATF_AI_Evaluation_Design.md); schemele propuse nu sunt semnături suplimentare ale API-ului implementat.
+- Modelele țintă și deciziile de boundary sunt în [designul AI](../../atf_j0/docs/ATF_AI_Evaluation_Design.md); schemele propuse nu sunt semnături suplimentare ale API-ului implementat.
 - `REGEX_RESTRICTED` cere un matcher cu execuție limitată; scorul tehnic existent nu este încă o rubrică business configurabilă pe caz.
 
 ## Utilizare ca JAR
@@ -337,3 +337,13 @@ Comanda selectează proba numită și construiește dependențele; nu declară
 trecerea întregului modul. Trecerea contractului nu validează transportul, rendererul sau un provider AI.
 
 </details>
+
+### Vocabular HTTP independent de locale
+
+Comparația case-insensitive Content-Type și identitatea regulii pentru un
+header folosesc `Locale.ROOT`. DSL-ul `contentTypeContains` rămâne o verificare
+de conținut declarată de caller; nu devine clasificator MIME ori parser de body.
+
+[ResponseContractRuleSetTest](src/test/java/atf/validation/contract/ResponseContractRuleSetTest.java)
+verifică aceeași decizie nominală, refuzul unui tip diferit și identitatea regulii
+în `tr-TR`; testul izolează și restaurează starea JVM.

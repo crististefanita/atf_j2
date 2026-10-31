@@ -1,15 +1,17 @@
 # ATF workspace rules
 
-- Use `C:\work\1\atf_j0` as the current Reporting source and test reference.
+- Use the sibling workspace `../atf_j0` as the current Core/Reporting source and test reference.
   `demo2` is historical; do not edit or synchronize it for new work.
 - Read `docs/ATF_Workspace_Synchronization.md` and
   `docs/ATF_Build_And_Execution_Safety.md` before changing or delivering code.
 - Keep Reporting implementation/native tests in `atf_j0/atf-reporting` and
   permanent mock, contract and browser regressions in `atf_j0/atf-reporting-tests`.
 - After relevant J0 changes, assess both `atf_j1` and `atf_j2`. Deliver and
-  validate each initialized consumer separately; J2 is currently empty.
-  Do not claim its initialization or acceptance from J1's results.
-- Binary consumers retain only the latest Reporting JAR/POM directly in `lib`,
+  validate each initialized consumer separately. Inspect J2's current bootstrap
+  and messaging scope; do not infer its acceptance from J1's results.
+- J2 keeps its existing Git and messaging scope. Its explicit Eventuate profile includes Setup and excludes Shop, AutoEx, UI and Debug UI; do not restore those modules or Playwright in J2.
+- Keep Core implementation and native tests only in J0. Binary consumers
+  retain the latest Core and Reporting JAR/POM pairs directly in `lib`,
   with one root provenance file. Do not copy Reporting source or its harness
   into the live binary consumers.
 - Reconcile common code and consumer adapters selectively in both directions.

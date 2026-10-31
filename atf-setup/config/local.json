@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "owner": "atf-j2",
+  "podman": {
+    "packageId": "RedHat.Podman",
+    "version": "5.8.3",
+    "wslVersion": "2.7.14",
+    "machine": "atf-j2",
+    "provider": "wsl",
+    "memoryMiB": 2048,
+    "cpus": 2,
+    "diskGiB": 20
+  },
+  "kafka": {
+    "image": "docker.io/apache/kafka:4.1.2@sha256:d50ab7b5df612b3c303f9d8afe8fee59626a5de798addfd626fe1924e3205965",
+    "platform": "linux/amd64",
+    "container": "atf-j2-kafka",
+    "network": "atf-j2-kafka-net",
+    "volume": "atf-j2-kafka-data",
+    "hostPort": 19092,
+    "memoryMiB": 768,
+    "heapMiB": 256,
+    "clusterId": "4L6g3nShT-eMCtK--X86sw",
+    "readinessSeconds": 60
+  }
+}

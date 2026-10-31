@@ -1,10 +1,14 @@
 # Build și execuție sigură pentru ATF
 
-Pentru sursa Reporting din `atf_j0` și țintele J1/J2, aplică [protocolul workspace-ului](ATF_Workspace_Synchronization.md) înaintea sync-ului selectiv.
+Pentru sursele Core și Reporting din `atf_j0` și țintele J1/J2, aplică [protocolul workspace-ului](ATF_Workspace_Synchronization.md) înaintea sync-ului selectiv.
 
-**Perimetru J1:** Reporting este JAR extern. Comenzile care țintesc
+**Perimetru J2:** Reporting este JAR extern. Comenzile care țintesc
 `atf-reporting/pom.xml`, resursele native sau auditul sursei se execută în
-staging-ul producătorului `atf_j0`; [ghidul J1](ATF_J1_Consumer.md) separă gate-urile și ownership-ul.
+staging-ul producătorului `atf_j0`; [ghidul consumerului](ATF_Reporting_Consumer.md) separă gate-urile și ownership-ul.
+
+UI și Debug UI sunt retrase din J2; [scopul deployment-ului](ATF_J2_Scope.md)
+delimitează catalogul de șapte module. Sync-ul nu restaurează modulele browser
+și nu copiază POM-ul altui deployment peste J2.
 
 ## Pe scurt
 
@@ -198,7 +202,7 @@ care nu este director refuză lotul fără modificări live. Preflight-ul nu cre
 părinții lipsă; directoarele se creează numai pentru fișierul executat.
 Execuția revalidează fiecare destinație; un eșec I/O ori drift apărut ulterior
 poate lăsa un lot parțial promovat. Atomicitatea rămâne per fișier, fără rollback
-al lotului; probele permanente sunt la [Core](../atf-core/README.md#manifest-și-promovare-guarded).
+al lotului; probele permanente sunt la [Core](../../atf_j0/atf-core/README.md#manifest-și-promovare-guarded).
 
 - Verificați și recitiți starea efectivă după orice eroare; nu interpretați
   excepția ca dovadă că niciun fișier nu s-a schimbat.
@@ -460,4 +464,3 @@ MCP pentru schimbări de layout, selector, collapse, tab sau scroll.
 - verificarea interactivă a fost făcută în TAB MCP când este necesară;
 - sincronizarea înapoi conține doar surse/documente aprobate;
 - nu au fost șterse fișiere sau modificate checkout-uri străine.
-

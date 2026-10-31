@@ -16,7 +16,6 @@ import atf.api.tests.governance.documentation.DocumentationTargetGovernanceTest;
 import atf.api.tests.governance.documentation.links.DocumentationLinkGovernanceTest;
 import atf.api.tests.governance.documentation.DocumentationAnchorGovernanceTest;
 import atf.api.tests.governance.documentation.factual.DocumentedBuildContractTest;
-import atf.api.tests.governance.documentation.factual.DocumentedUiGeometryContractTest;
 import atf.api.tests.governance.documentation.DynamicPathDocumentationArchitectureTest;
 import atf.api.tests.governance.consumers.ConsumerModuleArchitectureGovernanceTest;
 import atf.api.tests.governance.layers.AtfTestLayerArchitectureTest;
@@ -28,6 +27,11 @@ import org.junit.platform.suite.api.Suite;
 @AtfIntegrationTest
 @Suite
 @SelectClasses({
+        atf.j2.governance.J2DeploymentGovernanceTest.class,
+        atf.j2.governance.J2OwnershipGovernanceTest.class,
+        atf.j2.governance.J2ConsumerSelectionGovernanceTest.class,
+        atf.j2.governance.J2DocumentationGovernanceTest.class,
+        atf.api.tests.governance.distribution.core.CoreGovernanceSurfaceTest.class,
         GovernanceDeploymentTest.class,
         ReportingGovernanceSurfaceTest.class,
         ReportingHarnessOwnershipTest.class,
@@ -49,7 +53,6 @@ import org.junit.platform.suite.api.Suite;
         DocumentationLinkGovernanceTest.class,
         DocumentationAnchorGovernanceTest.class,
         DocumentedBuildContractTest.class,
-        DocumentedUiGeometryContractTest.class,
         ConsumerModuleArchitectureGovernanceTest.class,
         AtfTestLayerArchitectureTest.class,
         ConsumerSuiteCoverageGovernanceTest.class

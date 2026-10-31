@@ -2973,7 +2973,7 @@ testChanges:
 
 ## Control tehnic verificat — pregătirea gate-ului de geometrie
 
-[Contractul fixture-ului UI](../atf-ui/README.md#gate-ul-fixture-ului-de-geometrie)
+[Contractul fixture-ului UI](../../atf_j0/atf-ui/README.md#gate-ul-fixture-ului-de-geometrie)
 separă pregătirea de activarea unică; păstrează bugetele și oracolele native.
 
 <details>
@@ -2997,8 +2997,8 @@ testChanges:
 
 ## Control tehnic verificat — ownerul probei de compactare
 
-[UI](../atf-ui/README.md#inspectorul-de-rețea--limită-generică-de-responsabilitate)
-verifică prezentarea; [Shop](../atf-test-practice-shop/README.md#boundary-ul-probelor-api)
+[UI](../../atf_j0/atf-ui/README.md#inspectorul-de-rețea--limită-generică-de-responsabilitate)
+verifică prezentarea; [Shop](../../atf_j0/atf-test-practice-shop/README.md#boundary-ul-probelor-api)
 verifică datele coșului și activarea reală. Excepția Shop din testChanges
 nu înlocuiește review-ul ori proba comportamentală.
 
@@ -3965,6 +3965,302 @@ testChanges:
     proof: mvn -B -pl atf-core,atf-tests -am "-Dtest=RedactionStrategiesTest,CoreContractTest,WholeAtfGovernanceSuiteTest" "-Datf.governance.testChanges.baseRef=b79f593c4049213c6595f0387b17a820e665ad21" "-Dsurefire.failIfNoSpecifiedTests=false" test
     paths:
       - atf-core/src/test/java/atf/core/security/RedactionStrategiesTest.java
+```
+
+</details>
+
+
+## Control tehnic verificat — J2-FOUNDATION-BOOTSTRAP-80
+
+<details>
+<summary><strong>Control YAML — Core reconciliat și profil foundation explicit</strong></summary>
+
+```yaml
+testChanges:
+  - id: J2-FOUNDATION-BOOTSTRAP-80
+    status: VERIFIED
+    base: 66546500c7f5baef5223c45dd72652bdcbe026e0
+    expires: 2026-11-20
+    reason: Cerința explicită reconciliază Core și păstrează J2 fără Shop/AutoEx, pe Git-ul său existent. Profilul foundation rămâne cu 8 module și 9 pentru harness-ul TMP; Eventuate declară Setup și consumerul, cu 10 module și 11 numai pentru harness-ul TMP; profilul implicit journeys rămâne cu 10/11, iar producătorul cu 12. Sunt refuzate profilul necunoscut, override-ul sursei, un modul comun lipsă, directoarele și namespace-urile shadow. Guard-urile păstrează integral probele modulelor declarate; excluderile explicite sunt validate, iar mutanții de suite, scope și geometrie rămân activi prin fixture-uri independente în TMP. Masca literală și comparația FAIL înainte de preview au regresii la owner. Nu elimină teste și nu relaxează selecții, praguri, timeout-uri sau oracole.
+    proof: mvn -B -pl atf-core,atf-tests -am "-Dtest=RedactionStrategiesTest,CoreContractTest,WholeAtfGovernanceSuiteTest" "-Datf.governance.testChanges.baseRef=66546500c7f5baef5223c45dd72652bdcbe026e0" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-tests/src/test/java/atf/api/tests/governance/AtfPackageCohesionGovernanceTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/console/ConsoleDefaultsGovernanceTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/layers/ConsumerSuiteCoverageGovernanceTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/documentation/factual/DocumentedBuildContracts.java
+      - atf-tests/src/test/java/atf/api/tests/governance/documentation/factual/DocumentedBuildContractTest.java
+```
+
+</details>
+
+## Control tehnic — bootstrap Eventuate și Setup
+
+<details>
+<summary><strong>Control YAML — selecție și guvernanță aditivă</strong></summary>
+
+```yaml
+testChanges:
+  - id: J2-EVENTUATE-BOOTSTRAP-81
+    status: VERIFIED
+    base: 66546500c7f5baef5223c45dd72652bdcbe026e0
+    expires: 2026-11-20
+    reason: Cerința explicită adaugă exact trei componente Eventuate MOCK, suport main și adaptor JUnit test, plus Setup Kafka. Păstrează guvernanța și adaugă probe negative pentru profile, ownership, hash și selecții; comparația integrală precede preview-ul 240. Nu elimină teste, nu relaxează praguri și nu pretinde saga ori Kafka real din fixture-uri.
+    proof: mvn -B -pl atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest" "-Datf.governance.testChanges.baseRef=66546500c7f5baef5223c45dd72652bdcbe026e0" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-setup/pom.xml
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/EventuateApiContractComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/EventuateConvergenceComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/EventuateMessageEvidenceComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/suites/EventuateComponentSuite.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentSupport.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/EventuateArtifactAudit.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/EventuateReportAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/EventuateFixtures.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/ManualClock.java
+      - atf-test-eventuate/src/test/resources/junit-platform.properties
+      - atf-tests/src/test/java/atf/j2/governance/J2ConsumerSelectionGovernanceTest.java
+      - atf-tests/src/test/java/atf/j2/governance/J2GovernanceSuite.java
+```
+
+</details>
+
+
+## Control verificat — J2 fără UI
+
+<details>
+<summary><strong>Control tehnic — retragere UI cu păstrarea ownership-ului</strong></summary>
+
+```yaml
+testChanges:
+  - id: J2-HEADLESS-EVENTUATE-82
+    status: VERIFIED
+    base: 66546500c7f5baef5223c45dd72652bdcbe026e0
+    expires: 2026-11-20
+    reason: Cerința explicită retrage numai UI și Debug UI din J2, inclusiv testele și gate-urile de geometrie care le cer la compilare; acestea rămân intacte în J0/J1. Păstrează Setup, Eventuate și guard-urile platformei. Adaugă negative pentru directoare UI shadow, dependențe Playwright și perimetrul exact de opt module, fără relaxarea oracolelor business sau Reporting.
+    proof: mvn -B -pl atf-test-eventuate,atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest,EventuateComponentSuite" "-Datf.governance.testChanges.baseRef=66546500c7f5baef5223c45dd72652bdcbe026e0" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-tests/src/test/java/atf/api/tests/governance/consumers/ConsumerModuleArchitectureGovernanceTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/GovernanceDeploymentTest.java
+      - atf-tests/src/test/java/atf/j2/governance/J2OwnershipGovernanceTest.java
+  - id: J2-UI-RETIREMENT-84
+    status: VERIFIED
+    base: 66546500c7f5baef5223c45dd72652bdcbe026e0
+    expires: 2026-11-20
+    reason: Cerința explicită retrage numai UI și Debug UI din J2, inclusiv testele și gate-urile de geometrie care le cer la compilare; acestea rămân intacte în J0/J1. Păstrează Setup, Eventuate și guard-urile platformei. Adaugă negative pentru directoare UI shadow, dependențe Playwright și perimetrul exact de opt module, fără relaxarea oracolelor business sau Reporting.
+    proof: mvn -B -pl atf-test-eventuate,atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest,EventuateComponentSuite" "-Datf.governance.testChanges.baseRef=66546500c7f5baef5223c45dd72652bdcbe026e0" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    allowDelete: true
+    paths:
+      - atf-tests/src/test/java/atf/ui/tests/support/reporting/ReportUiActionAdapters.java
+      - atf-debug-ui/pom.xml
+      - atf-debug-ui/src/test/java/atf/debugui/AtfDebugUiLauncherParallelTest.java
+      - atf-debug-ui/src/test/java/atf/debugui/DebugUiMemoryPolicyTest.java
+      - atf-debug-ui/src/test/java/atf/debugui/DebugUiParallelStartupTest.java
+      - atf-debug-ui/src/test/java/atf/debugui/DebugUiServerTest.java
+      - atf-debug-ui/src/test/java/atf/debugui/DebugUiShutdownComponentTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/documentation/factual/DocumentedUiGeometryContractTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/documentation/factual/DocumentedUiGeometryContracts.java
+      - atf-ui/pom.xml
+      - atf-ui/src/test/java/atf/ui/audit/UiScreenAuditTest.java
+      - atf-ui/src/test/java/atf/ui/config/UiBrowserConfigurationTest.java
+      - atf-ui/src/test/java/atf/ui/config/UiNetworkInspectionConfigurationTest.java
+      - atf-ui/src/test/java/atf/ui/config/UiRetryPolicyTest.java
+      - atf-ui/src/test/java/atf/ui/config/geometry/UiViewportScaleTest.java
+      - atf-ui/src/test/java/atf/ui/config/recovery/UiRecoveryConfigurationTest.java
+      - atf-ui/src/test/java/atf/ui/dom/CssStringEscaperTest.java
+      - atf-ui/src/test/java/atf/ui/dom/HtmlElementTest.java
+      - atf-ui/src/test/java/atf/ui/network/UiNetworkBodyFidelityComponentTest.java
+      - atf-ui/src/test/java/atf/ui/network/UiNetworkInspectorComponentTest.java
+      - atf-ui/src/test/java/atf/ui/network/UiNetworkPresentationStreamComponentTest.java
+      - atf-ui/src/test/java/atf/ui/network/UiNetworkRequestIdentityComponentTest.java
+      - atf-ui/src/test/java/atf/ui/network/UiObservedQueryFingerprintComponentTest.java
+      - atf-ui/src/test/java/atf/ui/network/delivery/UiNetworkDeliveryComponentTest.java
+      - atf-ui/src/test/java/atf/ui/network/identity/UiRequestIdentityComponentTest.java
+      - atf-ui/src/test/java/atf/ui/network/lifecycle/UiNetworkLifecycleComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/ObservationBudgetComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/PlaywrightActionSequenceTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/PlaywrightClickPostconditionComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/PlaywrightJavaScriptClickComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/PlaywrightLocatorReadinessComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/PlaywrightReadinessBudgetComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/PlaywrightUiSessionTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/UiScreenValidationTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/download/PlaywrightDownloadComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/geometry/PlaywrightPointerGeometryComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/geometry/PointerGeometryPreparationComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/lifecycle/UiListenerScopeComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/recovery/UiRecoveryObserverLifecycleComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/recovery/UiRecoveryRecordingComponentTest.java
+      - atf-ui/src/test/java/atf/ui/playwright/selection/PlaywrightSelectContinuityComponentTest.java
+      - atf-ui/src/test/java/atf/ui/recovery/UiRecoveryLoopTest.java
+      - atf-ui/src/test/java/atf/ui/recovery/browser/RecoveryBrowserFixture.java
+      - atf-ui/src/test/java/atf/ui/recovery/browser/UiBackendRecoveryComponentTest.java
+      - atf-ui/src/test/java/atf/ui/tests/support/download/UiDownloadPortFixture.java
+      - atf-ui/src/test/java/atf/ui/tests/support/geometry/PointerGeometryFixture.java
+      - atf-ui/src/test/java/atf/ui/tests/support/selection/SelectContinuityBrowser.java
+      - atf-ui/src/test/java/atf/ui/tests/support/selection/SelectContinuityFixture.java
+      - atf-ui/src/test/resources/atf/ui/playwright/javascript-click.html
+      - atf-ui/src/test/resources/atf/ui/playwright/locator-readiness.html
+      - atf-ui/src/test/resources/atf/ui/playwright/select-continuity.html
+```
+
+</details>
+
+
+<details>
+<summary><strong>Control tehnic — CORE-BOUNDARY-HARDENING-79</strong></summary>
+
+Controlul a fost reconciliat în CORE-LIB-C1, la aceeași bază Git.
+
+</details>
+
+
+<details>
+<summary><strong>Control tehnic — MOCK-MEDIA-TYPE-83</strong></summary>
+
+```yaml
+testChanges:
+  - id: MOCK-MEDIA-TYPE-83
+    status: VERIFIED
+    base: 66546500c7f5baef5223c45dd72652bdcbe026e0
+    expires: 2026-11-30
+    reason: Cerința explicită reconciliază măștile literale și diagnosticul quoted, MIME-ul, headerele efective și vocabularul HTTP independent de locale. Păstrează cazurile existente; negativele independente refuză sursa anterioară, comparația precede redacția și nicio cerere nu este repetată.
+    proof: mvn -B -pl atf-core,atf-mock,atf-validation,atf-tests,atf-test-eventuate -am "-Dtest=RedactionStrategiesTest,QuotedAuthorizationRedactionTest,MediaTypesTest,HttpClientRequestHeadersTest,AuthProfilesTest,CoreContractTest,MockMediaTypeContractTest,AtfMockTransportTest,MockRequestBodyModeTest,MockRouteIdentityTest,ResponseContractRuleSetTest,ResponseContractTest,ValidationProtocolTest,WholeAtfGovernanceSuiteTest,EventuateApiContractComponentTest,EventuateConvergenceComponentTest,EventuateMessageEvidenceComponentTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-mock/src/test/java/atf/mock/MockMediaTypeContractTest.java
+```
+
+</details>
+
+
+<details>
+<summary><strong>Control tehnic — VALIDATION-PROTOCOL-LOCALE-84</strong></summary>
+
+```yaml
+testChanges:
+  - id: VALIDATION-PROTOCOL-LOCALE-84
+    status: VERIFIED
+    base: 66546500c7f5baef5223c45dd72652bdcbe026e0
+    expires: 2026-11-30
+    reason: Cerința explicită reconciliază măștile literale și diagnosticul quoted, MIME-ul, headerele efective și vocabularul HTTP independent de locale. Păstrează cazurile existente; negativele independente refuză sursa anterioară, comparația precede redacția și nicio cerere nu este repetată.
+    proof: mvn -B -pl atf-core,atf-mock,atf-validation,atf-tests,atf-test-eventuate -am "-Dtest=RedactionStrategiesTest,QuotedAuthorizationRedactionTest,MediaTypesTest,HttpClientRequestHeadersTest,AuthProfilesTest,CoreContractTest,MockMediaTypeContractTest,AtfMockTransportTest,MockRequestBodyModeTest,MockRouteIdentityTest,ResponseContractRuleSetTest,ResponseContractTest,ValidationProtocolTest,WholeAtfGovernanceSuiteTest,EventuateApiContractComponentTest,EventuateConvergenceComponentTest,EventuateMessageEvidenceComponentTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-validation/src/test/java/atf/validation/contract/ResponseContractRuleSetTest.java
+```
+
+</details>
+
+
+<details>
+<summary><strong>Control tehnic — GOV-SOURCE-INVENTORY-80</strong></summary>
+
+```yaml
+testChanges:
+  - id: GOV-SOURCE-INVENTORY-80
+    status: VERIFIED
+    base: 66546500c7f5baef5223c45dd72652bdcbe026e0
+    expires: 2026-11-30
+    reason: Separă descoperirea POM de sursa Java declarată și reconciliază explicit oracolul care ascundea package-uri legale. Proba compilează patru surse, cere setul exact și patru încălcări detectate; output-ul modulului rămâne exclus, fără relaxarea pragurilor sau selecțiilor.
+    proof: mvn -B -pl atf-core,atf-mock,atf-validation,atf-tests,atf-test-eventuate -am "-Dtest=RedactionStrategiesTest,QuotedAuthorizationRedactionTest,MediaTypesTest,HttpClientRequestHeadersTest,AuthProfilesTest,CoreContractTest,MockMediaTypeContractTest,AtfMockTransportTest,MockRequestBodyModeTest,MockRouteIdentityTest,ResponseContractRuleSetTest,ResponseContractTest,ValidationProtocolTest,WholeAtfGovernanceSuiteTest,EventuateApiContractComponentTest,EventuateConvergenceComponentTest,EventuateMessageEvidenceComponentTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-tests/src/test/java/atf/api/tests/governance/AtfSourceReadabilityGovernanceTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/layers/AtfJavaSourceInventory.java
+```
+
+</details>
+
+
+<details>
+<summary><strong>Control tehnic — CORE-LIB-C1-J2</strong></summary>
+
+```yaml
+testChanges:
+  - id: CORE-LIB-C1-J2
+    status: VERIFIED
+    base: 66546500c7f5baef5223c45dd72652bdcbe026e0
+    expires: 2026-11-30
+    reason: Publică Core parentless C1 cu sursa și nativele păstrate în J0; consumatorii verifică binarul real și păstrează probele negative, cataloagele și controalele de ownership.
+    proof: mvn -B -pl atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-console/pom.xml
+      - atf-mock/pom.xml
+      - atf-test-eventuate/pom.xml
+      - atf-tests/pom.xml
+      - atf-tests/src/test/java/atf/api/tests/governance/ArchitectureModuleBoundaryTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/ArchitectureOwnershipBoundaryTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/AtfGovernanceTestSupport.java
+      - atf-tests/src/test/java/atf/api/tests/governance/ConstantsOwnershipGovernanceTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/GovernanceDeployment.java
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/README.md
+      - atf-tests/src/test/java/atf/api/tests/governance/WholeAtfGovernanceSuiteTest.java
+      - atf-tests/src/test/java/atf/j2/governance/J2DeploymentGovernanceTest.java
+      - atf-tests/src/test/java/atf/j2/governance/J2DocumentationGovernanceTest.java
+      - atf-tests/src/test/java/atf/j2/governance/J2Project.java
+      - atf-validation/pom.xml
+      - pom.xml
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/core/BinaryCoreFixture.java
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/core/CoreGovernanceSurface.java
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/core/CoreGovernanceSurfaceTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control tehnic — CORE-SOURCE-RETIREMENT-J2</strong></summary>
+
+```yaml
+testChanges:
+  - id: CORE-SOURCE-RETIREMENT-J2
+    status: VERIFIED
+    base: 66546500c7f5baef5223c45dd72652bdcbe026e0
+    expires: 2026-11-30
+    reason: Publică Core parentless C1 cu sursa și nativele păstrate în J0; consumatorii verifică binarul real și păstrează probele negative, cataloagele și controalele de ownership.
+    proof: mvn -B -pl atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    allowDelete: true
+    paths:
+      - atf-core/pom.xml
+      - atf-core/src/test/java/atf/core/ApiTransportPolicyTest.java
+      - atf-core/src/test/java/atf/core/AtfDurationParserTest.java
+      - atf-core/src/test/java/atf/core/AuthenticationAndRetryTest.java
+      - atf-core/src/test/java/atf/core/config/AtfModuleConfigurationLoaderTest.java
+      - atf-core/src/test/java/atf/core/config/module
+      - atf-core/src/test/java/atf/core/ConfigurationContractTest.java
+      - atf-core/src/test/java/atf/core/CoreContractTest.java
+      - atf-core/src/test/java/atf/core/diagnostics/ThrowableDiagnosticsTest.java
+      - atf-core/src/test/java/atf/core/ExecutionResilienceTest.java
+      - atf-core/src/test/java/atf/core/files/AtfFileTreeTest.java
+      - atf-core/src/test/java/atf/core/files/AtfJavaSourceInventoryTest.java
+      - atf-core/src/test/java/atf/core/files/AtfJavaSourceReferencesTest.java
+      - atf-core/src/test/java/atf/core/files/AtfPathLocatorTest.java
+      - atf-core/src/test/java/atf/core/http/ApiBodyEvidenceTest.java
+      - atf-core/src/test/java/atf/core/http/ApiExecutorConsoleTelemetryTest.java
+      - atf-core/src/test/java/atf/core/http/ApiUrlBuilderTest.java
+      - atf-core/src/test/java/atf/core/http/auth/AuthProfilesTest.java
+      - atf-core/src/test/java/atf/core/http/diagnostics/ApiDiagnosticIsolationTest.java
+      - atf-core/src/test/java/atf/core/http/execution/ApiExecutionTimePolicyTest.java
+      - atf-core/src/test/java/atf/core/http/execution/ApiTerminalExecutionEvidenceTest.java
+      - atf-core/src/test/java/atf/core/http/JsonBodyPolicyTest.java
+      - atf-core/src/test/java/atf/core/http/protocol/ApiUrisTest.java
+      - atf-core/src/test/java/atf/core/http/protocol/HttpHeaderProfilesTest.java
+      - atf-core/src/test/java/atf/core/http/request/MediaTypesTest.java
+      - atf-core/src/test/java/atf/core/http/RetryAfterParserTest.java
+      - atf-core/src/test/java/atf/core/http/transport/ApiLiveTransportCatalogTest.java
+      - atf-core/src/test/java/atf/core/http/transport/HttpClientRequestHeadersTest.java
+      - atf-core/src/test/java/atf/core/lifecycle/ApiScenarioPhaseExecutorTest.java
+      - atf-core/src/test/java/atf/core/lifecycle/CleanupRegistryTest.java
+      - atf-core/src/test/java/atf/core/reporting/AtfConsoleEventInteropTest.java
+      - atf-core/src/test/java/atf/core/reporting/AtfDurationFormatterTest.java
+      - atf-core/src/test/java/atf/core/reporting/contract/AtfReportStatusTest.java
+      - atf-core/src/test/java/atf/core/ReportStatusAggregatorTest.java
+      - atf-core/src/test/java/atf/core/routing/ApiPathTemplateTest.java
+      - atf-core/src/test/java/atf/core/security/QuotedAuthorizationRedactionTest.java
+      - atf-core/src/test/java/atf/core/security/RedactionStrategiesTest.java
+      - atf-core/src/test/java/atf/core/sync/AtfPromotionGuardTest.java
+      - atf-core/src/test/java/atf/core/sync/AtfPromotionPreflightTest.java
+      - atf-core/src/test/java/atf/core/testing/api/ApiScenarioSelectionTest.java
+      - atf-core/src/test/java/atf/core/testing/http/RecordingApiTransportTest.java
+      - atf-core/src/test/java/atf/core/ui/AtfUiActionRecordTest.java
 ```
 
 </details>

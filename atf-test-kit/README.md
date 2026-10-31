@@ -160,8 +160,8 @@ flowchart LR
 
 </details>
 
-Contractul runtime este la [UI](../atf-ui/README.md#recuperare-be-prin-observație-pasivă);
-exemplele sunt în [ghidul adnotărilor](../docs/ATF_Test_Infrastructure_Annotations.md#recuperare-be-declarată).
+Contractul runtime este la [UI](../../atf_j0/atf-ui/README.md#recuperare-be-prin-observație-pasivă);
+exemplele sunt în [ghidul web J1](../../atf_j1/docs/ATF_Test_Infrastructure_Annotations.md#recuperare-be-declarată).
 
 ### Comparații JUnit cu dovadă neutră
 
@@ -378,7 +378,7 @@ browserului sau raportului în Kit. Primitivele din `lifecycle` există deja.
 
 Deciziile despre primitivele existente și ownership sunt în
 [atlas](../docs/ATF_Context_Atlas.md#reutilizare-fără-mutarea-politicii-aplicației);
-[acceptanța business a consumerilor](../docs/ATF_Testing_Guide.md#acceptanța-business-individual-și-prin-suită)
+[acceptanța business a consumerilor](../../atf_j1/docs/ATF_Testing_Guide.md#acceptanța-business-individual-și-prin-suită)
 descrie probele business și limitele interpretării lor.
 
 ## Dependențe

@@ -167,10 +167,10 @@ singură achiziția parțială, izolarea scope-ului sau păstrarea cauzei.
 Flow-ul business, flow-ul UI, acțiunile compuse și operația Playwright atomică
 au contracte diferite; validarea produce rezultate tipizate înaintea proiecției
 în raport. Boundary-urile și probele țintă sunt în
-[ghidul de testare](ATF_Testing_Guide.md#separarea-flow-urilor-business-ui-și-a-validărilor).
+[ghidul de testare](../../atf_j1/docs/ATF_Testing_Guide.md#separarea-flow-urilor-business-ui-și-a-validărilor).
 
 - Deciziile de reutilizare sunt în [atlas](ATF_Context_Atlas.md#reutilizare-fără-mutarea-politicii-aplicației).
-- [Acceptanța business a consumerilor](ATF_Testing_Guide.md#acceptanța-business-individual-și-prin-suită)
+- [Acceptanța business a consumerilor](../../atf_j1/docs/ATF_Testing_Guide.md#acceptanța-business-individual-și-prin-suită)
   descrie dovada cerută înaintea reducerii selecției.
 
 ## Contracte protejate și schimbări controlate

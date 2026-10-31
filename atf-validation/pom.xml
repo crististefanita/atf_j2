@@ -15,7 +15,7 @@
         <dependency>
             <groupId>atf.api</groupId>
             <artifactId>atf-core</artifactId>
-            <version>${project.version}</version>
+            <version>${atf.core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

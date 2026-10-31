@@ -5,6 +5,7 @@ import atf.api.tests.governance.distribution.ReportingHarnessOwnership;
 import atf.core.config.module.AtfModuleIds;
 import atf.api.tests.governance.distribution.GovernanceDeployment;
 import atf.api.tests.governance.distribution.ReportingGovernanceSurface;
+import atf.api.tests.governance.distribution.core.CoreGovernanceSurface;
 import atf.testkit.AtfComponentTest;
 
 import org.junit.jupiter.api.Test;
@@ -67,19 +68,34 @@ public class ArchitectureModuleBoundaryTest {
     void rootPomExposesTheCanonicalReactorModuleCatalog() throws Exception {
         Path root = locateProjectRoot();
         var deployment = GovernanceDeployment.read(root);
-        assertEquals(deployment.reportingSource() ? AtfModuleIds.REACTOR_MODULES : AtfModuleIds.REACTOR_MODULES.stream()
+        var expected = new ArrayList<>(deployment.reportingSource() ? AtfModuleIds.REACTOR_MODULES : AtfModuleIds.REACTOR_MODULES.stream()
                         .filter(module -> !module.equals(AtfModuleIds.REPORTING))
+                        .filter(module -> deployment.coreSource() || !module.equals(AtfModuleIds.CORE))
+                        .filter(module -> !List.of(AtfModuleIds.PRACTICE_SHOP, AtfModuleIds.AUTOMATION_EXERCISE).contains(module) || deployment.sourceModules().contains(module))
                         .filter(module -> !module.equals(AtfModuleIds.REPORTING_TESTS)
-                                || deployment.sourceModules().contains(AtfModuleIds.REPORTING_TESTS)).toList(), deployment.sourceModules());
+                                || deployment.sourceModules().contains(AtfModuleIds.REPORTING_TESTS)).toList());
+        var properties = GovernanceDeployment.child(GovernanceDeployment.xml(Files.readString(root.resolve("pom.xml"))), "properties");
+        if (GovernanceDeployment.text(properties, "atf.consumer.profile").equals("eventuate"))
+        {
+            expected.removeAll(List.of(AtfModuleIds.UI, AtfModuleIds.DEBUG_UI));
+            expected.addAll(expected.indexOf(AtfModuleIds.TESTS), List.of("atf-setup", "atf-test-eventuate"));
+        }
+        assertEquals(expected, deployment.sourceModules());
     }
 
     @Test
     void productionModulesDoNotImportForbiddenLayersOrMarkup() throws Exception {
         Path root = locateProjectRoot();
         var violations = new ArrayList<String>();
+        var deployment = GovernanceDeployment.read(root);
         for (AtfGovernanceRules.SourceRule rule : AtfGovernanceRules.PRODUCTION_SOURCE_RULES) {
+            if (List.of(AtfModuleIds.UI, AtfModuleIds.DEBUG_UI).contains(rule.module()) && !deployment.sourceModules().contains(rule.module())) continue;
+            if (List.of(AtfModuleIds.PRACTICE_SHOP, AtfModuleIds.AUTOMATION_EXERCISE).contains(rule.module())
+                    && !AtfGovernanceTestSupport.consumerDeclared(root, rule.module())) continue;
             if (rule.module().equals(AtfModuleIds.REPORTING) && !GovernanceDeployment.read(root).reportingSource())
                 violations.addAll(ReportingGovernanceSurface.read(root).forbiddenReferences(rule.forbiddenTokens()));
+            else if (rule.module().equals(AtfModuleIds.CORE) && !GovernanceDeployment.read(root).coreSource())
+                violations.addAll(CoreGovernanceSurface.read(root).forbiddenReferences(rule.forbiddenTokens()));
             else assertNoForbidden(moduleSource(root, rule.module(), false), rule.forbiddenTokens(), violations);
         }
         assertTrue(violations.isEmpty(), () -> "Architecture boundary violations: " + violations);
@@ -90,6 +106,11 @@ public class ArchitectureModuleBoundaryTest {
         Path root = locateProjectRoot();
         assertAll(AtfGovernanceRules.MODULE_DEPENDENCY_RULES.stream()
                 .map(rule -> () -> {
+                    var declared = GovernanceDeployment.read(root).sourceModules();
+                    if (List.of(AtfModuleIds.UI, AtfModuleIds.DEBUG_UI).contains(rule.module()) && !declared.contains(rule.module())) return;
+                    if (rule.dependency().equals(AtfModuleIds.UI) && !declared.contains(AtfModuleIds.UI)) {
+                        assertDependencyAbsent(root, rule.module(), rule.dependency()); return;
+                    }
                     if (rule.required()) {
                         assertDependencyPresent(root, rule.module(), rule.dependency());
                     } else if (rule.module().equals(AtfModuleIds.REPORTING)) {
@@ -119,7 +140,7 @@ public class ArchitectureModuleBoundaryTest {
         Path root = locateProjectRoot();
         assertTrue(Files.notExists(root.resolve("atf-execution")),
                 "the retired concrete atf-execution module must not return");
-        assertTrue(Files.isRegularFile(root.resolve(
+        assertTrue(CoreGovernanceSurface.read(root).owns(root.resolve(
                         "atf-core/src/main/java/atf/core/lifecycle/CleanupRegistry.java")),
                 "generic lifecycle cleanup belongs to core");
         ReportingHarnessOwnership.read(root).requireFile(root.resolve(

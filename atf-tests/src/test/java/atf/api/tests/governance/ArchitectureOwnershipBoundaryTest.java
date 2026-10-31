@@ -1,9 +1,11 @@
 package atf.api.tests.governance;
 
 import atf.api.tests.governance.distribution.ReportingHarnessOwnership;
+import atf.api.tests.governance.distribution.GovernanceDeployment;
 
 import atf.core.config.module.AtfModuleIds;
 import atf.api.tests.governance.distribution.ReportingGovernanceSurface;
+import atf.api.tests.governance.distribution.core.CoreGovernanceSurface;
 import atf.testkit.AtfComponentTest;
 import org.junit.jupiter.api.Test;
 
@@ -131,6 +133,10 @@ public class ArchitectureOwnershipBoundaryTest {
     @Test
     void uiConfigurationOwnershipKeepsAtfUiGeneric() throws Exception {
         Path root = locateProjectRoot();
+        if (!GovernanceDeployment.read(root).sourceModules().contains(AtfModuleIds.UI)) {
+            assertFalse(Files.exists(root.resolve(AtfModuleIds.UI)), "Excluded UI cannot remain as a shadow module");
+            return;
+        }
         Path genericUiConfig = modulePath(root, AtfModuleIds.UI, MAIN_JAVA, "atf/ui/config");
         Path reportingUiConfig = modulePath(root, AtfModuleIds.REPORTING_TESTS, TEST_JAVA,
                 "atf/ui/tests/extent/support/config");
@@ -252,7 +258,8 @@ public class ArchitectureOwnershipBoundaryTest {
     private static boolean ownedFile(Path path) throws Exception {
         Path root = locateProjectRoot();
         return path.startsWith(root.resolve(AtfModuleIds.REPORTING))
-                ? ReportingGovernanceSurface.read(root).owns(path) : Files.isRegularFile(path);
+                ? ReportingGovernanceSurface.read(root).owns(path)
+                : path.startsWith(root.resolve(AtfModuleIds.CORE)) ? CoreGovernanceSurface.read(root).owns(path) : Files.isRegularFile(path);
     }
 
     private static void requireFile(Path path, String message) throws Exception {
@@ -264,7 +271,8 @@ public class ArchitectureOwnershipBoundaryTest {
     private static void forbidFile(Path path, String message) throws Exception {
         Path root = locateProjectRoot();
         boolean exists = path.startsWith(root.resolve(AtfModuleIds.REPORTING)) && !ReportingGovernanceSurface.read(root).source()
-                ? ReportingGovernanceSurface.read(root).owns(path) : Files.exists(path);
+                ? ReportingGovernanceSurface.read(root).owns(path)
+                : path.startsWith(root.resolve(AtfModuleIds.CORE)) ? CoreGovernanceSurface.read(root).owns(path) : Files.exists(path);
         assertFalse(exists, message + ": " + path);
     }
 }
