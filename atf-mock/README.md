@@ -20,7 +20,8 @@ produce un `ApiResponse` reproductibil pentru fiecare request configurat.
 %%{init: {"themeVariables":{"fontSize":"15px"},"themeCSS":".nodeLabel, .nodeLabel p { font-size: 15px !important; line-height: 1.35 !important; } .edgeLabel, .edgeLabel p { font-size: 12px !important; font-weight: 400 !important; line-height: 1.2 !important; } .edgeLabel .labelBkg, .edgeLabel p { background: transparent !important; } .edgeLabel foreignObject { transform: translateY(-18px); overflow: visible; } .node rect { rx: 6px; ry: 6px; }","flowchart":{"curve":"linear","nodeSpacing":24,"rankSpacing":16,"padding":10,"diagramPadding":16}}}%%
 flowchart LR
     Source["YAML / defaults"] -->|încarcă| Loader["Loader"]
-    Loader -->|creează| Catalog["Catalog"]
+    Loader -->|construiește| Guard["JSON complet"]
+    Guard -->|permite| Catalog["Catalog"]
     Catalog -->|alimentează| Transport["Mock transport"]
     Transport -->|implementează| Port["ApiTransport"]
     Port -->|produce| Response["ApiResponse"]
@@ -30,7 +31,8 @@ flowchart LR
 <summary><strong>Legendă — cum se produce răspunsul fake</strong></summary>
 
 - `Source` furnizează doar date de test, nu configurație de producție;
-- `Loader` validează schema și construiește modele imutabile;
+- `Loader` verifică forma catalogului; constructorul MockRoute aplică același guard și la apelul direct;
+- `Guard` verifică expected-ul furnizat și răspunsurile POST/PUT, înainte de transport;
 - `Catalog` decide ruta câștigătoare sau fallback-ul;
 - `AtfMockTransport` implementează portul neutru din `atf-core`;
 - `ApiResponse` păstrează forma observabilă a schimbului fără trafic HTTP;
@@ -157,10 +159,9 @@ mock:
 
 ## Potrivirea și prioritatea rutelor
 
-Expected-ul și răspunsul fixture-ului folosesc încă parsare Jackson permisivă;
-trailing content poate fi acceptat chiar dacă request-ul este validat strict.
-[Feedback-ul Mock](../docs/feedback/ATF_Mock_Feedback.md) delimitează această
-lacună; ea nu schimbă regulile de prioritate descrise mai jos.
+Un fixture invalid este refuzat la construcție sau încărcare, înainte de
+dispatch. Request-ul invalid nu este eligibil pentru o rută write și ajunge
+la fallback-ul configurat; ordinea și prioritatea rutelor rămân distincte.
 
 ```mermaid
 %%{init: {"themeVariables":{"fontSize":"15px"},"themeCSS":".nodeLabel, .nodeLabel p { font-size: 15px !important; line-height: 1.35 !important; } .edgeLabel, .edgeLabel p { font-size: 12px !important; font-weight: 400 !important; line-height: 1.2 !important; } .edgeLabel .labelBkg, .edgeLabel p { background: transparent !important; } .edgeLabel foreignObject { transform: translateY(-18px); overflow: visible; } .node rect { rx: 6px; ry: 6px; }","flowchart":{"curve":"linear","nodeSpacing":24,"rankSpacing":40,"padding":10,"diagramPadding":16}}}%%
@@ -233,6 +234,39 @@ mock:
 </details>
 
 ## Vocabular și responsabilități
+
+### Document JSON complet — expected, request și response
+
+MockJsonDocument este parserul intern comun: consumă întregul document și
+refuză cheile duplicate, inclusiv nested. Readerul este imuabil și reutilizat;
+arborele parsează local observația și nu este expus în API-ul public.
+
+| Intrare | Contract |
+|---|---|
+| expected Java null ori request-body YAML absent/null | fără restricție expected; nu înseamnă document JSON null |
+| expected furnizat, inclusiv șir gol sau whitespace | trebuie să fie un document JSON complet și neambiguu; golul este refuzat |
+| request-body YAML obiect/array neîncadrat ca text | refuzat înainte de coerciție; pentru JSON obiect/array se folosește text JSON quoted |
+| response POST/PUT, inclusiv status negativ | document complet obligatoriu; parserul original rămâne cauză a excepției |
+| request POST/PUT în ambele moduri | document complet înainte de verificarea MIME și comparația structurală |
+| citire ori wildcard și răspuns raw | păstrate pentru fixture-uri negative intenționate; nu sunt certificate ca JSON valid |
+
+- JSON null explicit, scalarii și containerele sunt documente sintactic valide.
+  Politica HTTP care interzice null pe write în Core este o verificare separată.
+- Textul răspunsului este păstrat integral, inclusiv whitespace; matching-ul nu
+  schimbă ordinea array-ului sau tipul string/număr și compară valoarea integrală.
+- Core C1 oferă vocabularul metodelor și MIME, dar validDocument acceptă
+  primul arbore și trailing content. Guard-ul strict rămâne în Mock până la
+  reconcilierea unei primitive comune la ownerul Core, fără Core shadow în J2.
+
+[Fixture-uri](src/test/java/atf/mock/json/MockJsonFixtureComponentTest.java)
+și [catalog YAML](src/test/java/atf/mock/json/MockJsonCatalogComponentTest.java)
+protejează nominalele, refuzul înainte de dispatch și modurile negative.
+[Acceptanța J2 pe JAR](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/MockFixtureReportAcceptance.java)
+publică dovezi individuale și combinate; rendererele rămân în biblioteca externă.
+
+Matching-ul decimal de precizie mare are un [criteriu separat deschis](../docs/feedback/ATF_Mock_Feedback.md).
+
+### Ownerii vocabularului
 
 Valorile stabile trebuie să aibă un owner semantic. Nu introducem un bucket
 global de constante și nu copiem endpoint-uri între module.

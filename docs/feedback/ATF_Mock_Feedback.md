@@ -1,27 +1,21 @@
-# Mock — documentul întreg în contractul fixture-ului
+# Mock — precizia comparației numerice
 
 ## Pe scurt
 
-Validarea request-ului folosește politica strictă Core, dar constructorul
-fixture-ului și comparația expected-ului păstrează parsare permisivă locală.
-Ownerul este Mock; verdictul Reporting nu poate repara un fixture acceptat greșit.
+[Contractul fixture-urilor](../../atf-mock/README.md#document-json-complet--expected-request-și-response)
+refuză documente incomplete, duplicate și constrângeri YAML coerced la gol.
+Regresia și acceptanța pe JAR rămân permanente; criteriul închis este retras.
 
-## MOCK-STRICT-FIXTURE-85 — prioritate 85
+## MOCK-NUMERIC-MATCH-104 — prioritate 86
 
-Prin API-ul public, expectedRequestBody egal cu un obiect JSON urmat de
-trailing content este acceptat și se potrivește unui request cu obiectul curat.
-Un body de răspuns POST cu trailing content este de asemenea acceptat.
+Prin API-ul public, două valori decimale distincte, 9007199254740992.0 și
+9007199254740993.0, se potrivesc în expected și actual. Parserul păstrează
+comportamentul numeric Jackson anterior; conversia Double pierde diferența.
 
-| Suprafață | Owner live | Cerință |
-|---|---|---|
-| constructor și comparație | [MockRoute](../../atf-mock/src/main/java/atf/mock/MockRoute.java) | document complet, nu numai primul arbore Jackson |
-| policy existentă | Core C1 JsonBodyPolicy | evitați validatoare de JSON cu accepții incompatibile |
-| probe permanente | [teste Mock](../../atf-mock/src/test/java/atf/mock) | malformed expected, malformed response și nominal independente |
+- Definiți egalitatea numerică a matching-ului independent de reprezentarea Double; păstrați structura, tipurile și ordinea array-ului.
+- Verificați limite mari, fracții apropiate, exponent, zero și compatibilitatea nominală înainte de schimbarea readerului sau a egalității.
+- Adăugați regresie componentă publică și oracol de rutare: request-ul distinct trebuie să ajungă la fallback, iar wire body nu se rescrie.
 
-- Unificați politica de document complet pentru request, expected și response, păstrând modurile negative intenționate.
-- Refuzați fixture-ul malformed înainte de dispatch; fallback-ul nu trebuie să transforme eroarea de configurare în succes.
-- Păstrați matching-ul și prioritatea rutelor existente; problema nu cere modificarea semanticii wildcard sau query.
-- Reconcilierea codului comun se face selectiv în J0/J1/J2; nu modificați sursa Core ori Reporting în consumer.
-
-Închidere: configurațiile cu trailing content sunt refuzate, matching-ul
-semantic nominal rămâne corect și regresiile rulează prin reactorul ownerului.
+Închidere: contraexemplul nu mai selectează ruta, nominalele sunt demonstrate
+și comparația integrală precede orice preview. Proba publică este în TMP,
+incrementul atf-j2-mock-json-615a89c6ad, mock-numeric-observation.log.

@@ -116,9 +116,12 @@ protejează cauza originală, faza, lipsa răspunsului și nominalele existente.
 
 | Criteriu rămas | Owner și probă de închidere |
 |---|---|
-| identitate și deadline | [convergență](../docs/feedback/ATF_Eventuate_Feedback.md#evt-convergence-contract-86--identitate-și-deadline-real): identitatea și overflow sunt protejate; rămâne propagarea bugetului către citirea bounded LIVE |
+| identitate și deadline | [convergență](../docs/feedback/ATF_Eventuate_Feedback.md#evt-convergence-contract-86--deadline-al-citirii-live): identitatea și overflow sunt protejate; rămâne propagarea bugetului către citirea bounded LIVE |
 | notificare consolă | [politica căii](../docs/feedback/ATF_Eventuate_Feedback.md#evt-console-path-79--prioritate-79): adaptorul emite direct calea și ocolește console.enabled |
 
 Identitatea integrală și decodarea fără overflow au regresii în [EventuateOrderContractTest](src/test/java/atf/eventuate/tests/unit/EventuateOrderContractTest.java) și în componenta de convergență. API-ul await primește OrderContract, nu o stare izolată. ID-ul, starea și rejectionReason trebuie să corespundă în aceeași observație; istoricul păstrează observațiile respinse.
 
 Celelalte criterii de mai sus și integrarea Kafka reală rămân deschise.
+
+
+Fixture-ul terminal after-success serializează răspunsul înaintea execuției măsurate. Deadline-ul Core de 250 ms și proba care păstrează excepția originală a sink-ului rămân distincte de pregătirea datelor de test.

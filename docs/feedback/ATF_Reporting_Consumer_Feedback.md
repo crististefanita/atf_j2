@@ -3,12 +3,10 @@
 ## Pe scurt
 
 J2 deține adaptorul și acceptanța sa, nu implementarea bibliotecii.
-J7 este binarul consumat; J6 păstrează proveniența istorică demo2, cu owner curent J0. Contractul local este
+J8 este binarul consumat; J6/J7 păstrează proveniența istorică, cu owner curent J0. Contractul local este
 în [atlasul JAR](../ATF_Reporting_Library_Atlas.md).
 
-Auditul scalar J2 confirmă valorile și verdicturile în ambele renderere, dar
-validarea API fallback nu are disclosure propriu. [Criteriul și regresia J0](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-fallback-validation-disclosure-99--validarea-api-colapsabilă)
-păstrează acest gap; acceptanța structurală locală nu îl declară rezolvat.
+[Livrarea J8](../ATF_Reporting_J8_Verification.md) închide lipsa disclosure-ului API fallback. Regresia neutră J0 și matricea Validation păstrează valorile, verdicturile per rând, preview-ul 240 și tastatura. Inspectorul, timing-ul și geometria badge-ului rămân criterii distincte.
 
 - Matricea media type confirmă valori și verdicturi, dar badge-ul Warning depășește RESULT în fallback. Criteriul REPORT-FALLBACK-RESULT-WIDTH-101 și componentele neutre necesare sunt în [feedback-ul J0](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md).
 
@@ -25,7 +23,12 @@ rezultatul original și verdictul oracolului pe tabele, fără fals verde univer
 Închidere locală: noul binar este adoptat cu proveniență și oracol explicit
 assertion-only/HTTP și renderer. Green-ul J0 sau J1 nu certifică J2.
 
-Catalogul nativ finit J2 este reconciliat explicit cu J7, fără wildcard sau skip. Această acceptanță nu închide automat guvernanța ori adopția din J0/J1.
+Catalogul nativ finit J2 este reconciliat explicit cu J8, fără wildcard sau skip. Această acceptanță nu închide automat guvernanța ori adopția din J0/J1.
+
+- Matricea Mock JSON adaugă 14 artifacte assertion-only individuale și combinate;
+inspectorul J7 le refuză pe toate, iar rezultatele originale sunt păstrate.
+Oracolul J2 și auditul browser confirmă comparațiile și disclosure-urile;
+această probă întărește criteriul de profil, fără să certifice un candidat nou.
 
 ## REPORT-J2-TIMING-83 — prioritate 88
 

@@ -33,6 +33,8 @@ public final class TerminalFailureFixtures {
         if (!CASES.contains(name)) throw new IllegalArgumentException("Unknown terminal fixture: " + name);
         var dispatches = new AtomicInteger();
         var original = new IOException("controlled terminal transport");
+        // Fixture serialization precedes the execution deadline; this case tests sink ownership.
+        String completedBody = name.equals("after-success") ? EventuateFixtures.order("APPROVED") : "";
         ApiAttemptOutcome outcome = name.equals("timeout") ? ApiAttemptOutcome.TIMED_OUT
                 : name.equals("cancel") ? ApiAttemptOutcome.CANCELLED : ApiAttemptOutcome.FAILED;
         ApiTransport transport;
@@ -43,7 +45,7 @@ public final class TerminalFailureFixtures {
             transport = (request, url, auth) -> {
                 int call = dispatches.incrementAndGet();
                 if (name.equals("after-success") && call == 1)
-                    return CompletableFuture.completedFuture(new ApiResponse(200, EventuateFixtures.order("APPROVED"), Map.of(), Duration.ZERO, url));
+                    return CompletableFuture.completedFuture(new ApiResponse(200, completedBody, Map.of(), Duration.ZERO, url));
                 if (name.equals("retry-transport") && call == 1)
                     return CompletableFuture.completedFuture(new ApiResponse(503, "busy", Map.of(), Duration.ZERO, url));
                 if (name.equals("timeout")) return new CompletableFuture<>();

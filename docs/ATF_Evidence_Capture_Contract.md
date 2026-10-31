@@ -21,8 +21,8 @@ O dovadă stale, lipsă sau aparținând altui ID nu devine succes numai pentru
 că starea sa este APPROVED.
 
 Un request terminal trebuie să păstreze cauza și snapshot-ul disponibil.
-Acest traseu are [criteriu J2 separat](feedback/ATF_Eventuate_Feedback.md),
-neînchis de nominalele MOCK sau de simpla existență a HTML-ului.
+Traseul este implementat și protejat de [contractul terminal Eventuate](../atf-test-eventuate/README.md#snapshot-uri-terminale-și-faze).
+Același obiect de excepție și evidence-ul fără răspuns inventat sunt probate în toate fazele; această dovadă nu certifică integrarea LIVE.
 
 ## Responsabilități și limite
 
@@ -34,5 +34,5 @@ neînchis de nominalele MOCK sau de simpla existență a HTML-ului.
 ## Unde se aprofundează
 
 [Atlas J2](ATF_Context_Atlas.md), [Testing](ATF_Testing_Guide.md) și
-[Reporting J6](ATF_Reporting_Library_Atlas.md) descriu compoziția curentă.
+[Reporting J7](ATF_Reporting_J7_Verification.md) descriu compoziția curentă.
 Contractele browser și screenshot-urile aplicațiilor web sunt la [J1](../../atf_j1/docs/ATF_Evidence_Capture_Contract.md).

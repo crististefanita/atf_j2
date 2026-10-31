@@ -4,13 +4,13 @@
 
 J0 păstrează implementarea și toate testele native Core. J1 și J2 consumă
 aceeași bibliotecă `atf.api:atf-core:1.0.0-c1`, fără modul sursă ori teste
-native copiate în live. Reporting rămâne versiunea J6 existentă.
+native copiate în live. Reporting consumat în J2 este J7; livrarea sa este independentă de Core C1.
 
 | Contract | C1 |
 |---|---|
 | runtime | Java 21; Jackson Databind și YAML 2.17.2 |
 | independență | POM fără parent de reactor; zero dependențe ATF/JUnit/Extent de producție |
-| layout consumer | `lib/atf-core-1.0.0-c1.jar` și `.pom`, lângă perechea Reporting J6; exact patru fișiere |
+| layout consumer | `lib/atf-core-1.0.0-c1.jar` și `.pom`, lângă perechea Reporting J7; exact patru fișiere |
 | proveniență | `coreLibrary` în `library-provenance.json`; hash JAR/POM, intrări și catalog native; istoricul J6 rămâne distinct |
 | sursă și teste | [owner J0](../../atf_j0/atf-core/README.md); niciun Core shadow în consumer |
 
@@ -52,6 +52,21 @@ colapsabile, ownership-ul business ori backlog-ul funcțional existent.
 Procedura completă este în [sincronizare](ATF_Workspace_Synchronization.md)
 și [build izolat](ATF_Build_And_Execution_Safety.md).
 
+## Limita JSON a binarului C1
+
+JsonBodyPolicy.validDocument acceptă primul arbore Jackson, inclusiv când
+urmează text sau alt document; validateWriteExchange poate întoarce zero
+încălcări pentru asemenea input. Acest comportament este reprodus pe C1,
+distinct de politica pentru null explicit pe write.
+
+- Mock J2 aplică propriul guard complet la fixture-uri și matching; nu copiază
+  o implementare Core și nu modifică JAR-ul consumat.
+- Reconcilierea parserului comun și nativele aparțin J0. O livrare corectată
+  cere versiune și proveniență noi, apoi acceptanțe separate ale consumerilor.
+
+[Dovada J2](ATF_J2_Verification.md) păstrează observația pe binar și limitele
+incrementului; regula strictă Mock nu certifică validarea HTTP reală prin C1.
+
 ## Harta livrării Core
 
 ```mermaid
@@ -68,12 +83,12 @@ flowchart LR
 - Muchiile descriu publicarea și adoptarea, nu dependențe Maven între workspace-uri.
 - J0 păstrează implementarea și toate nativele; testele pe JAR se copiază numai într-un harness TMP.
 - J1 verifică integrarea web; J2 verifică integrarea MOCK fără browser, independent de acceptanța Kafka reală.
-- Reporting are propria versiune și proveniență; publicarea Core nu reconstruiește J6.
+- Reporting are propria versiune și proveniență; publicarea Core nu reconstruiește biblioteca Reporting.
 
 </details>
 
 ## Limita acceptanței Reporting
 
-Distribuția Core C1 păstrează Reporting J6. [Timing-ul capturat/publicare](../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-recorded-timing-83--execuție-capturată-și-cost-de-publicare)
+J2 consumă Core C1 și Reporting J7, cu proveniențe independente. [Timing-ul capturat/publicare](../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-recorded-timing-83--execuție-capturată-și-cost-de-publicare)
 rămâne deschis la ownerul J0; verdicturile corecte, tabelele lizibile și
 expandările verificate nu certifică relația temporală dintre fază și copil.

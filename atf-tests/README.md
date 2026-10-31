@@ -39,9 +39,9 @@ business și nu mută rendererul Reporting în guvernanță.
 | Deployment | Module | Contract |
 |---|---:|---|
 | sursă J0 | 12 | implementare și regresii Reporting native |
-| journeys J1 | 10 | consumeri Shop/AutoEx și Reporting JAR |
-| foundation | 8 | alt catalog; nu substituie Eventuate |
-| eventuate J2 | 8 | cinci module platformă, Setup, Eventuate și Tests; fără browser |
+| journeys J1 | 9 | consumeri Shop/AutoEx și Reporting JAR |
+| foundation | 7 / 8 | Core binar, fără / cu harness Reporting; alt catalog decât Eventuate |
+| eventuate J2 | 7 | patru module platformă, Setup, Eventuate și Tests; Core/Reporting binare, fără browser |
 
 [Resolverul comun](src/test/java/atf/api/tests/governance/distribution/README.md)
 și [guard-ul J2](src/test/java/atf/j2/governance/J2DeploymentGovernanceTest.java)

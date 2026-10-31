@@ -1,5 +1,69 @@
 # J2 — perimetru verificat
 
+## Reporting J8 — livrarea curentă
+
+Perechea curentă este J8, direct în `lib`, cu Core C1 păstrat.
+
+| Boundary | Dovadă și limită |
+|---|---|
+| acceptanță curentă | [J8](ATF_Reporting_J8_Verification.md): 40 artifacte Validation, componente MOCK individual/prin suită și gate binar neutru |
+| disclosure API fallback | corectat și verificat prin mouse/Enter/Space; verdicturile sunt păstrate per rând |
+| restanțe | profilul inspectorului, timing-ul și geometria Warning rămân în feedback-ul Reporting |
+| istoric J7 | acceptanțele de mai jos păstrează versiunea executată; nu certifică automat candidatul J8 |
+
+## Reconciliere anterioară — Mock și revizia documentației
+
+Snapshot-ul live a avansat printr-un commit concurent. Cele nouă diferențe
+față de captura inițială sunt păstrate: Kit, probele Validation, documentul
+de adopție și controalele/proveniența comune; promovarea rămâne selectivă.
+
+| Verificare în staging reconciliat | Rezultat și limită |
+|---|---|
+| Kit / Mock / Validation | 5 / 80 / 165 invocări selectate, fără eșecuri, erori ori skip |
+| Eventuate | cele trei componente prin suită trec; aceasta nu este acceptanță LIVE |
+| guvernanță | 166 controale; trei refuzuri inițiale pentru baza controlului Kit și aceeași ancoră mutată sunt corectate și reexecutate cu succes, fără schimbarea testelor |
+| documente aprobate | 16 documente verificate prin validatoarele ownerului, fără încălcări |
+| Setup offline | 48 contracte și 31 comparații de componentă; fără pornirea engine-ului/brokerului sau recertificarea gazdei |
+| artifacte | matricea Mock de 14 rapoarte rămâne aplicabilă; aceleași binare Core C1/Reporting J7 și implementare Mock, cu backlink-ul Extent reverificat |
+
+- review-live-gates.log păstrează inclusiv refuzurile inițiale;
+  review-final-corrections.log păstrează reluarea verde a celor trei controale.
+- live-reconciliation.json, review-setup-contracts.log și
+  review-setup-components.log delimitează snapshot-ul și probele independente.
+- J6 rămâne inventar istoric; paginile de consum indică J7, iar catalogul J2
+  indică șapte module. Protecția semantică suplimentară rămâne în [feedback](feedback/ATF_Documentation_Feedback.md).
+
+## Mock — fixture JSON complet și constrângeri YAML
+
+Mock J2 folosește un singur parser intern pentru expected, request și
+response POST/PUT. Fixture-ul invalid este refuzat înainte de dispatch;
+request-ul invalid ajunge la fallback, fără schimbarea priorității rutelor.
+
+| Probă în staging Mock JSON | Rezultat și limită |
+|---|---|
+| baseline | 59 cazuri noi, 39 eșecuri pe implementarea anterioară; expected gol, trailing content, duplicate și obiect/array YAML fără constrângere |
+| regresii permanente | 62 teste noi: constructor, loader, transport, nominale, cauză parser, comparație după preview și matching concurent |
+| gate Mock | 80 teste, zero eșecuri, erori sau skip; cele 18 probe existente rămân verzi |
+| integrare și guvernanță | trei componente Eventuate prin suită și 166 controale verzi, fără relaxări |
+| rapoarte consumer | 14 HTML-uri Extent/fallback: șase cazuri individuale și un raport combinat per renderer, cu un mismatch controlat |
+| oracole artifact | identitate, trei rânduri și patru coloane per scenariu, valori și verdict per rând; coloană eliminată și verdict corupt refuzate |
+| browser | patru artifacte: expected/response refuzate și rapoarte combinate în Extent/fallback; disclosure implicit închis, Enter/Space și backlink exact, cu vecini PASS izolați |
+| inspector generic J7 | 14 neconformități păstrate pentru profilul assertion-only; oracolul consumerului nu declară inspectorul universal verde |
+| Core C1 | validDocument acceptă trailing content și documentul al doilea; validateWriteExchange întoarce zero încălcări în proba publică |
+| limită numerică | două valori decimale distincte se potrivesc după conversia Double; criteriul nou rămâne deschis, separat de sintaxa JSON |
+
+Contractul stabil și probele sunt în [README Mock](../atf-mock/README.md#document-json-complet--expected-request-și-response).
+
+- Dovezi TMP: incrementul atf-j2-mock-json-615a89c6ad, mock-before.log,
+  mock-gates.log, mock-matrix/acceptance.json și promovările controlate.
+- core-policy-observation.json și mock-numeric-observation.log păstrează
+  contraexemplele publice, fără a le transforma în nominale verzi.
+- Rapoartele sunt acceptanțe tehnice ale proiecției; nu certifică timing-ul
+  execuției, HTTP real sau brokerul Kafka.
+
+Guard-ul local nu este livrare Core. J0 deține remedierea bibliotecii și
+reconcilierea Mock comun; source/binary și deployment-urile au gate-uri separate.
+
 ## Media type JSON — contracte canonice
 
 Cele cinci contracte canonice folosesc contentTypeJson, delegat către Core C1.
@@ -15,7 +79,7 @@ rând nereușit, cu statusul HTTP și câmpurile payload nominale păstrate.
 | artifacte | 40 HTML-uri, inclusiv cele 28 de regresii anterioare; oracole de coloane, cardinalitate, verdict și ACTUAL exact, cu mutanți refuzați |
 | verdict per rând | 12 artifacte media type verificate independent; opt mutații care mută verdictul negativ pe alt rând sunt refuzate, chiar cu același număr de eșecuri |
 | browser | șase rapoarte Extent/fallback: FAIL, WARNING și nominal; patru coloane, vecini PASS, Fails către dovada originală și Enter/Space Extent |
-| Reporting rămas | disclosure API fallback absent și badge Warning mai lat decât RESULT; backlog-ul și componentele neutre dedicate sunt la J0 |
+| Reporting rămas în J7 | disclosure API fallback absent și badge Warning mai lat decât RESULT; J8 închide numai disclosure-ul, iar geometria rămâne la J0 |
 
 Contractul stabil este în [README Validation](../atf-validation/README.md#content-type--clasificare-semantică-json).
 
@@ -28,7 +92,7 @@ de 61,8 px; wrapperul de 870 px are scrollWidth 877 px. [Feedback-ul J0](../../a
 păstrează criteriul REPORT-FALLBACK-RESULT-WIDTH-101 și proba de componentă,
 fără a transfera clasificarea MIME către renderer.
 
-- J0 păstrează încă sursa canonică veche și propriul criteriu Validation.
+- La execuția matricei, reconcilierea sursei Validation din J0 era încă deschisă.
 Acceptanța J2 nu certifică reconcilierea ori execuția J0/J1/J3; implementările
 Core/Reporting și cele șapte module J2 sunt păstrate.
 
@@ -54,10 +118,7 @@ scalar-matrix/acceptance.json, browser-audit.json și promovarea
 selectivă. Valoarea null textuală rămâne compatibilă; un contract care cere
 distincția de tip adaugă jsonPathType.
 
-Auditul browser verifică șase rapoarte nominal/FAIL/WARNING în cele două
-renderere, coloanele, tastatura Extent și legătura
-din Fails la ultima comparație. Fallback-ul păstrează verdicturile și valorile,
-dar validarea API nu are disclosure propriu; [limita rendererului are owner J0](../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-fallback-validation-disclosure-99--validarea-api-colapsabilă).
+Auditul browser al incrementului scalar J7 a păstrat valorile/verdicturile; colapsarea API fallback lipsea pe acel binar. [Livrarea J8](ATF_Reporting_J8_Verification.md) repetă cazul și închide disclosure-ul, cu mouse/Enter/Space și backlink/reload în TAB.
 
 ## Snapshot terminal Eventuate — captură și ownership
 
@@ -132,8 +193,11 @@ Ownerii și criteriile reproductibile sunt în [Validation](feedback/ATF_Validat
 ## Perimetru curent — Core C1 binar
 
 J2 declară șapte module sursă: Test Kit, Mock, Validation, Console, Setup,
-Eventuate și ATF Tests. Core C1 și Reporting J6 sunt cele două biblioteci
+Eventuate și ATF Tests. Core C1 și Reporting J7 sunt cele două biblioteci
 externe, fiecare cu JAR/POM direct în lib.
+
+Probele C1 de mai jos sunt istorice și au folosit Reporting J6, înaintea adoptării J7.
+Nu reprezintă o reluare a nativelor Core în această revizie.
 
 | Probă C1 în TMP | Rezultat și limită |
 |---|---|

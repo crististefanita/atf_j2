@@ -2,6 +2,8 @@
 
 ## Pe scurt
 
+[Reporting J8 — validare API colapsabilă](ATF_Reporting_J8_Verification.md) păstrează dovada livrării și limitele ei.
+
 Ținta este un framework Kafka cu un singur modul de test și Setup PowerShell în Podman. Kafka și clientul Java de infrastructură sunt validate din VM; clientul/observerul framework-ului și scenariile Eventuate reale rămân WIP.
 
 Documentația locală explică Eventuate, mesageria, Setup și platforma consumată.
@@ -60,7 +62,7 @@ guvernanței; ele trimit către J0 și nu dublează backlog-ul producătorului.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C1 și Reporting J6 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 7 module sursă. Core C1 și Reporting J8 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.

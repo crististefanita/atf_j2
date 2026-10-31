@@ -15,7 +15,7 @@ Reporting este JAR extern; UI, Debug UI și Playwright nu fac parte din J2.
 | evaluare și diagnostic | atf-validation, atf-console | validare neutră și proiecție de consolă |
 | laborator local | atf-setup | configurație și scripturi Kafka; fără lifecycle Maven care instalează servicii |
 | scaffold de test · WIP | atf-test-eventuate | suport main; teste, fixture-uri și adaptor JUnit în test |
-| raport | Reporting JAR J6 | API public și Extent/fallback, cu implementare/regresii în J0 |
+| raport | Reporting JAR J8 | API public și Extent/fallback, cu implementare/regresii în J0 |
 | guvernanță | atf-tests | catalog, boundaries, selecții, documentație și CodeSource/hash |
 
 ### Harta modulelor: platformă și consumatori
@@ -111,7 +111,7 @@ infrastructurii reale rămâne o axă separată. [Ghidul](ATF_Testing_Guide.md)
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C1 și Reporting J6 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 7 module sursă. Core C1 și Reporting J8 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.

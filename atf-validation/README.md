@@ -496,3 +496,7 @@ Regresii permanente: [prezență și containere](src/test/java/atf/validation/Js
 și [subsetul schemei](src/test/java/atf/validation/JsonSchemaContractTest.java).
 Acceptanța API sintetică în Extent/fallback verifică separat verdictul,
 rândurile și preview-ul; nu demonstrează transport real sau acuratețe speech.
+
+Contractul MIME comun este reconciliat la ownerul J0 și în J1/J3; originea
+candidatului J2 rămâne în istoricul său. Reporting consumă rezultatele deja
+evaluate, fără clasificare MIME în renderer.

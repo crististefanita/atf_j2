@@ -4400,6 +4400,25 @@ testChanges:
 </details>
 
 <details>
+<summary><strong>Control tehnic — MOCK-JSON-FIXTURE-102</strong></summary>
+
+```yaml
+testChanges:
+  - id: MOCK-JSON-FIXTURE-102
+    status: VERIFIED
+    base: a1a57bb41d1023aac409c96c0ceaf529ea9d528a
+    expires: 2026-11-30
+    reason: Regresii componentă pentru documente JSON complete în expected, request și response POST/PUT, duplicate, constrângeri YAML fără coerciție, semantică nominală și moduri negative păstrate. Acceptanța consumerului verifică Extent/fallback fără modificarea Reporting sau Core; nicio probă existentă nu este relaxată.
+    proof: mvn -B -pl atf-mock,atf-test-eventuate,atf-tests -am "-Dtest=MockJsonFixtureComponentTest,MockJsonCatalogComponentTest,AtfMockTransportTest,MockMediaTypeContractTest,MockRouteIdentityTest,MockRequestBodyModeTest,EventuateComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=a1a57bb41d1023aac409c96c0ceaf529ea9d528a" test
+    paths:
+      - atf-mock/src/test/java/atf/mock/json/MockJsonFixtureComponentTest.java
+      - atf-mock/src/test/java/atf/mock/json/MockJsonCatalogComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/MockFixtureReportAcceptance.java
+```
+
+</details>
+
+<details>
 <summary><strong>Control tehnic verificat — CONTRACTS-J2-96</strong></summary>
 
 ```yaml
@@ -4423,7 +4442,7 @@ testChanges:
 
 Controalele istorice rămân la baza lor originală. Acest control revizuiește
 snapshot-ul concurent păstrat la HEAD-ul actual; nu rebazează înregistrările
-vechi și nu modifică testele ori implementarea Eventuate.
+vechi; singura ajustare a fixture-ului pregătește payload-ul înaintea execuției. Implementarea Eventuate rămâne neschimbată.
 
 ```yaml
 testChanges:
@@ -4446,6 +4465,81 @@ testChanges:
       - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/TerminalFailureFixtures.java
       - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/EventuateTerminalEvidenceTest.java
       - atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control tehnic — J2-KIT-LIVE-RECONCILIATION-106</strong></summary>
+
+```yaml
+testChanges:
+  - id: J2-KIT-LIVE-RECONCILIATION-106
+    status: VERIFIED
+    base: a1a57bb41d1023aac409c96c0ceaf529ea9d528a
+    expires: 2026-11-30
+    reason: Revizuiește la baza acestei acceptanțe diferența Kit importată concurent, inclusiv toleranța numerică denumită. Testul și implementarea live sunt păstrate byte cu byte; controlul CONTRACTS-J2-96 rămâne la baza sa originală, fără relaxarea regulilor sau a assertions.
+    proof: mvn -B -pl atf-tests -am "-Dtest=AuditedAssertionsTest,TestChangeGovernanceTest,DocumentationReadmeStructureGovernanceTest,DocumentationLinkGovernanceTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=a1a57bb41d1023aac409c96c0ceaf529ea9d528a" test
+    paths:
+      - atf-test-kit/src/test/java/atf/testkit/assertions/AuditedAssertionsTest.java
+```
+
+</details>
+
+
+<details>
+<summary><strong>Control VERIFIED — adopția Reporting J8</strong></summary>
+
+```yaml
+testChanges:
+  - id: REPORT-J8-J2-ADOPTION
+    status: VERIFIED
+    base: bd30bcbc2f514e2fbd728145c4ee0f4a6ffb6872
+    expires: 2026-11-30
+    reason: Adoptă perechea J8 verificată la baza curentă J2, cu Core C1 și șapte module. Controalele istorice rămân la bazele lor; catalogul finit este revizuit în controlul curent J2-LIVE-SYNC, fără wildcard, skip sau surse Reporting în consumer.
+    proof: mvn -B -pl atf-tests,atf-test-eventuate -am "-Dtest=WholeAtfGovernanceSuiteTest,EventuateComponentSuite,AuditedAssertionsTest" "-Datf.governance.testChanges.baseRef=bd30bcbc2f514e2fbd728145c4ee0f4a6ffb6872" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - pom.xml
+```
+
+</details>
+
+
+<details>
+<summary><strong>Control verificat — Reporting J8 după reconcilierea live</strong></summary>
+
+```yaml
+testChanges:
+  - id: REPORT-J8-LIVE-ATF-J2
+    status: VERIFIED
+    base: 288319e9ad9d82f11a38f8e8410d6426c29f09a0
+    expires: 2026-11-30
+    reason: Revalidează schimbările J8 după commit-ul concurent al consumerului, păstrând controalele istorice la bazele originale. Catalogul finit include Observation și ValidationDisclosure, fără wildcard; fixture-ul J2 pregătește payload-ul înaintea deadline-ului neschimbat de 250 ms. Assertions, preview 240, modulele și pragurile de guvernanță sunt păstrate.
+    proof: mvn -B -pl atf-tests -am "-Dtest=TestChangeGovernanceTest,AtfTestLayerArchitectureTest,Documentation*Test" "-Datf.governance.testChanges.baseRef=288319e9ad9d82f11a38f8e8410d6426c29f09a0" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java
+      - pom.xml
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/TerminalFailureFixtures.java
+```
+
+</details>
+
+
+<details>
+<summary><strong>Control verificat — Mock la baza live J2</strong></summary>
+
+```yaml
+testChanges:
+  - id: J2-MOCK-LIVE-RECONCILIATION-107
+    status: VERIFIED
+    base: 288319e9ad9d82f11a38f8e8410d6426c29f09a0
+    expires: 2026-11-30
+    reason: Reconcilează cele trei probe Mock importate concurent după commit-ul live, fără schimbarea codului sau expected-urilor. Cele 62 de cazuri constructor/loader/transport și acceptanța fizică de 14 rapoarte disting refuzul fixture-ului, dispatch și mismatch-ul controlat. Controlul istoric MOCK-JSON-FIXTURE-102 rămâne la baza sa originală; inspectorul generic și Core C1 păstrează limitele consemnate.
+    proof: mvn -B -pl atf-mock,atf-test-eventuate,atf-tests -am "-Dtest=MockJsonFixtureComponentTest,MockJsonCatalogComponentTest,WholeAtfGovernanceSuiteTest" "-Datf.governance.testChanges.baseRef=288319e9ad9d82f11a38f8e8410d6426c29f09a0" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-mock/src/test/java/atf/mock/json/MockJsonFixtureComponentTest.java
+      - atf-mock/src/test/java/atf/mock/json/MockJsonCatalogComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/MockFixtureReportAcceptance.java
 ```
 
 </details>

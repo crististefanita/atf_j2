@@ -12,14 +12,15 @@ consumată. Reporting se întreține în J0; Shop/AutoEx, UI și Debug UI au own
 |---:|---|---:|---|
 | 1 | [Eventuate](ATF_Eventuate_Feedback.md) | 90 | aplicație și observer LIVE, deadline propagat și efecte independente |
 | 2 | [Adoptare Reporting](ATF_Reporting_Consumer_Feedback.md) | 89 | profil artifact și timing demonstrate pe binarul consumat |
-| 3 | [Mock](ATF_Mock_Feedback.md) | 85 | expected și response malformed sunt acceptate ca fixture-uri valide |
+| 3 | [Mock](ATF_Mock_Feedback.md) | 86 | două valori decimale distincte pot selecta aceeași rută după conversia Double |
 | 4 | [Setup](ATF_Setup_Feedback.md) | 84 | cauza primară la eșecul receipt-ului, ownership fizic și reluare după restart |
+| 5 | [Documentație](ATF_Documentation_Feedback.md) | 77 | prevenirea contradicțiilor dintre deployment și afirmațiile curente din pagini |
 
 Scorurile sunt priorități de intervenție, nu note ale modulelor. Ordinea
 executării ține cont de dependențe: un engine și un witness funcționale
 preced certificarea saga sau idempotency business.
 
-Parsarea JSON, schemele, egalitatea scalară, media type și identitatea integrală au contracte și regresii
+Parsarea JSON, fixture-urile complete, schemele, egalitatea scalară, media type și identitatea integrală au contracte și regresii
 permanente; criteriile rezolvate sunt retrase din registrul activ.
 
 <details>
@@ -31,13 +32,15 @@ permanente; criteriile rezolvate sunt retrase din registrul activ.
 | REPORT-J2-ADOPTION-62 | 89 | adoptare JAR cu profil artifact și acceptanță J2 distinctă |
 | EVT-IDEMPOTENCY-02 | 88 | duplicat de transport, business și POST separate, cu efecte independente |
 | REPORT-J2-TIMING-83 | 88 | latență controlată și intervale coerente captură/publicare |
-| MOCK-STRICT-FIXTURE-85 | 85 | JSON complet pentru expected și response |
+| MOCK-NUMERIC-MATCH-104 | 86 | matching numeric fără pierderea diferenței dintre valori distincte |
 | EVT-CONVERGENCE-CONTRACT-86 | 84 | citirea LIVE bounded prin timpul rămas; identitatea și overflow sunt deja protejate |
 | SETUP-PRIMARY-FAILURE-87 | 84 | eșecul scrierii receipt-ului păstrează cauza inițială |
 | SETUP-REMOTE-TRANSPORT-84 | 80 | ownership, transport durabil și reluare după restart |
 | EVT-CONSOLE-PATH-79 | 79 | console.enabled și opt-in respectate de adaptorul J2 |
 | SETUP-PROBE-COVERAGE-85 | 78 | contracte pure pentru utilitarul Java în afara Maven |
+| DOC-DEPLOYMENT-FACTS-105 | 77 | mutanți pentru catalog/versiune curentă și istoric legitim, fără relaxarea guvernanței |
 | SETUP-STAGE-RUNNER-86 | 76 | un protocol de etape, cauză primară și NOT_RUN |
+| DOC-CONTRACT-OWNER-107 | 74 | un singur contract Validation, cu limite, probe și ancore păstrate |
 
 </details>
 
@@ -53,13 +56,14 @@ permanente; criteriile rezolvate sunt retrase din registrul activ.
 
 | Domeniu | Registru canonic |
 |---|---|
+| Core și validarea documentului JSON | [J0 Core](../../../atf_j0/docs/feedback/ATF_Core_Feedback.md) |
 | Reporting și mesagerie în renderer | [J0 Reporting](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md) |
 | regresii generice Reporting | [J0 Reporting Tests](../../../atf_j0/docs/feedback/ATF_Reporting_Tests_Feedback.md) |
 | Shop/AutoEx | [J1 business](../../../atf_j1/docs/ATF_Testing_Guide.md#acceptanța-business-individual-și-prin-suită) |
 | Debug UI | [J1 Debug](../../../atf_j1/atf-debug-ui/README.md#identitatea-path-ului-uri) |
 
-Două fișiere scurte de compatibilitate, Reporting și AI, rămân ținte ale
-guvernanței existente. Ele indică ownerul extern și nu conțin ToDo-uri J2.
+Fișierele scurte Validation, Reporting și AI păstrează orientarea către
+ownerii contractelor și țintele existente; nu conțin ToDo-uri J2 active.
 La reconcilierea țintelor se pot retrage explicit, fără skip după absență.
 
 ## Curățare și închidere

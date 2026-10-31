@@ -3,6 +3,9 @@
   "baseCommit": "d93c17ad2c69f6cfe920281bd93e9fadbb29de32",
   "snapshot": "J2 foundation reconciled from live J1; per-file imported source/config/test bytes",
   "files": {
+    "atf-mock/src/test/java/atf/mock/json/MockJsonCatalogComponentTest.java": "aaf5b15322f38f33bb2319ab2d4a3ebe228f39c5e201297527e1e5cf043f3856",
+    "atf-mock/src/test/java/atf/mock/json/MockJsonFixtureComponentTest.java": "b7363fe9e751d7e95e985e7211f18c5eabe98e356036c211923d00a815cf0f4d",
+    "atf-mock/src/main/java/atf/mock/MockJsonDocument.java": "ba61c4ed3b1a9174c0ad25136a8a2cdff298854f239b1d33295606803d6deb1a",
     "atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java": "69f38d0a9afac5e2a49e385c08ec069ee98be8f4318dd3bd2b96cbb86e2cd93e",
     "atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java": "df5f4c34edea75beeb3503e3435211579a38e7f93ece764a2f2b47fd2182da32",
     "atf-console/pom.xml": "59174c8b1310018b146a89ddaecb89c208e55bd1f1c3d99df083b20dd3fda5bb",
@@ -31,10 +34,10 @@
     "atf-console/src/test/java/atf/console/junit/NestedConsoleContextIntegrationTest.java": "beb17c31fd8a5c57acbab81a5f23de1d2b495d008518a5c5274bf768214a52b3",
     "atf-mock/pom.xml": "cce4eaa0b5c8522b2b6331983b67c1da57e45edfea4f2fce22dc529e41ccbb42",
     "atf-mock/src/main/java/atf/mock/AtfMockConfiguration.java": "9bb01a7254e2de1f244f9798d14cce8270f5941ebcc1b849dc3dd51a680a460e",
-    "atf-mock/src/main/java/atf/mock/AtfMockConfigurationLoader.java": "f94b333bad664a1cd8c5178ce4e925919c2f2e574a58b0d91f340daadb7a7128",
+    "atf-mock/src/main/java/atf/mock/AtfMockConfigurationLoader.java": "1fd15e05f5318efa7103ff6b8e67b5868b19579e36fa638a98bfdeff91247d29",
     "atf-mock/src/main/java/atf/mock/AtfMockTransport.java": "42f31758029a784b3101ded19843e42056468e2878b53e8753b050faa8eb9d76",
     "atf-mock/src/main/java/atf/mock/MockRequestBodyMode.java": "8a9bced1dc4c6ec4546df7739bd2383fab1722b9f28663b7c9221c4e9b91365c",
-    "atf-mock/src/main/java/atf/mock/MockRoute.java": "c1161153ba3d2c8f04d848f93d9ed64cd62ca83bbfd56212155cbbfbaac2d7ab",
+    "atf-mock/src/main/java/atf/mock/MockRoute.java": "068785d30278979089fa5b03e6e910c42118fdbc32fe48b65ac22bc77c1d33a5",
     "atf-mock/src/main/java/atf/mock/MockRoutePaths.java": "5e92da6590edc3cd876f30dfecd7a7252114f52d74e1e0ac1532a55d4ca76bd5",
     "atf-mock/src/test/java/atf/mock/AtfMockTransportTest.java": "2045223fe14681e75dfb2a1e8a0e935f905c1ef4ef081d866e809c9573852504",
     "atf-mock/src/test/java/atf/mock/MockRequestBodyModeTest.java": "9182554a573854141350261f45f4d9045f645b46c15b6d5b0d70121f9e78ea8e",
@@ -167,7 +170,7 @@
     "atf-validation/src/main/java/atf/validation/contract/schema/JsonValueEquality.java": "d58ae5778351636218b758628adca8e6e2966a910eba7b971ffcb5ca487e123d",
     "atf-validation/src/test/java/atf/validation/JsonPresenceContractTest.java": "df590e2000d2fcef89245e60f463f338da38407d0f10685d392465cc4c88aaad",
     "atf-validation/src/test/java/atf/validation/JsonSchemaContractTest.java": "38bceff47576e693c86b0e691d5224e59293f856998b844f085e94a321c8f909",
-    "atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java": "2aeb7a0d584dff29774c1648113be61ceff40706528410d6ca6a7b49cd6af77c"
+    "atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java": "e217bd64d5ff3735125f62d32c261ea5938d03fba90f7191b46ffd2bd27be7a5"
   },
   "consumerBaseCommit": "66546500c7f5baef5223c45dd72652bdcbe026e0",
   "retiredUiModules": {
@@ -372,6 +375,34 @@
         "atf-validation/src/test/java/atf/validation/JsonSchemaContractTest.java": {
           "previousSha256": "11102a9a3eab6217ce80aea72613eefc8c7c368c45e27b497dd3ec6aa54d8c66",
           "sha256": "38bceff47576e693c86b0e691d5224e59293f856998b844f085e94a321c8f909"
+        }
+      }
+    },
+    {
+      "id": "J2-MOCK-JSON-2026-10-31",
+      "source": "Local J2 Mock owner; Core C1 method/MIME vocabulary retained, document parsing tightened locally",
+      "sourceBaseCommit": "bd30bcbc2f514e2fbd728145c4ee0f4a6ffb6872",
+      "scope": "Complete unambiguous expected/request/write-response JSON, explicit blank expected rejection and YAML container refusal; preserve raw read fixtures, matching priority and negative modes. Core/Reporting binaries unchanged.",
+      "files": {
+        "atf-mock/src/main/java/atf/mock/MockRoute.java": {
+          "previousSha256": "c1161153ba3d2c8f04d848f93d9ed64cd62ca83bbfd56212155cbbfbaac2d7ab",
+          "sha256": "068785d30278979089fa5b03e6e910c42118fdbc32fe48b65ac22bc77c1d33a5"
+        },
+        "atf-mock/src/main/java/atf/mock/AtfMockConfigurationLoader.java": {
+          "previousSha256": "f94b333bad664a1cd8c5178ce4e925919c2f2e574a58b0d91f340daadb7a7128",
+          "sha256": "1fd15e05f5318efa7103ff6b8e67b5868b19579e36fa638a98bfdeff91247d29"
+        },
+        "atf-mock/src/main/java/atf/mock/MockJsonDocument.java": {
+          "previousSha256": null,
+          "sha256": "ba61c4ed3b1a9174c0ad25136a8a2cdff298854f239b1d33295606803d6deb1a"
+        },
+        "atf-mock/src/test/java/atf/mock/json/MockJsonFixtureComponentTest.java": {
+          "previousSha256": null,
+          "sha256": "b7363fe9e751d7e95e985e7211f18c5eabe98e356036c211923d00a815cf0f4d"
+        },
+        "atf-mock/src/test/java/atf/mock/json/MockJsonCatalogComponentTest.java": {
+          "previousSha256": null,
+          "sha256": "aaf5b15322f38f33bb2319ab2d4a3ebe228f39c5e201297527e1e5cf043f3856"
         }
       }
     }

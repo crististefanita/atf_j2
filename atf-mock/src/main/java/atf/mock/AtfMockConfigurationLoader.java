@@ -127,7 +127,7 @@ public final class AtfMockConfigurationLoader {
         requiredHeadersNode.fields().forEachRemaining(entry ->
                 requiredHeaders.put(entry.getKey(), entry.getValue().asText()));
         String requestBodyMode = text(node, "request-body-mode", MockRequestBodyMode.JSON.value(), location);
-        String expectedRequestBody = optionalText(node, "request-body");
+        String expectedRequestBody = optionalText(node, "request-body", location);
         return new MockRoute(method, path, status, body, headers, duration, authProfile, query,
                 parsedQuery,
                 requiredHeaders, requestBodyMode, expectedRequestBody);
@@ -145,9 +145,11 @@ public final class AtfMockConfigurationLoader {
         return text;
     }
 
-    private static String optionalText(JsonNode node, String name) {
+    private static String optionalText(JsonNode node, String name, String location) {
         JsonNode value = node.path(name);
-        return value.isMissingNode() || value.isNull() ? null : value.asText();
+        if (value.isMissingNode() || value.isNull()) return null;
+        if (!value.isValueNode()) throw new IllegalStateException(location + "." + name + " must be scalar JSON text");
+        return value.asText();
     }
 
     private static int integer(JsonNode node, String name, int defaultValue, String location) {

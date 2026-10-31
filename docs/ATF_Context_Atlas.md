@@ -14,11 +14,13 @@ J2 are șapte module și exclude UI/Debug; auditul HTML rămâne extern.
 | request/response | [EventuateApiClient](../atf-test-eventuate/src/main/java/atf/eventuate/api/EventuateApiClient.java) | binding MOCK implicit: POST o tentativă, GET 503 cel mult două; seam separat pentru executori/politici/provenance explicite |
 | snapshot terminal | [EventuateExchange](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateExchange.java), [collector](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateEvidence.java) | Completed sau Terminal în ordinea și faza capturării; aceeași excepție, fără răspuns inventat și fără dublarea callback-ului |
 | script finit | [ScriptedApiTransport](../atf-test-eventuate/src/main/java/atf/eventuate/mock/ScriptedApiTransport.java) | ordonat, strict, fără răspuns verde când se epuizează ruta |
+| fixture JSON Mock | [contract](../atf-mock/README.md#document-json-complet--expected-request-și-response), [parser](../atf-mock/src/main/java/atf/mock/MockJsonDocument.java) | expected furnizat, request și response write consumă documentul complet; duplicate și coerciția YAML sunt refuzate; raw read și wildcard rămân fixture-uri explicite |
 | convergență | [OrderAwaiter](../atf-test-eventuate/src/main/java/atf/eventuate/await/OrderAwaiter.java) | clock/pause injectate; aplică OrderContract integral la fiecare observație; un răspuns corect sosit după deadline nu converge |
 | identitate business | [OrderContract](../atf-test-eventuate/src/main/java/atf/eventuate/validation/OrderContract.java) | expected independent: ID, stare și rejectionReason; decodorul refuză overflow înainte de long și păstrează limitele signed long |
 | decodare comenzi | [OrderResponseDecoder](../atf-test-eventuate/src/main/java/atf/eventuate/api/OrderResponseDecoder.java) | document complet și neambiguu; integral/canConvertToLong înainte de conversie; evidence HTTP capturat înaintea decodării |
 | mesagerie | [MessageEvidenceContract](../atf-test-eventuate/src/main/java/atf/eventuate/validation/MessageEvidenceContract.java) | livrări MOCK_EVENT_FEED și witness de efecte; ordinalul fixture-ului nu este offset Kafka |
 | validare JSON | [Validation](../atf-validation/README.md#json--prezență-document-și-capabilități) | document complet, stări typed și schema fail-closed; egalitatea textuală cere scalar prezent, iar containerele rămân JSON în ACTUAL |
+| boundary JSON Core C1 | [contract binar](ATF_Core_Consumer.md#limita-json-a-binarului-c1) | C1 acceptă trailing content; parserii stricți Mock/Validation nu certifică validarea documentului în biblioteca externă; remedierea și versiunea nouă aparțin J0 |
 | comparație scalară | [contract](../atf-validation/README.md#egalitate-scalară--fără-coerciția-containerelor), [regresie](../atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java) | aceeași regulă pentru path și fiecare proprietate din array; string gol real acceptat, containere refuzate; null textual compatibil, tipul cerut separat |
 | media type JSON | [contract](../atf-validation/README.md#content-type--clasificare-semantică-json), [regresie](../atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java) | cinci contracte canonice delegă tipul/subtipul către Core C1; parametrii nu imită JSON; contains literal și validarea body-ului sunt independente |
 | audit JUnit | [EventuateComponentExtension](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java) | Kit decide o singură dată; adaptorul transferă comparațiile fără reevaluare |
@@ -27,7 +29,7 @@ J2 are șapte module și exclude UI/Debug; auditul HTML rămâne extern.
 | selecție și artifact | [ghid Eventuate](ATF_Eventuate_Testing.md) | trei componente; matrice nominală de 14 artifacte, plus 36 de probe terminale individual/suită în toate fazele |
 | guvernanță | [ATF Tests](../atf-tests/README.md), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | inventar explicit și probe negative pentru modul lipsă, UI shadow și dependențe browser |
 
-Reporting J7 este binarul consumat; proveniența J6 demo2 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
+Reporting J8 este binarul consumat; proveniența J6 (demo2) și J7 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
 
 ## Boundary-uri de fidelitate
 
@@ -105,7 +107,7 @@ aduce înapoi aceste domenii în atlasul și backlog-ul J2.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C1 și Reporting J6 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 7 module sursă. Core C1 și Reporting J8 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.

@@ -31,15 +31,10 @@ detector fără deduplicare; replay-ul vechi este un risc static de reprodus.
 CQRS coerentă; verifică și creditul concurent și recuperarea CDC. Un defect
 upstream se raportează cu dovadă, fără relaxarea oraclelor ATF.
 
-## EVT-CONVERGENCE-CONTRACT-86 — identitate și deadline real
+## EVT-CONVERGENCE-CONTRACT-86 — deadline al citirii LIVE
 
 **Prioritate: 84/100.** Criteriul rămas este citirea bounded în integrarea LIVE.
-Identitatea integrală și overflow sunt protejate de [contractul livrat](../../atf-test-eventuate/README.md#limite-curente-ale-scaffold-ului),
-regresii negative și probe consumer individual/suită; nu sunt ToDo-uri deschise.
-
-| Probă de buget | Rezultat | Limită |
-|---|---|---|
-| 25 ms disponibili, citire de 40 ms în clock virtual | PASS refuzat, observația păstrată și elapsed 40 ms | nu demonstrează anularea unei citiri HTTP reale |
+[Contractul livrat](../../atf-test-eventuate/README.md#limite-curente-ale-scaffold-ului) și clock-ul virtual nu certifică anularea unei citiri HTTP blocate.
 
 - Propagați timpul rămas către portul de citire LIVE și timeout-ul transportului, fără reînnoirea bugetului la retry.
 - Păstrați cauza originală la expirare; fără timeout mărit sau replay de mutații.
@@ -47,6 +42,7 @@ regresii negative și probe consumer individual/suită; nu sunt ToDo-uri deschis
 
 Închidere: timpul real este bounded prin port/transport și probat individual
 și prin suită. Clock-ul virtual dovedește politica de verdict, nu SLA-ul rețelei.
+
 ## EVT-CONSOLE-PATH-79 — prioritate 79
 
 Cu reporting.console.enabled false, loaderul Console confirmă disabled,
