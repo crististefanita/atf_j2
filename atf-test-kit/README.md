@@ -412,27 +412,16 @@ Test Kit deține și probele componentă pentru primitivele sale; nu este un
 depozit pentru teste extrase din Shop/AutoEx doar pentru a elimina dubluri.
 Nu primește dependențe de `atf-reporting`, `atf-ui` sau modulele consumerilor.
 
-AutoEx avea o validare locală a directoarelor API raport, fără verificare a
-reparse-point-urilor. Criteriul generic a fost promovat în
-`ReportOutputDirectory.resolveProjectRelative(...)` și este probat aici; AutoEx
-păstrează numai alegerea default-ului și path-ului său configurat. Nu a rezultat
-o bibliotecă de harness UI: `AtfE2eActivationPolicy`, cleanup-ul și
-adnotările evidence sunt comune, iar profilele Reporting, captura browserului,
-corelarea traficului și redactarea identității au proprietari diferiți sau reguli
-dependente de consumer.
+<details>
+<summary><strong>Contracte care pot fi promovate fără politica aplicației</strong></summary>
 
-- `FailureAwareCleanupTest.partiallyAcquiredResourcesCloseInReverseAndKeepAcquisitionFailurePrimary`
-  este proba neutră pentru închiderea inversă și păstrarea cauzei primare.
-- Handle-urile lipsă, mai multe erori de close și repropagarea cauzei primare
-  fără self-suppression sunt probate în aceeași clasă neutră.
-- Copia directă Shop a fost eliminată; `ShopE2eFailureBoundaryTest` păstrează
-  publicarea failure-ului prin adaptorul propriu.
-- Inițializarea cu factory-uri și probele sale neutre sunt aici, nu în AutoEx.
-  Consumerul furnizează callback-urile browser/report; Kit-ul nu le implementează.
-- Factory-ul rămâne responsabil pentru resursele dobândite intern înainte de
-  returnarea unui handle; succesul transferă cleanup-ul normal către run.
-- `ConsumerModuleArchitectureGovernanceTest` respinge recrearea copiei AutoEx,
-  dependențele Kit către UI/Reporting și importurile consumer în probele neutre.
+- ReportOutputDirectory validează path-ul și reparse-point-urile; consumerul alege directorul și default-ul.
+- FailureAwareCleanup păstrează cauza primară, închide resursele invers și atașează erorile secundare; [probele neutre](src/test/java/atf/testkit/lifecycle/FailureAwareCleanupTest.java) includ achiziția parțială.
+- Factory-ul păstrează resursele dobândite înaintea returnării handle-ului; după succes, run-ul deține cleanup-ul normal.
+- Activarea E2E și declarațiile evidence sunt neutre; profilele rendererului, browserul și corelarea business rămân la consumer.
+- Guvernanța respinge dependențe Kit către UI/Reporting și importuri ale consumerilor în probele neutre.
+
+</details>
 
 ## Verificare rapidă
 

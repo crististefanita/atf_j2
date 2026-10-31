@@ -7,6 +7,19 @@ runde complete. Contractul stabil este în [Setup](../../atf-setup/README.md),
 iar probele și eșecurile inițiale sunt în [registrul verificărilor](../ATF_J2_Verification.md#kafka-remote--broker-și-client-extern-validate).
 Backlog-ul păstrează durabilitatea și ownership-ul gazdei, fără a redeschide brokerul demonstrat.
 
+## SETUP-PRIMARY-FAILURE-87 — prioritate 84
+
+Contraexemplul nativ refuză mai întâi listenerul așteptat greșit, fără topic
+creat. Dacă destinația receipt-ului este apoi nescriibilă, finally aruncă
+AccessDeniedException și pierde diagnosticul original Advertised listener differs.
+
+- Păstrați cauza inițială și atașați eșecul publicării ca secundar; stderr trebuie să rămână util chiar când fișierul nu poate fi creat.
+- Separați execuția probei de serializarea/salvarea rezultatului, fără transformarea eșecului inițial în succes sau retry de mutații.
+- Probați failure simplu, output indisponibil și ambele simultan; verificați și propagarea prin wrapperul PowerShell.
+
+Închidere: exit code rămâne FAIL, iar ambele cauze sunt observabile în ordinea
+corectă, inclusiv când niciun receipt nou nu poate fi scris.
+
 ## SETUP-REMOTE-TRANSPORT-84 — prioritate 80
 
 API-ul funcțional folosește TCP fără TLS/autentificare. Limitarea firewall la
@@ -22,3 +35,30 @@ rețetă completă verificată după restart.
 Închidere: ruta autorizată este reproductibilă după restart; o țintă greșită
 ori lipsa autentificării cerute produce FAIL înainte de operații asupra resurselor.
 [Atlasul Setup](../ATF_Setup_Atlas.md#stare-curentă--engine-remote-validat) delimitează dovada actuală.
+
+## SETUP-PROBE-COVERAGE-85 — prioritate 78
+
+KafkaExternalProbe.java este un utilitar în afara source-set-urilor Maven;
+compilarea și verificarea lui sunt în proba nativă explicită. Contractele
+offline Setup parsează PowerShell, iar componentele verifică în principal
+receipts/profiluri; nu reprezintă toate ramurile clientului Java.
+
+- Delimitați metadata, confirmarea livrării și serializarea receipt-ului prin contracte pure, probate fără broker; nu mutați tool-ul într-un modul nou.
+- Acoperiți host/port greșite, lipsa ack-ului, identitate/poziție diferită și eroarea inițială plus eșecul scrierii dovezii.
+- Declarați inventarul și comanda offline a utilitarului; un gate Maven verde nu trebuie prezentat ca verificare automată a acestui source-set separat.
+
+Închidere: probele pure și compilarea pe dependențele pin-uite refuză
+contraexemplele, iar acceptanța nativă păstrează verdictul distinct.
+
+## SETUP-STAGE-RUNNER-86 — prioritate 76
+
+Cele trei entrypoint-uri Setup repetă bucla de etape, logurile și salvarea
+receipt-ului, cu variante diferite pentru etapele NOT_RUN. Acest control-flow
+poate deriva chiar dacă provisioning-ul Kafka este deja comun.
+
+- Extrageți un runner PowerShell pentru planuri explicite de etape, fără alegere automată de engine ori instalări ascunse.
+- Păstrați în entrypoint configurația și selecția etapelor; păstrați în ownerii actuali instalarea, Kafka și clientul Java.
+- Probați prima etapă eșuată, etapele următoare NOT_RUN și păstrarea cauzei când salvarea receipt-ului eșuează.
+
+Închidere: local, remote Podman și remote Kafka folosesc același protocol de
+orchestrare, cu regresii offline și aceeași acceptanță reală, fără timeout mărit.

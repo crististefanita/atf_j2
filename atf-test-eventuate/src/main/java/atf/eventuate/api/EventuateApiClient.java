@@ -36,15 +36,7 @@ public final class EventuateApiClient {
     public OrderObservation observe(long orderId) {
         var result = getOrder(orderId);
         if (result.response().status() != 200) throw new IllegalStateException("Order observation HTTP status: " + result.response().status());
-        try {
-            var body = json.readTree(result.response().body());
-            if (!body.path("orderId").isIntegralNumber() || !body.path("orderState").isTextual())
-                throw new IllegalArgumentException("Order response requires integral orderId and textual orderState");
-            var reason = body.get("rejectionReason");
-            if (reason == null || !(reason.isNull() || reason.isTextual()))
-                throw new IllegalArgumentException("Order response requires nullable textual rejectionReason");
-            return new OrderObservation(body.path("orderId").longValue(), body.path("orderState").textValue(), reason.isNull() ? null : reason.textValue());
-        } catch (java.io.IOException failure) { throw new IllegalArgumentException("Invalid order response JSON", failure); }
+        return OrderResponseDecoder.decode(result.response().body());
     }
     private ApiExecutionResult execute(ApiExecutor executor, ApiRequest request) {
         var result = executor.execute(request);

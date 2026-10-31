@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-J2 verifică Eventuate prin componente MOCK și pregătește infrastructura Kafka.
+J2 verifică Eventuate prin componente MOCK și are acceptanță separată pentru infrastructura Kafka reală.
 Reporting este consumat ca JAR; auditul HTML se face extern, fără a cere modulul UI.
 
 | Nivel | Intrare | Limita verdictului |
@@ -11,7 +11,8 @@ Reporting este consumat ca JAR; auditul HTML se face extern, fără a cere modul
 | component | [EventuateComponentSuite](../atf-test-eventuate/src/test/java/atf/eventuate/tests/suites/EventuateComponentSuite.java) | exact trei cazuri deterministe, cu assertions colapsabile |
 | guvernanță | [WholeAtfGovernanceSuiteTest](../atf-tests/src/test/java/atf/api/tests/governance/WholeAtfGovernanceSuiteTest.java) | catalog, boundaries, selecții, documente, Git și JAR fizic |
 | infrastructură offline | [Setup contracts](../atf-setup/tests/Test-SetupContracts.ps1) | scripturi, configurație, ownership și proces; fără broker |
-| integration reală | [Setup Kafka](../atf-setup/README.md) și clientul viitor | engine, broker și efecte reale, cu provenance distinctă |
+| infrastructură reală | [Setup Kafka](../atf-setup/README.md) și proba Java Setup | engine, metadata și livrare corelată; fără certificarea efectelor Eventuate |
+| integration Eventuate | clientul/observerul framework-ului, de implementat | corelare de mesaje și efecte independente, cu provenance distinctă |
 | E2E | planul [Eventuate](ATF_Eventuate_Integration.md) | saga și efectele persistente; încă nedemonstrate |
 
 ## Traseul canonic al unei verificări

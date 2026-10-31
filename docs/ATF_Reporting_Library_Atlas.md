@@ -1,5 +1,8 @@
 # Reporting J6 — atlasul integrării J2
 
+Adopția curentă este J7; inventarul J6 de mai jos rămâne baza istorică.
+[Delta și proba J7](ATF_Reporting_J7_Verification.md) includ observațiile typed și limitele compatibilității.
+
 ## Pe scurt
 
 J2 consumă atf.api:atf-reporting:1.0.0-j6. API-ul folosit mai jos este confirmat

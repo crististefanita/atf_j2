@@ -44,13 +44,15 @@ POST-ul upstream nu expune o cheie HTTP de idempotency în controllerul analizat
 Consumerul JDBC și proiecția Mongo au strategii de deduplicare diferite;
 nu deduce o garanție universală dintr-un PASS al validatorului mock.
 
-## Resurse locale
+## Resurse și laborator
 
-Observațiile de host de mai jos sunt istorice, nu precondiții revalidate de citirea acestui ghid. Starea curentă se măsoară prin scripturile Setup; nu porniți instalări ori brokerul pentru o revizie documentară.
+[Setup](../atf-setup/README.md) deține rețeta și probele brokerului;
+[ghidul fizic–VM](../atf-setup/prerequisites/README_Remote_Host.md) explică
+engine-ul remote și eliminarea dependenței de WSL2 imbricat în guest.
 
-- Hostul observat: Windows 11 în VirtualBox, aproximativ 8 GB RAM și 1,1 GB liberi.
-- Podman 5.8.3 și WSL 2.7.14 sunt instalate; VirtualMachinePlatform cere restart manual.
-- WSL a raportat virtualizare indisponibilă; Kafka nu este declarat executat. [Setup](../atf-setup/README.md) deține rețeta.
+- Dimensionați serviciile, CDC și bazele pe gazda engine-ului; memoria liberă observată cândva în guest nu este un buget al laboratorului fizic.
+- Istoricul restartului și al virtualizării rămâne în [registrul verificărilor](ATF_J2_Verification.md); nu este o precondiție actuală repetată în fiecare ghid.
+- O revizie documentară nu pornește instalări ori servicii; măsurați starea prin probe explicite înainte de execuția LIVE.
 
 | Etapă | Instrument și dovadă cerută |
 |---|---|
@@ -59,6 +61,6 @@ Observațiile de host de mai jos sunt istorice, nu precondiții revalidate de ci
 | aplicație de referință | compose-ul upstream pin-uit, rețea și versiunile compatibile; readiness pentru CDC, SQL, Mongo și servicii |
 | observer ATF | client Kafka și citiri read-only ale efectelor, pornite înaintea comenzii; corelare prin order/message ID |
 
-- Un broker [Kafka standalone](https://kafka.apache.org/41/getting-started/docker/) verifică adaptorul de mesagerie, fără a demonstra saga.
+- Un broker [Kafka standalone](https://kafka.apache.org/41/getting-started/docker/) și proba Java Setup verifică infrastructura; nu certifică adaptorul framework-ului ori saga.
 - Păstrați compatibilitatea upstream; o imagine nouă cere probă distinctă.
 - Laboratorul complet cere resurse suplimentare sau host dedicat; restartul rămâne manual.

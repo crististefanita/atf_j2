@@ -2,9 +2,9 @@
 
 ## Pe scurt
 
-J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente sunt MOCK, iar Reporting J6 nu certifică un broker ori un client Kafka Java.
+J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente sunt MOCK, iar Reporting J7 nu certifică un broker ori un client Kafka Java.
 
-J2 integrează JAR/POM J6 și propriul adaptor Eventuate. Implementarea,
+J2 integrează JAR/POM J7 și propriul adaptor Eventuate. Implementarea,
 documentația bibliotecii și regresiile generice au owner J0; J1 deține
 scenariile web și platforma comună, reconciliate selectiv.
 
@@ -79,3 +79,6 @@ impactul local și revalidarea cerută; backlog-ul generic este numai în J0.
 <a id="j1-reporting-tests-02--retragere-cu-dovadă-păstrată"></a>
 
 [Gate-ul la producător](#gate-ul-extern-reporting) păstrează regresiile, fără harness local.
+
+Adopția curentă este J7. [Verificarea livrării](ATF_Reporting_J7_Verification.md)
+separă proba acestui increment de acceptanța istorică J6.

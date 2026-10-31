@@ -20,7 +20,8 @@ public final class EventuateFixtures {
     }
     public static String order(String state) {
         String description = DESCRIPTION + (probe().equals("late-mismatch") ? "DIFFERENT" : "");
-        return "{\"orderId\":42,\"orderState\":\"" + state + "\",\"rejectionReason\":null,\"auditDescription\":\"" + description + "\"}";
+        long identity = probe().equals("wrong-identity") ? 99 : 42;
+        return "{\"orderId\":" + identity + ",\"orderState\":\"" + state + "\",\"rejectionReason\":null,\"auditDescription\":\"" + description + "\"}";
     }
     public static List<MessageDelivery> deliveries() {
         return List.of(new MessageDelivery("evt-42", 42, "OrderCreated", 1), new MessageDelivery("evt-42", 42, "OrderCreated", 2));
@@ -30,7 +31,7 @@ public final class EventuateFixtures {
     }
     private static String probe() {
         String value = System.getProperty("atf.eventuate.probe", "none");
-        if (!List.of("none", "late-mismatch", "duplicate-effect").contains(value)) throw new IllegalArgumentException("Unknown controlled probe: " + value);
+        if (!List.of("none", "late-mismatch", "duplicate-effect", "wrong-identity").contains(value)) throw new IllegalArgumentException("Unknown controlled probe: " + value);
         return value;
     }
 }

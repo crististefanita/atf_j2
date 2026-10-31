@@ -31,12 +31,13 @@ public final class EventuateReportAcceptance {
                 launch(output, renderer, "combined-suite", EventuateComponentSuite.class, "none", 3, 0, receipts);
                 launch(output, renderer, "controlled-late-mismatch", EventuateApiContractComponentTest.class, "late-mismatch", 1, 1, receipts);
                 launch(output, renderer, "controlled-duplicate-effect", EventuateMessageEvidenceComponentTest.class, "duplicate-effect", 1, 1, receipts);
+                launch(output, renderer, "controlled-wrong-identity", EventuateApiContractComponentTest.class, "wrong-identity", 1, 1, receipts);
             }
         } finally {
             previous.forEach((key, value) -> { if (value == null) System.clearProperty(key); else System.setProperty(key, value); });
         }
         new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(output.resolve("acceptance.json").toFile(), receipts);
-        System.out.println("EVENTUATE_ACCEPTANCE reports=" + receipts.size() + "; invocations=16; controlledFailures=4");
+        System.out.println("EVENTUATE_ACCEPTANCE reports=" + receipts.size() + "; invocations=18; controlledFailures=6");
     }
 
     private static void launch(Path output, String renderer, String name, Class<?> selected, String probe,
@@ -63,12 +64,12 @@ public final class EventuateReportAcceptance {
         Path report = reports.getFirst();
         var inspection = ReportArtifactInspector.inspect(report);
         String html = Files.readString(report);
-        int rows = expectedFailures > 0 ? 6 : expectedTests == 3 ? 33
-                : selected == EventuateApiContractComponentTest.class ? 9 : 12;
-        List<String> comparisons = selected == EventuateApiContractComponentTest.class
+        int rows = probe.equals("wrong-identity") ? 4 : expectedFailures > 0 ? 6 : expectedTests == 3 ? 37
+                : selected == EventuateApiContractComponentTest.class ? 9 : selected == EventuateConvergenceComponentTest.class ? 16 : 12;
+        List<String> comparisons = probe.equals("wrong-identity") ? List.of("Order identity") : selected == EventuateApiContractComponentTest.class
                 ? List.of("Order identity", "Order state", "Full synthetic audit value before display preview")
                 : selected == EventuateConvergenceComponentTest.class
-                ? List.of("Creation dispatches", "HTTP attempts in first read", "No read at the expired deadline")
+                ? List.of("Creation dispatches", "HTTP attempts in first read", "No read at the expired deadline", "Foreign approved order cannot converge", "Observed foreign order identity")
                 : selected == EventuateMessageEvidenceComponentTest.class
                 ? List.of("Same message and order identity", "Independent reservation count")
                 : List.of("Order identity", "Creation dispatches", "Independent reservation count");

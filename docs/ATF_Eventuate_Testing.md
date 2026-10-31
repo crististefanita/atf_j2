@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-J2 este WIP pentru Kafka/mesagerie cu Setup Podman. Cele trei teste de componentă existente folosesc numai fixture-uri MOCK; acest ghid nu declară un client Kafka Java sau o acceptanță reală implementate.
+Cele trei teste Eventuate folosesc fixture-uri MOCK. Clientul/observerul framework-ului și saga reală sunt WIP; proba Java Setup pe Kafka real are [acceptanță de infrastructură separată](../atf-setup/README.md#kafka-remote--provisioning-și-client-extern).
 
 Componenta este aleasă explicit prin `@EventuateComponentTest`, compusă cu
 adnotarea Kit și extensia de audit. Cele trei cazuri normale au fiecare un
@@ -11,7 +11,7 @@ test executabil; controalele negative rămân în aceleași oracole.
 | Caz | Ce verifică |
 |---|---|
 | EventuateApiContractComponentTest | identitate, stare, rejectionReason și probă sintetică 240 și proveniență HTTP mock |
-| EventuateConvergenceComponentTest | retry 503 pe GET, trei observații, o singură creare și buget nereînnoit |
+| EventuateConvergenceComponentTest | retry 503 pe GET, trei observații nominale, o singură creare; ID străin refuzat în bugetul original |
 | EventuateMessageEvidenceComponentTest | două livrări simulate, un singur efect și refuzul dovezilor incomplete sau stale |
 
 ## Lansare individuală și suită
@@ -33,7 +33,7 @@ Bootstrap-ul Maven instalează JAR-ul Reporting cu POM-ul real prin root
 | `atf.eventuate.report.renderer` | `EXTENT`; alternativă explicită `FALLBACK` |
 | `atf.eventuate.report.directory` | `target/eventuate-reports`, față de working directory capturat |
 | `atf.test.run.scope` | `class`; suita declară `suite` |
-| `atf.eventuate.probe` | `none`; numai `late-mismatch` și `duplicate-effect` sunt probe controlate |
+| `atf.eventuate.probe` | `none`; `late-mismatch`, `duplicate-effect` și `wrong-identity` sunt probe controlate |
 
 Extensia folosește `@AtfReportPath`: calea absolută apare numai după close
 reușit. Configurația display este capturată la owner, iar comparația precede
@@ -45,10 +45,10 @@ preview-ul de 240 de caractere.
 <summary><strong>Matrice, comandă și oracol publicat</strong></summary>
 
 `EventuateReportAcceptance` este un CLI test-scoped, nu un al patrulea test
-de componentă. Primește un director absent și verifică 16 invocări JUnit,
-patru failure-uri intenționate și 12 rapoarte proaspete.
+de componentă. Primește un director absent și verifică 18 invocări JUnit,
+șase failure-uri intenționate și 14 rapoarte proaspete.
 
-Fiecare renderer produce trei rapoarte individuale, o suită comună și două
+Fiecare renderer produce trei rapoarte individuale, o suită comună și trei
 probe FAIL. Orice container failure, test lipsă, SKIP, artifact lipsă sau
 eroare în afara assertion-ului oprește acceptanța.
 
@@ -84,3 +84,28 @@ inspectorul universal verde. Ownerul și închiderea sunt în
 Integration verifică adaptoare împreună cu infrastructură reală; E2E verifică
 aplicația și efectele sale. Kafka, SQL, Mongo și browserul business nu sunt
 executate de cele trei componente mock.
+
+## Acceptanța semantică Validation
+
+[ValidationReportAcceptance](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/ValidationReportAcceptance.java)
+exercită portul neutru public pe JAR-ul Reporting existent. Nouă fixture-uri
+produc câte un Extent și un fallback: nominal, JSON invalid, missing/null,
+null explicit, additionalProperties, items false, schemă invalidă, warning și
+comparație integrală cu preview 240.
+
+Oracolul cere un singur tabel agregat, patru coloane, toate comparațiile și
+severitatea corectă; eliminarea coloanei ACTUAL sau coruperea verdictului
+oprește acceptanța. Fixture-urile nu expediază cereri și sunt etichetate synthetic.
+Dependency-ul Validation este test-scoped, fără cod Reporting copiat în J2.
+
+După build, folosește același classpath și alt director absent:
+
+```powershell
+$validationOutput = Join-Path ([IO.Path]::GetTempPath()) ("j2-validation-" + [guid]::NewGuid().ToString("N"))
+java -Xmx384m -cp $eventuateCp atf.eventuate.tests.support.acceptance.ValidationReportAcceptance $validationOutput
+```
+
+[Regresiile unitare Eventuate](../atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/EventuateOrderContractTest.java)
+acoperă separat limitele signed long, overflow, documente ambigue, identitatea
+schimbată, rejectionReason și răspunsul corect sosit după deadline. Componenta
+păstrează assertions colapsabile; unitarele nu moștenesc lifecycle-ul raportului.

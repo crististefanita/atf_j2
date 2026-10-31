@@ -22,9 +22,10 @@ Nu este declarată remedierea J6 în acest increment documentar.
 
 ## REPORT-J2-TIMING-83 — prioritate 88
 
-Acceptanța paralelă fără UI a consemnat SETUP 21 ms cu assertions 94 ms și
-TEST BODY 68 ms cu request 514 ms. Verdicturile și expandările verificate nu
-închid coerența temporală; publicarea dovezii și execuția capturată cer delimitare.
+Intervalul publicat al copilului și execuția capturată a fazei pot descrie
+momente diferite și pot apărea incompatibile. [Dovada consemnată](../ATF_J2_Verification.md#revizie-semantică-a-codului-și-documentației-j2)
+nu este înlocuită de nominale verzi; închiderea cere latență controlată și
+delimitarea execuției de publicarea dovezii.
 
 - [Ownerul J0](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-recorded-timing-83--execuție-capturată-și-cost-de-publicare) păstrează artifactul, analiza și regresia neutră necesară.
 - J2 verifică adaptorul ComponentReportRun și adoptă contractul demonstrat; nu atribuie automat întreaga diferență rendererului.

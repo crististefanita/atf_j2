@@ -1,7 +1,7 @@
 # ATF J2 — Eventuate, Kafka și framework de mesagerie · WIP
 
 J2 compune teste Eventuate cu transport MOCK și infrastructură Kafka configurată
-prin scripturi. Reporting este biblioteca J6 distribuită ca JAR/POM; sursa și
+prin scripturi. Reporting este biblioteca J7 distribuită ca JAR/POM; sursa și
 regresiile generice au owner în J0.
 
 ## ATF Java — prezentare executivă
@@ -128,7 +128,9 @@ o sesiune elevată pregătită în prealabil permite rularea silent.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C1 și Reporting J6 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 7 module sursă. Core C1 și Reporting J7 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C1](docs/ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
+
+[Acceptanța Reporting J7](docs/ATF_Reporting_J7_Verification.md) păstrează catalogul existent și istoricul J6.

@@ -106,9 +106,10 @@ public final class ResponseContract {
         if (evaluated) throw new IllegalStateException("ResponseContract can be evaluated only once");
         if (rules.isEmpty()) throw new IllegalStateException("ResponseContract must contain at least one rule");
         evaluated = true;
+        var context = new ContractEvaluation(response, table);
         for (var rule : rules) {
             try {
-                rule.rule().evaluate(response, table);
+                rule.rule().evaluate(context);
             } catch (RuntimeException error) {
                 table.addFailure(rule.title(), "rule completed", error.getMessage(), error);
             }
@@ -132,5 +133,5 @@ public final class ResponseContract {
         if (value == null || value.isBlank()) throw new IllegalArgumentException(field + " must not be blank");
     }
 
-    private record NamedRule(String title, ResponseValidationRule rule) { }
+    private record NamedRule(String title, ContextualRule rule) { }
 }

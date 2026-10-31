@@ -9,7 +9,7 @@ primește și verifică livrarea potrivită propriului deployment.
 | Workspace | Rol | Suprafață existentă |
 |---|---|---|
 | `atf_j0` | sursă Core/Reporting, teste native și `atf-reporting-tests`; referință pentru contractele comune | 12 module sursă; Core și guvernanța comune reconciliate |
-| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 9 module journeys; J6 în lib și acceptanță proprie |
+| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 9 module journeys; J7 în lib și acceptanță proprie |
 | `atf_j2` | WIP: framework și teste Kafka/mesagerie, fără module browser ori Shop/AutoEx | 7 module sursă; Core și Reporting JAR; componente Eventuate MOCK; Kafka remote și clientul Java de infrastructură validate, clientul/observerul framework-ului rămâne WIP |
 | `demo2` | origine istorică a livrării J6 existente | nu mai este destinație activă de mentenanță sau sync |
 
@@ -128,3 +128,5 @@ Acest consumer are 7 module sursă. Core C1 și Reporting J6 sunt biblioteci ext
 
 [Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
+
+[Livrarea observations J7](ATF_Reporting_J7_Verification.md) păstrează acceptanțele și istoricul versiunilor separat.

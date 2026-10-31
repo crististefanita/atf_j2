@@ -1,5 +1,54 @@
 # J2 — perimetru verificat
 
+## Contracte JSON și identitate Eventuate — implementare verificată
+
+Incrementul implementează parsarea completă, prezența typed și subsetul schema
+fail-closed în Validation. Eventuate compară OrderContract integral și refuză
+ID-ul din afara signed long înainte de conversie; citirea bounded LIVE rămâne
+criteriu separat de verdictul convergenței.
+
+| Probă TMP | Rezultat și limită |
+|---|---|
+| guvernanță completă | 166 verificări verzi, fără controale relaxate; pragul de coeziune și hash-urile platformei sunt respectate |
+| regresii semantice noi | 88 invocări Validation și 19 Eventuate, nominale și negative; fără timeout mărit ori replay POST |
+| mutații deliberate | invalid tratat ca missing: opt eșecuri; additionalProperties ignorat: două; overflow permis: trei; state-only: două; toate sunt AssertionError, nu erori de linkage |
+| consumer Eventuate | 14 HTML-uri, 18 invocări JUnit, șase failure-uri controlate; individual și suită de trei, 37 rânduri în raportul combinat |
+| consumer Validation | 18 HTML-uri: nouă fixture-uri în Extent/fallback, cu PASS/FAIL/WARNING, patru coloane și mutanți de artifact refuzați |
+| audit TAB MCP | JSON invalid și WARNING, schema items false în fallback, suita Extent și identitatea 42 versus 99; expandare, ultima comparație și navigare exactă din Fails |
+| limita J6 existentă | nouă rezultate neconforme ale inspectorului generic în matricea extinsă: șapte fallback și două Extent assertion-only; rezultatele brute sunt păstrate |
+| limite funcționale | fără modificări Reporting/Core JAR; fără broker ori aplicație Eventuate LIVE; SLA-ul rețelei nu este demonstrat de clock-ul virtual |
+
+Contractele stabile sunt în [Validation](../atf-validation/README.md#json--prezență-document-și-capabilități),
+[Eventuate](../atf-test-eventuate/README.md) și [atlas](ATF_Context_Atlas.md).
+Manifestul platformei păstrează hash-urile anterioare și reconcilierea locală;
+aceasta nu certifică automat sursele ori acceptanța altui deployment.
+<a id="revizie-semantică-a-codului-și-documentației-j2"></a>
+
+## Revizie semantică anterioară — diagnostic înaintea implementării
+
+Revizia separă probele nominale, contraexemplele și implementarea viitoare.
+Codul executabil nu a fost reparat în acest increment; feedback-ul de mai jos
+conține criteriile rămase, fără a converti un gate structural verde în certificare semantică.
+
+| Probă în staging TMP | Rezultat și limită |
+|---|---|
+| reactor și guvernanță | 206 invocări verzi, dintre care 166 de guvernanță și 40 selectate pentru Kit, Mock, Validation, Console și Eventuate; fără teste-gate relaxate |
+| documente finale | 25 teste documentare verzi și 17 fișiere revizuite fără încălcări de stil, structură sau linkuri |
+| matrice de artifacte | 12 HTML-uri noi, 16 invocări, patru AssertionError controlate; oracolul consumerului și contraexemplele sale trec |
+| inspector generic J6 | opt neconformități păstrate: șase fallback și două Extent assertion-only; profilul generic rămâne deschis |
+| timing J6 consemnat anterior | SETUP 21 ms cu assertions 94 ms și BODY 68 ms cu request 514 ms; nu este probă nouă de latență controlată în această revizie |
+| randare | această revizie nu repetă auditul interactiv în browser; acceptanța structurală HTML nu este declarată probă vizuală nouă |
+| Validation | zece contraexemple publice cu PASS semantic greșit: parsare/presence, schema și contractul canonic MIME |
+| Eventuate | identitate greșită acceptată de awaiter, alias numeric prin overflow, snapshot terminal pierdut și calea Console emisă când enabled este false |
+| Mock | expected și response cu trailing content acceptate ca fixture-uri valide |
+| Setup | eșecul scrierii receipt-ului maschează cauza primară; controlul pentru listener greșit nu creează topic |
+| relevanță Kafka | 16 intrări executabile neschimbate față de acceptanța nativă, aceeași resursă activă și TCP guest accesibil; cele două roundtrip-uri nu au fost reluate în această revizie |
+
+Ownerii și criteriile reproductibile sunt în [Validation](feedback/ATF_Validation_Feedback.md),
+[Eventuate](feedback/ATF_Eventuate_Feedback.md), [Mock](feedback/ATF_Mock_Feedback.md)
+și [Setup](feedback/ATF_Setup_Feedback.md). Profilele/timing-ul J6 păstrează
+[feedback de adoptare](feedback/ATF_Reporting_Consumer_Feedback.md), cu implementarea la J0.
+
 ## Perimetru curent — Core C1 binar
 
 J2 declară șapte module sursă: Test Kit, Mock, Validation, Console, Setup,
@@ -115,7 +164,7 @@ actuale se citesc la owner și nu sunt redeschise automat prin acest tabel.
 
 | Probă | Observație | Criteriu |
 |---|---|---|
-| OrderAwaiter direct | APPROVED cu orderId 99 acceptat de predicatul state-only | [identitate și convergență](feedback/ATF_Eventuate_Feedback.md#evt-convergence-contract-86--identitate-și-deadline-real) |
+| OrderAwaiter direct, istoric | APPROVED cu orderId 99 acceptat de predicatul state-only; corectat de incrementul de mai sus | [contractul curent](../atf-test-eventuate/README.md) |
 | buget virtual 25 ms, citire 40 ms | PASS refuzat, revenire la 40 ms; fără dovada anulării citirii | același criteriu; SLA LIVE separat |
 | transport scriptat epuizat | Core păstrează snapshot terminal; collectorul Eventuate are zero exchanges | [dovadă terminală](feedback/ATF_Eventuate_Feedback.md#evt-terminal-evidence-87--snapshot-ul-core-înaintea-excepției) |
 | redacție Core | JSON valid mascat; quoted text și fallback JSON invalid păstrează canary-ul sintetic | [Core](../../atf_j0/atf-core/README.md#media-type-headere-și-vocabular-de-protocol) |

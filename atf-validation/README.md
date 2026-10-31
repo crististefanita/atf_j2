@@ -89,13 +89,15 @@ integrarea rendererului numai la ownerul adaptorului. [Utilizarea ca JAR](#utili
 |---|---|---|
 | `ResponseContract` | fațadă fluentă pentru compunerea regulilor și lifecycle one-shot | transport sau UI |
 | `ResponseContractRuleSet` | construiește regulile pentru status, headers, JSON path, arrays și schema I/O | duplicate identity sau verdict global |
+| `ContractEvaluation` + `contract.json` | document complet, lazy și local evaluării; `JsonPathSupport` distinge invalid, missing și present | cache global ori markeri de afișare în predicat |
+| `JsonSchemaValidator` + `contract.schema` | preflight recursiv al capabilităților, apoi validarea instanței și egalitate numerică fără narrowing | rezolvare externă sau ignorarea constrângerilor necunoscute |
 | `ResponseValidationRule` | descrie o regulă individuală | lifecycle-ul request-ului |
 | `ValidationEvaluator` | evaluează regulile și calculează statusul | Extent și markup |
 | `ValidationOutcomePolicy` | exprimă politica strictă sau soft-warning fără booleani împrăștiați | transport sau UI |
 | `ValidationDecision` | păstrează verdictul, mesajul, assertions și regula soft/fail | publicarea artifactului |
 | `ValidationTable` | agregă assertions într-o singură colecție | layout-ul tabelului |
 | `ResponseContractReporter` | leagă evaluarea de `ValidationSink` | implementarea sink-ului |
-| `SchemaResourceResolver` | rezolvă schema din rădăcini declarate fără traversal | filesystem global sau raportare |
+| `SchemaResourceResolver` | limitează căile relative la rădăcinile declarate; păstrează acceptarea explicită a căilor absolute pentru compatibilitate | raportare și politica viitoare de acces |
 | `AiEvaluationCase` + `AiFieldExpectation` | expected versionat, independent de output; fiecare field poate declara o cerință typed de grounding | apelarea unui model, output-ul observat sau decizia consumerului asupra expected-ului business |
 | `AiEvaluationEvaluator` + `AiEvaluationPolicy` | comparații typed, score ponderat, threshold explicit și hard-fail critic | provider AI, renderer sau workflow review |
 | `AiInvocationEvidence` | clasifică real/mock/fallback/unknown și păstrează referințe opace request/response/output | payload, prompt, token, credential sau invocation efectivă |
@@ -103,7 +105,7 @@ integrarea rendererului numai la ownerul adaptorului. [Utilizarea ca JAR](#utili
 | `AiEvaluationSnapshot` + `AiFieldComparison` | snapshot immutable `COMPLETE` cu policy, timestamp, invocation, comparații, observații de grounding și hard-fails cu expected/observed/reason/evidence reference | run-level evidence ledger și proiecție raport |
 
 `ResponseContract` nu mai conține mecanica fiecărei reguli. `ResponseContractRuleSet`
-producește definiții compozabile (`identity`, `title`, `ResponseValidationRule`),
+producește definiții compozabile (`identity`, `title`, regulă contextuală),
 inclusiv adapterul pentru schema I/O. Fațada păstrează compatibilitatea DSL-ului,
 deduplicarea și regula one-shot; `ValidationEvaluator` rămâne singurul owner al
 deciziei aggregate și al politicii strict/warning.
@@ -239,11 +241,73 @@ Aceste contracte sunt utilizabile independent de un evaluator general nou.
 4. O validare publică un singur tabel agregat; nu se creează câte un container
    pentru fiecare assertion.
 5. Reporterul nu decide business verdictul; folosește rezultatul evaluatorului.
-6. Orice resursă de schema se rezolvă numai din rădăcinile declarate și nu poate
-   traversa în afara lor.
+6. Căile relative de schema nu pot ieși din rădăcinile declarate; o cale absolută
+   existentă este acceptată de contractul de compatibilitate și nu oferă aceeași izolare.
 7. `atf-validation` nu deschide sau închide sesiunea de raportare; lifecycle-ul
    aparține testului/execution, iar rendererul aparține reporting.
 
+## JSON — prezență, document și capabilități
+
+Contractul parsează lazy un singur document complet per evaluare. Nu există
+cache global de răspunsuri.
+
+Documentul invalid, calea nesuportată, proprietatea
+absentă și valoarea prezentă sunt stări distincte; JSON null este prezent.
+Trailing content, documentul gol și cheile duplicate sunt refuzate. Markerul
+`<missing>` este numai diagnostic; o valoare textuală reală cu acest conținut
+poate fi comparată, însă absența nu satisface equals.
+
+| JSON path acceptat | Semnificație |
+|---|---|
+| `$`, `$.id`, `$[0].id` | rădăcină, proprietăți simple și indecși nenegativi |
+| `id`, `items[0].id` | forma relativă compatibilă pentru proprietăți simple |
+| `/a~1b/~0x` | JSON Pointer, cu escaparea slash și tilde |
+| wildcard, recursive descent, filtre, quoted properties în brackets | nesuportate; produc rând nereușit, inclusiv pentru absent |
+
+`jsonPathRequired` și `jsonPathExists` acceptă null explicit. `jsonPathAbsent`
+cere document valid și cale validă absentă. `jsonPathType` nu deduce tipul null
+din lipsă sau eroare.
+
+Comparația integrală precede preview-ul 240 și redacția;
+politica warning schimbă severitatea, fără să transforme predicatul în PASS.
+
+### Subsetul JSON Schema
+
+Evaluatorul implementează un subset explicit al dialectului 2020-12, fără
+rezolvare externă sau acces la rețea. Dacă `$schema` este prezent, singura valoare
+acceptată este `https://json-schema.org/draft/2020-12/schema`. Capabilitățile sunt
+validate recursiv înaintea instanței, inclusiv în proprietăți absente.
+
+Un keyword
+necunoscut ori o valoare invalidă refuză contractul, fără ignorare implicită.
+
+| Grup | Capabilități acceptate |
+|---|---|
+| schemă | obiect, inclusiv obiect gol, sau boolean true/false |
+| tip și enum | cele șapte tipuri JSON Schema, uniuni fără duplicate, enum nevid cu egalitate numerică matematică |
+| obiect | required, properties, additionalProperties boolean ori subschemă |
+| array | items boolean ori subschemă, minItems, maxItems |
+| string | minLength/maxLength în code points Unicode, pattern cu sintaxă Java regex |
+| număr | minimum/maximum fără conversie la int/long sau pierdere de precizie |
+| metadata | title, description, $comment textuale; default ca date; examples array |
+
+- Schema și instanța trebuie să fie fiecare un document JSON complet. Un fișier
+gol nu este schema obiect goală; true și obiectul gol nu acceptă un body invalid.
+
+- `$ref`, combinatorii, format și celelalte keywords sunt refuzate explicit;
+acesta nu este un evaluator complet JSON Schema. Alegerea unei biblioteci mai
+largi trebuie să păstreze portul neutru și probele publice ale acestui subset.
+
+- [JsonPresenceContractTest](src/test/java/atf/validation/JsonPresenceContractTest.java)
+și [JsonSchemaContractTest](src/test/java/atf/validation/JsonSchemaContractTest.java)
+protejează nominalele și contraexemplele. Acceptanța rendererului rămâne la
+[consumerul Eventuate](../docs/ATF_Eventuate_Testing.md#acceptanța-raportului).
+
+### Limită rămasă — media type
+
+`contentTypeContains` este comparație literală. Contractele canonice încă o
+folosesc pentru cerințe JSON mai stricte; parametrul care imită application/json
+rămâne în [feedback-ul Validation](../docs/feedback/ATF_Validation_Feedback.md).
 ## Teste de contract
 
 Testele modulului protejează separat:

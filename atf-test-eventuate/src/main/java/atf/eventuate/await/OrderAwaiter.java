@@ -1,5 +1,6 @@
 package atf.eventuate.await;
 import atf.eventuate.api.OrderObservation;
+import atf.eventuate.validation.OrderContract;
 import java.time.Duration;
 import java.util.List;
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ public final class OrderAwaiter {
     public OrderAwaiter(LongSupplier ticks, Consumer<Duration> pause) {
         this.ticks = Objects.requireNonNull(ticks); this.pause = Objects.requireNonNull(pause);
     }
-    public Result await(Supplier<OrderObservation> read, String expectedState, Duration budget, Duration interval) {
+    public Result await(Supplier<OrderObservation> read, OrderContract expected, Duration budget, Duration interval) {
+        Objects.requireNonNull(read, "read");
+        Objects.requireNonNull(expected, "expected");
         if (budget.isNegative() || budget.isZero() || interval.isNegative() || interval.isZero())
             throw new IllegalArgumentException("Positive convergence budget and interval required");
         long start = ticks.getAsLong();
@@ -31,7 +34,7 @@ public final class OrderAwaiter {
             var actual = Objects.requireNonNull(read.get());
             elapsed = Math.max(0, ticks.getAsLong() - start);
             trace.add(new Observation(trace.size() + 1, Duration.ofNanos(elapsed), actual));
-            if (elapsed < budget.toNanos() && expectedState.equals(actual.state()))
+            if (elapsed < budget.toNanos() && expected.matches(actual))
                 return new Result(true, trace, Duration.ofNanos(elapsed));
             if (elapsed >= budget.toNanos()) return new Result(false, trace, Duration.ofNanos(elapsed));
             pause.accept(Duration.ofNanos(Math.min(interval.toNanos(), budget.toNanos() - elapsed)));

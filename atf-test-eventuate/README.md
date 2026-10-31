@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-Acesta este singurul modul de test J2. Framework-ul pentru cozi Kafka este în lucru; integrarea Java cu brokerul real nu este implementată, iar infrastructura Podman aparține [Setup](../atf-setup/README.md).
+Acesta este singurul modul de test J2. Clientul/observerul Kafka al framework-ului este în lucru; [Setup](../atf-setup/README.md) are deja o probă Java de infrastructură validată pe broker real, separată de integrarea Eventuate.
 
 Modulul compune platforma ATF cu trei oracole deterministe pentru Eventuate:
 contract API, convergență cu retry de citire și validarea dovezilor de mesagerie.
@@ -42,7 +42,7 @@ fallback, prin aceeași bibliotecă externă.
 | Sursă | Rol în investigație |
 |---|---|
 | [EventuateApiClient](src/main/java/atf/eventuate/api/EventuateApiClient.java) | binding concret MOCK; POST o tentativă, GET 503 maximum două tentative prin Core |
-| [OrderAwaiter](src/main/java/atf/eventuate/await/OrderAwaiter.java) | clock/pause injectate, buget unic; PENDING intermediar și refuzul citirii după deadline |
+| [OrderAwaiter](src/main/java/atf/eventuate/await/OrderAwaiter.java) | clock/pause injectate, buget unic și OrderContract integral; observațiile respinse rămân în istoric |
 | [MessageEvidenceContract](src/main/java/atf/eventuate/validation/MessageEvidenceContract.java) | identitate, livrări distincte și witness independent; nu implementează deduplicarea aplicației |
 | [ComponentReportRun](src/main/java/atf/eventuate/reporting/ComponentReportRun.java) | owner serial, configurație capturată, trei faze și publicare la close |
 | [EventuateComponentExtension](src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java) | scope class/suite, collector per invocare; calea absolută numai după publicare |
@@ -75,7 +75,10 @@ Comanda execută cele trei componente MOCK și produce un raport comun; nu porne
 
 | Criteriu rămas | Owner și probă de închidere |
 |---|---|
-| identitate și deadline | [convergență](../docs/feedback/ATF_Eventuate_Feedback.md#evt-convergence-contract-86--identitate-și-deadline-real): awaiterul state-only nu certifică identitatea; callerul trebuie să compună întregul contract |
+| identitate și deadline | [convergență](../docs/feedback/ATF_Eventuate_Feedback.md#evt-convergence-contract-86--identitate-și-deadline-real): identitatea și overflow sunt protejate; rămâne propagarea bugetului către citirea bounded LIVE |
 | execuție terminală | [snapshot înaintea excepției](../docs/feedback/ATF_Eventuate_Feedback.md#evt-terminal-evidence-87--snapshot-ul-core-înaintea-excepției): rezultatul normal absent nu trebuie să elimine evidence-ul disponibil |
+| notificare consolă | [politica căii](../docs/feedback/ATF_Eventuate_Feedback.md#evt-console-path-79--prioritate-79): adaptorul emite direct calea și ocolește console.enabled |
 
-Aceste criterii sunt deschise. Cele trei fixture-uri nominale și matricea publicată nu certifică negativele încă neacoperite sau integrarea Kafka reală.
+Identitatea integrală și decodarea fără overflow au regresii în [EventuateOrderContractTest](src/test/java/atf/eventuate/tests/unit/EventuateOrderContractTest.java) și în componenta de convergență. API-ul await primește OrderContract, nu o stare izolată. ID-ul, starea și rejectionReason trebuie să corespundă în aceeași observație; istoricul păstrează observațiile respinse.
+
+Celelalte criterii de mai sus și integrarea Kafka reală rămân deschise.

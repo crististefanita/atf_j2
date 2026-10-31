@@ -117,7 +117,7 @@ amprenta anterioară și cea nouă pentru incrementul revizuit.
 
 | Moment | Control |
 |---|---|
-| import nou sau corecție comună | comparație byte cu byte cu ownerul J1 verificat în TMP; listă explicită, fără rehash global |
+| import nou sau corecție comună | importul compară ownerul J1; implementarea locală J2 păstrează previousSha256, noul hash și scope propriu, fără a certifica implicit J0/J1; fără rehash global |
 | acceptanță J2 | `J2DeploymentGovernanceTest` cere toate amprentele efective și profilul fără module browser; un import neconsemnat produce FAIL |
 | Reporting JAR | `library-provenance.json` rămâne dovada binarului original; ledgerul surselor platformei nu o rescrie |
 

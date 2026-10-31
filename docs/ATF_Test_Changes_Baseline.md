@@ -1,8 +1,8 @@
 # ATF — registrul de control al schimbărilor de teste
 
-**Context J1:** controalele istorice copiate păstrează bazele producătorului.
-Controalele J1 folosesc baza reală de review a consumerului; eligibilitatea
-este verificată de [controlul Git](../atf-tests/README.md#guvernanța-schimbării-testelor), fără conversia implicită a bazelor.
+**Context J2:** registrul include controale istorice importate și controalele
+deployment-ului curent. Bazele și dovezile aparțin reviziei lor originale;
+eligibilitatea este verificată de [controlul Git](../atf-tests/README.md#guvernanța-schimbării-testelor), fără conversia implicită a SHA-urilor sau a istoricului J1.
 
 ## Pe scurt
 
@@ -4261,6 +4261,64 @@ testChanges:
       - atf-core/src/test/java/atf/core/testing/api/ApiScenarioSelectionTest.java
       - atf-core/src/test/java/atf/core/testing/http/RecordingApiTransportTest.java
       - atf-core/src/test/java/atf/core/ui/AtfUiActionRecordTest.java
+```
+
+</details>
+
+
+<details>
+<summary><strong>Control tehnic — VALIDATION-STRICT-93</strong></summary>
+
+```yaml
+testChanges:
+  - id: VALIDATION-STRICT-93
+    status: VERIFIED
+    base: a1a57bb41d1023aac409c96c0ceaf529ea9d528a
+    expires: 2026-11-30
+    reason: Regresii publice pentru JSON complet, absent versus null, markeri, subset de scheme verificat înaintea instanței și verdict strict sau warning. Niciun test existent, prag sau timeout nu este relaxat.
+    proof: mvn -B -pl atf-validation,atf-test-eventuate,atf-tests -am "-Dtest=JsonPresenceContractTest,JsonSchemaContractTest,EventuateOrderContractTest,EventuateComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=a1a57bb41d1023aac409c96c0ceaf529ea9d528a" test
+    paths:
+      - atf-validation/src/test/java/atf/validation/JsonPresenceContractTest.java
+      - atf-validation/src/test/java/atf/validation/JsonSchemaContractTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control tehnic — EVT-IDENTITY-94</strong></summary>
+
+```yaml
+testChanges:
+  - id: EVT-IDENTITY-94
+    status: VERIFIED
+    base: a1a57bb41d1023aac409c96c0ceaf529ea9d528a
+    expires: 2026-11-30
+    reason: Contract terminal integral, conversie long fără overflow și regresii consumer individual sau suită. Matricea păstrează oracolele existente și adaugă cazul FAIL cu identitate străină; dependența Validation este exclusiv test-scoped pentru acceptanța portului neutru pe binarul Reporting existent.
+    proof: mvn -B -pl atf-validation,atf-test-eventuate,atf-tests -am "-Dtest=JsonPresenceContractTest,JsonSchemaContractTest,EventuateOrderContractTest,EventuateComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=a1a57bb41d1023aac409c96c0ceaf529ea9d528a" test
+    paths:
+      - atf-test-eventuate/pom.xml
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/EventuateConvergenceComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/EventuateReportAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/ValidationReportAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/EventuateFixtures.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/EventuateOrderContractTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control tehnic verificat — REPORT-J7-J2-ADOPTION</strong></summary>
+
+```yaml
+testChanges:
+  - id: REPORT-J7-J2-ADOPTION
+    status: VERIFIED
+    base: a1a57bb41d1023aac409c96c0ceaf529ea9d528a
+    expires: 2026-11-30
+    reason: Adoptă Reporting J7 fizic în catalogul Eventuate de șapte module, fără surse Core/Reporting sau module browser; păstrează Core C1 și lucrul Setup concurent.
+    proof: 'mvn "-Dtest=EventuateMessageEvidenceComponentTest,EventuateApiContractComponentTest,EventuateConvergenceComponentTest" "-Dsurefire.failIfNoSpecifiedTests=false" test'
+    paths:
+      - pom.xml
 ```
 
 </details>
