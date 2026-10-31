@@ -1,0 +1,136 @@
+{
+  "coordinate": "atf.api:atf-reporting:1.0.0-j6",
+  "producerDirectory": "C:/work/1/demo2",
+  "producerHead": "4f6bd353bf23f499a1268e811116b5627522306c",
+  "producerHasUncommittedChanges": true,
+  "javaRelease": 21,
+  "verifiedToolchain": "Temurin 21.0.12.1+1",
+  "binarySha256": "CAEBFBE51DA5F00241F0C092281CBB19FD3FC887EBE0A0A57CDCA71F3D591C1C",
+  "sourceIncluded": false,
+  "nativeTests": 49,
+  "nativeTestFailures": 0,
+  "nativeTestSkips": 0,
+  "publishedPomSha256": "D41BD2BF144E93527592247F6451E67B0E10083AE86365E469E36BE35D98D0C7",
+  "versionTransformation": {
+    "producer": "1.0.0-SNAPSHOT",
+    "published": "1.0.0-j6",
+    "otherPomChanges": false
+  },
+  "reproducibility": {
+    "forcedCleanBuilds": 2,
+    "identicalBytes": true
+  },
+  "binaryApiComparison": {
+    "reference": "atf.api:atf-reporting:1.0.0-j5",
+    "previousPublicProtectedEntries": 3837,
+    "removed": 0,
+    "added": 2
+  },
+  "consumerDistribution": {
+    "layout": "flat-lib-jar-pom",
+    "jar": "lib/atf-reporting-1.0.0-j6.jar",
+    "pom": "lib/atf-reporting-1.0.0-j6.pom",
+    "bootstrap": "root validate; maven-install-plugin:3.2.0:install-file",
+    "sourceModules": 10,
+    "reportingTests": "producer-owned; full binary acceptance in temporary consumer"
+  },
+  "binaryAcceptance": {
+    "producerOwnedTests": "C:/work/1/demo2/atf-reporting-tests",
+    "classes": 275,
+    "methodDefinitions": 881,
+    "testInvocations": 1437,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "producerGovernance": 138,
+    "consumerGovernance": 138,
+    "harnessInputFiles": 508,
+    "harnessSourceSha256": "1F88BEB5BF151804BA5790D5A6595A6F2636AFBECBE5F12EEA94578BB20FC8E8",
+    "harnessDigestFormat": "SHA-256 of sorted relativePath + NUL + uppercase file SHA-256, joined with LF and terminal LF",
+    "temporaryPomAdaptation": "Reporting dependency only: project.version -> atf.reporting.version",
+    "applicationAcceptance": {
+      "modules": [
+        "practice-shop",
+        "auto-ex"
+      ],
+      "modes": [
+        "individual",
+        "representative-suite"
+      ],
+      "testInvocations": 4,
+      "htmlReports": 4,
+      "failures": 0,
+      "skipped": 0,
+      "liveAutoExSync": {
+        "testClass": "atf.autoex.tests.e2e.AutoExPurchaseUiFinalScreenshotE2eTest",
+        "tests": 1,
+        "succeeded": 1,
+        "failed": 0,
+        "skipped": 0,
+        "reports": 1,
+        "binarySha256": "caebfbe51da5f00241f0c092281cbb19fd3fc887ebe0a0a57cdca71f3d591c1c"
+      }
+    },
+    "postGateImportNormalization": {
+      "invocations": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "functionalChange": false
+    }
+  },
+  "producerInputs": {
+    "files": 393,
+    "sha256": "7067D8C8E09960892E2F096985A160316F539CE660A0F451CC7AF0F8B87A0912",
+    "nativeTests": [
+      {
+        "path": "src/test/java/atf/reporting/standalone/ReportingStandaloneContractTest.java",
+        "sha256": "A8C07D18F5DD9A54F0060CACC4A2CEBB56BD5DF2CCC36E629020F0CA4604FB72"
+      },
+      {
+        "path": "src/test/java/atf/reporting/standalone/ReportingStandaloneDependencyTest.java",
+        "sha256": "76695CF3BBB28E82931A15C7A1D5512EB3471C190BC7126B2381CEBE80504887"
+      },
+      {
+        "path": "src/test/java/atf/reporting/standalone/ReportingStandaloneEnvironmentSnapshotTest.java",
+        "sha256": "301C6B3F7488E6B5CAC47CF14FBF979819B1CE885B1894752251BD9093DCA8CA"
+      },
+      {
+        "path": "src/test/java/atf/reporting/standalone/ReportingStandaloneEvidenceLayoutTest.java",
+        "sha256": "CCE0286F5C72B7594B6EA93470D13B1A2D70A89AC4E8B3369350BC0FE9AE6D87"
+      },
+      {
+        "path": "src/test/java/atf/reporting/standalone/ReportingStandaloneVerdictComponentTest.java",
+        "sha256": "FBA1263E4F39890319D76B78788B275F5DF79210C4145DB2D40EC59B4B655B53"
+      },
+      {
+        "path": "src/test/java/atf/reporting/standalone/StandaloneBoundaryRules.java",
+        "sha256": "382C5496E55BE015E0284D89A633D7046E237670428A24E4C471D95008577A95"
+      },
+      {
+        "path": "src/test/java/atf/reporting/standalone/StandaloneBoundaryRulesTest.java",
+        "sha256": "48E857FBB19442F46AE1BE5A32287FB6CC309656353062E5820030E947B3C036"
+      },
+      {
+        "path": "src/test/java/atf/reporting/standalone/source/ReportingModuleSource.java",
+        "sha256": "D5ADEEBACE1090C9EFB321BA6AED2BB3F52564188C65A55DD1265F66EAE7FEF8"
+      },
+      {
+        "path": "src/test/java/atf/reporting/standalone/source/ReportingSourceArchitectureTest.java",
+        "sha256": "AADF8F4B6AC4AF8B2B910A540814853989802A912FC3A303AEBF64B032D1255A"
+      }
+    ]
+  },
+  "producerInputsSha256": "759E12E68E091F3E3C7A7C69BF8566B6DFF0E5296E91E82BBE10EBCF5924275C",
+  "producerInputsDigestFormat": "SHA-256 of sorted relativePath + NUL + uppercase file SHA-256, joined with LF and terminal LF",
+  "maintenanceReference": {
+    "producerDirectory": "C:/work/1/atf_j0",
+    "reportingModule": "atf-reporting",
+    "testModule": "atf-reporting-tests",
+    "consumerDirectories": [
+      "C:/work/1/atf_j1",
+      "C:/work/1/atf_j2"
+    ],
+    "note": "Current maintenance reference. producerDirectory and binaryAcceptance retain the original J6 build and validation origin."
+  }
+}
