@@ -3,6 +3,8 @@
   "baseCommit": "d93c17ad2c69f6cfe920281bd93e9fadbb29de32",
   "snapshot": "J2 foundation reconciled from live J1; per-file imported source/config/test bytes",
   "files": {
+    "atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java": "69f38d0a9afac5e2a49e385c08ec069ee98be8f4318dd3bd2b96cbb86e2cd93e",
+    "atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java": "df5f4c34edea75beeb3503e3435211579a38e7f93ece764a2f2b47fd2182da32",
     "atf-console/pom.xml": "59174c8b1310018b146a89ddaecb89c208e55bd1f1c3d99df083b20dd3fda5bb",
     "atf-console/src/main/java/atf/console/AtfConsoleConfiguration.java": "ff2327fb54fae7df40b538ef04da2c259eb86b8f9025a92cf04a90877628232a",
     "atf-console/src/main/java/atf/console/AtfConsoleConfigurationContext.java": "fd0f577b108a4a7efb346038c8b4461f584951b3e8a8938625fa2c6401e3b426",
@@ -46,7 +48,7 @@
     "atf-test-kit/src/main/java/atf/testkit/AtfUnitTest.java": "b7163cc4f57c4eb02027f9abe9a5970e248869bc3dbc63d937070343a85ab655",
     "atf-test-kit/src/main/java/atf/testkit/assertions/AssertionValueDisplay.java": "63b6b7bf346a178e8f472295b5ee71c44300debef8a9f7e1c00205b7bfcd7962",
     "atf-test-kit/src/main/java/atf/testkit/assertions/AuditedAssertionScope.java": "83aa06fc34a55d36c194709af1fe889edf5ae666447b2bed62891681b8fe072a",
-    "atf-test-kit/src/main/java/atf/testkit/assertions/AuditedAssertions.java": "41dff971b452c42fe5382adc93835df6b841bbdf86e3e62db6a4b5ffb1308b7f",
+    "atf-test-kit/src/main/java/atf/testkit/assertions/AuditedAssertions.java": "a31f99d6b4276cdf4a95ab21bf83f90a5e8d45c29c717bbe32f96e7eeb1143b5",
     "atf-test-kit/src/main/java/atf/testkit/assertions/ComponentAssertionAudit.java": "aa1957a6436a23d18308144841701a3748ec7d256b868da172cb5425cf01ba46",
     "atf-test-kit/src/main/java/atf/testkit/assertions/ComponentAuditAdapter.java": "d6149e810cbfc127c1d7bbb6367a8006b8bdc1f11843bbd37c046b62a523148c",
     "atf-test-kit/src/main/java/atf/testkit/assertions/ComponentAuditExtension.java": "f035ac4e5e03d479ff55c27c0b75dac179f22ad7a7ea28af97bf3e758b6b0776",
@@ -91,7 +93,7 @@
     "atf-test-kit/src/main/java/atf/testkit/timing/InvocationTimer.java": "2f87d6fa866bb450a6130ff57e5edf85db8d8754a943580629eab53de7c17cc1",
     "atf-test-kit/src/test/java/atf/testkit/assertions/AssertionProjectionTest.java": "39509611bf69fd03b0e86754cd485849dc302c7a0bc28e3910ac605c6fc5f03e",
     "atf-test-kit/src/test/java/atf/testkit/assertions/AuditedAssertionScopeComponentTest.java": "3191d58c43c7288eb939eb4af9296335317f491d6aa9b1ffdef788f25b04cc0b",
-    "atf-test-kit/src/test/java/atf/testkit/assertions/AuditedAssertionsTest.java": "d7d64b140745322ab6875568b22692c054312fc170b269bb4d81860afce10ac3",
+    "atf-test-kit/src/test/java/atf/testkit/assertions/AuditedAssertionsTest.java": "2e3bf3ee72c5f1eed11c203f42203fd8871a30e7c9dd473a753e1b0ecdb60008",
     "atf-test-kit/src/test/java/atf/testkit/assertions/ComponentAuditExtensionComponentTest.java": "7f6f69d98fc79aacf0b009318659684212217cbbccd43862d7e27d82f50a8fe4",
     "atf-test-kit/src/test/java/atf/testkit/assertions/ComponentPhaseTimingExtensionComponentTest.java": "9b4681f4bd1f5afff7f15b406796af358ec5049b9608eca814a85b17a198c45e",
     "atf-test-kit/src/test/java/atf/testkit/assertions/HandledComponentFailureComponentTest.java": "92d6d600c6d00444ea8516feee4cf9fbaedad704a6372e9452e629900e7da89e",
@@ -132,7 +134,7 @@
     "atf-validation/src/main/java/atf/validation/ai/grounding/AiGroundingRequirement.java": "db5d66e40176f4f2ed96fa86dfa654582eb26611447175a4cce77039e398c4b4",
     "atf-validation/src/main/java/atf/validation/ai/grounding/AiSourceReference.java": "4f9a832cffc9d96f20496a2baac17a76e77d5b321d388960dc75caef5da88900",
     "atf-validation/src/main/java/atf/validation/ai/invocation/AiInvocationEvidence.java": "8375ff5e3fdaa0ed4cbec35e5033596d97a61b939d8533878669605bb3390510",
-    "atf-validation/src/main/java/atf/validation/contract/ContractValidators.java": "2e2f277f8e002415c8e466ed6991d339915e7956fd5727129419b22d085e62c8",
+    "atf-validation/src/main/java/atf/validation/contract/ContractValidators.java": "da88e0debbd375e400dc7a70dcd360f7cffed07dd342586762f27764186263a0",
     "atf-validation/src/main/java/atf/validation/contract/ResponseValidationRule.java": "cbd277148535c894499d7627fbb4b852e8899f6062c50844452371b158f44dad",
     "atf-validation/src/main/java/atf/validation/contract/SchemaResourceResolver.java": "af3108712a396d8a273cf3c450153997f1ad41ed907bf8e2bda61761e55cd25b",
     "atf-validation/src/main/java/atf/validation/evaluation/ApiValidationException.java": "5d2594605ce775e60b2d4339aa21e76cee53ee2c11b650edac4580aa78d71f1f",
@@ -157,14 +159,15 @@
     "atf-mock/src/test/java/atf/mock/MockMediaTypeContractTest.java": "97518cc69e5b0b7ea847dd906e0f172b12298a1562298d24b256124cf7f437a9",
     "atf-validation/src/main/java/atf/validation/contract/ContractEvaluation.java": "bb08a1a9c30fbd7ff6dbb89f3b7af165f701dd7b3bf31e51a64abe566c442b9b",
     "atf-validation/src/main/java/atf/validation/contract/json/JsonDocument.java": "2420629e8bff529c1ea23a1559d5b63d1d7526c6daae3044b96200e9c94db280",
-    "atf-validation/src/main/java/atf/validation/contract/JsonPathSupport.java": "e944696c797dbef73a5755f26a51fe163a9e9bb92c6e08a85b6f558468ca36e2",
+    "atf-validation/src/main/java/atf/validation/contract/JsonPathSupport.java": "523f4350f3e33da97ef61472641bc2938cb84642157acfa72e9aa4f9e2656403",
     "atf-validation/src/main/java/atf/validation/contract/JsonSchemaValidator.java": "9a0c8f689aa141696880a168a732d9989a61265660948ff9db6c85f58a5544eb",
-    "atf-validation/src/main/java/atf/validation/contract/ResponseContract.java": "92cc485865d092267fecf3a824d8c5953b1010102f5e1f6e1b959659bf90bd37",
-    "atf-validation/src/main/java/atf/validation/contract/ResponseContractRuleSet.java": "ad7941c9789da8f94e4bfa7717fe8cd30be938ab1599bb9711bd8b14597ad036",
+    "atf-validation/src/main/java/atf/validation/contract/ResponseContract.java": "00088bce3dc9641f873908c7860c6432ef76c4be9fb04f8f9431b26d18ab269f",
+    "atf-validation/src/main/java/atf/validation/contract/ResponseContractRuleSet.java": "2bde483df5e064555679bac11999bc4fc254d585966557e9dc8897c07f7baaf7",
     "atf-validation/src/main/java/atf/validation/contract/schema/JsonSchemaCapabilities.java": "a1078e4cba17c76561f4a7a62768456babb69ee5ecbfbae80768679a4634069d",
     "atf-validation/src/main/java/atf/validation/contract/schema/JsonValueEquality.java": "d58ae5778351636218b758628adca8e6e2966a910eba7b971ffcb5ca487e123d",
-    "atf-validation/src/test/java/atf/validation/JsonPresenceContractTest.java": "c697945f53274ec9e735059d50bfada2d26b10655724ca6f077e99750c163757",
-    "atf-validation/src/test/java/atf/validation/JsonSchemaContractTest.java": "11102a9a3eab6217ce80aea72613eefc8c7c368c45e27b497dd3ec6aa54d8c66"
+    "atf-validation/src/test/java/atf/validation/JsonPresenceContractTest.java": "df590e2000d2fcef89245e60f463f338da38407d0f10685d392465cc4c88aaad",
+    "atf-validation/src/test/java/atf/validation/JsonSchemaContractTest.java": "38bceff47576e693c86b0e691d5224e59293f856998b844f085e94a321c8f909",
+    "atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java": "2aeb7a0d584dff29774c1648113be61ceff40706528410d6ca6a7b49cd6af77c"
   },
   "consumerBaseCommit": "66546500c7f5baef5223c45dd72652bdcbe026e0",
   "retiredUiModules": {
@@ -285,6 +288,90 @@
         "atf-validation/src/test/java/atf/validation/JsonSchemaContractTest.java": {
           "previousSha256": null,
           "sha256": "11102a9a3eab6217ce80aea72613eefc8c7c368c45e27b497dd3ec6aa54d8c66"
+        }
+      }
+    },
+    {
+      "id": "J2-J7-NATIVE-CATALOG-2026-10-31",
+      "source": "J7 native catalog in the consumed binary; J0 source reviewed without edits",
+      "sourceBaseCommit": "a1a57bb41d1023aac409c96c0ceaf529ea9d528a",
+      "scope": "Review exactly ReportingStandaloneObservationTest.java; retain finite equality and all forbidden-reference checks.",
+      "files": {
+        "atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java": {
+          "previousSha256": "8d0f6bed94db003ab6889d4e9423f65c046afc7ce790416da2a19fdf0e10cd71",
+          "sha256": "2aeb7a0d584dff29774c1648113be61ceff40706528410d6ca6a7b49cd6af77c"
+        }
+      }
+    },
+    {
+      "id": "J2-SCALAR-EQUALITY-2026-10-31",
+      "source": "Local J2 Validation owner; public DSL and neutral reporting port",
+      "sourceBaseCommit": "bd30bcbc2f514e2fbd728145c4ee0f4a6ffb6872",
+      "scope": "Container values cannot satisfy scalar text equality. Preserve scalar compatibility, full comparison, diagnostic JSON and the consumed Reporting binary.",
+      "files": {
+        "atf-validation/src/main/java/atf/validation/contract/JsonPathSupport.java": {
+          "previousSha256": "e944696c797dbef73a5755f26a51fe163a9e9bb92c6e08a85b6f558468ca36e2",
+          "sha256": "523f4350f3e33da97ef61472641bc2938cb84642157acfa72e9aa4f9e2656403"
+        },
+        "atf-validation/src/main/java/atf/validation/contract/ResponseContractRuleSet.java": {
+          "previousSha256": "ad7941c9789da8f94e4bfa7717fe8cd30be938ab1599bb9711bd8b14597ad036",
+          "sha256": "48a7669d7619ca1cef943e57b37d9ca248cd49ab01fb362afd146a4dd5c79245"
+        },
+        "atf-validation/src/main/java/atf/validation/contract/ResponseContract.java": {
+          "previousSha256": "92cc485865d092267fecf3a824d8c5953b1010102f5e1f6e1b959659bf90bd37",
+          "sha256": "3924d4e442ad95e28fd2620fe5ee532e1088751b629a520c7b92d85d35071316"
+        },
+        "atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java": {
+          "previousSha256": null,
+          "sha256": "df5f4c34edea75beeb3503e3435211579a38e7f93ece764a2f2b47fd2182da32"
+        }
+      }
+    },
+    {
+      "id": "J2-JSON-MEDIA-TYPE-2026-10-31",
+      "source": "J2 Validation owner; semantic classification delegates to consumed Core C1",
+      "sourceBaseCommit": "bd30bcbc2f514e2fbd728145c4ee0f4a6ffb6872",
+      "scope": "All five canonical JSON contracts inspect the concrete type/subtype. Keep literal contains compatible, neutral publication and Reporting J7 unchanged; other deployments need separate reconciliation.",
+      "files": {
+        "atf-validation/src/main/java/atf/validation/contract/ContractValidators.java": {
+          "previousSha256": "2e2f277f8e002415c8e466ed6991d339915e7956fd5727129419b22d085e62c8",
+          "sha256": "da88e0debbd375e400dc7a70dcd360f7cffed07dd342586762f27764186263a0"
+        },
+        "atf-validation/src/main/java/atf/validation/contract/ResponseContract.java": {
+          "previousSha256": "3924d4e442ad95e28fd2620fe5ee532e1088751b629a520c7b92d85d35071316",
+          "sha256": "00088bce3dc9641f873908c7860c6432ef76c4be9fb04f8f9431b26d18ab269f"
+        },
+        "atf-validation/src/main/java/atf/validation/contract/ResponseContractRuleSet.java": {
+          "previousSha256": "48a7669d7619ca1cef943e57b37d9ca248cd49ab01fb362afd146a4dd5c79245",
+          "sha256": "2bde483df5e064555679bac11999bc4fc254d585966557e9dc8897c07f7baaf7"
+        },
+        "atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java": {
+          "previousSha256": null,
+          "sha256": "69f38d0a9afac5e2a49e385c08ec069ee98be8f4318dd3bd2b96cbb86e2cd93e"
+        }
+      }
+    },
+    {
+      "id": "J0-CONTRACTS-AUDIT-2026-10-31",
+      "source": "../atf_j0; reviewed dirty source snapshot, no Core/Reporting binary change",
+      "sourceBaseCommit": "79f1575e2e87319ce8935f9486d5392859009c5f",
+      "scope": "Named numeric tolerance in Kit and strengthened JSON native regressions; preserve original import and all historical reconciliations.",
+      "files": {
+        "atf-test-kit/src/main/java/atf/testkit/assertions/AuditedAssertions.java": {
+          "previousSha256": "41dff971b452c42fe5382adc93835df6b841bbdf86e3e62db6a4b5ffb1308b7f",
+          "sha256": "a31f99d6b4276cdf4a95ab21bf83f90a5e8d45c29c717bbe32f96e7eeb1143b5"
+        },
+        "atf-test-kit/src/test/java/atf/testkit/assertions/AuditedAssertionsTest.java": {
+          "previousSha256": "d7d64b140745322ab6875568b22692c054312fc170b269bb4d81860afce10ac3",
+          "sha256": "2e3bf3ee72c5f1eed11c203f42203fd8871a30e7c9dd473a753e1b0ecdb60008"
+        },
+        "atf-validation/src/test/java/atf/validation/JsonPresenceContractTest.java": {
+          "previousSha256": "c697945f53274ec9e735059d50bfada2d26b10655724ca6f077e99750c163757",
+          "sha256": "df590e2000d2fcef89245e60f463f338da38407d0f10685d392465cc4c88aaad"
+        },
+        "atf-validation/src/test/java/atf/validation/JsonSchemaContractTest.java": {
+          "previousSha256": "11102a9a3eab6217ce80aea72613eefc8c7c368c45e27b497dd3ec6aa54d8c66",
+          "sha256": "38bceff47576e693c86b0e691d5224e59293f856998b844f085e94a321c8f909"
         }
       }
     }

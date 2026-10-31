@@ -109,3 +109,30 @@ java -Xmx384m -cp $eventuateCp atf.eventuate.tests.support.acceptance.Validation
 acoperă separat limitele signed long, overflow, documente ambigue, identitatea
 schimbată, rejectionReason și răspunsul corect sosit după deadline. Componenta
 păstrează assertions colapsabile; unitarele nu moștenesc lifecycle-ul raportului.
+## Snapshot terminal — acceptanță consumer
+
+[TerminalEvidenceReportAcceptance](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/TerminalEvidenceReportAcceptance.java)
+lansează oracolul API existent individual și prin suita canonică, fără clase
+business suplimentare. Cele 36 de artifacte Extent/fallback acoperă script epuizat,
+transport, timeout, cancel, retry urmat de eșec și succes urmat de eșec.
+
+| Variantă | Dovadă cerută |
+|---|---|
+| failure în TEST BODY | exact excepția capturată ajunge la JUnit; request, tentative, timing și no-response sunt prezente |
+| failure în SETUP | snapshot-ul este în SETUP, chiar când TEST BODY nu este executat |
+| failure în TEARDOWN | răspunsul nominal din body și failure-ul ulterior rămân în faze distincte |
+| excepție așteptată | assertions verifică explicit outcome, identitate și absența răspunsului; JUnit și raportul păstrează PASS |
+| mutanți de artifact | snapshot eliminat, fază greșită și coloană eliminată sunt refuzate |
+
+După build, folosește classpath-ul de acceptanță și un director absent:
+
+```powershell
+$terminalOutput = Join-Path ([IO.Path]::GetTempPath()) ("j2-terminal-" + [guid]::NewGuid().ToString("N"))
+java -Xmx384m -cp $eventuateCp atf.eventuate.tests.support.acceptance.TerminalEvidenceReportAcceptance $terminalOutput
+```
+
+Proprietățile atf.eventuate.terminal și atf.eventuate.terminal.phase sunt exclusiv probe test-scoped; CLI-ul le
+restaurează la ieșire. Timeout-ul scurt al fixture-ului nu schimbă bugetele
+binding-ului implicit și nu certifică un SLA de rețea real.
+
+ExpectedTerminalProbe este fixture tehnic separat, selectat explicit de CLI; nu înlocuiește expected-ul business din EventuateApiContractComponentTest. Cele patru probe PASS rulează fixture-ul individual sau împreună cu ceilalți doi consumatori, într-un scope comun.

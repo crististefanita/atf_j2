@@ -17,6 +17,6 @@ public abstract class EventuateComponentSupport {
 
     @AfterEach void offlineBoundary(RecordedAssertions checks, EventuateEvidence evidence) {
         checks.isTrue("No captured HTTP exchange executed a network endpoint",
-                evidence.exchanges().stream().noneMatch(exchange -> exchange.provenance().networkExecuted()));
+                evidence.entries().stream().noneMatch(exchange -> exchange.provenance().networkExecuted()));
     }
 }

@@ -1,6 +1,7 @@
 package atf.validation.contract;
 
 import atf.core.http.request.HttpHeader;
+import atf.core.http.request.MediaTypes;
 import atf.core.http.response.ApiResponse;
 import atf.validation.evaluation.ValidationTable;
 import java.nio.file.Files;
@@ -34,6 +35,13 @@ final class ResponseContractRuleSet {
                     actual != null && actual.toLowerCase(Locale.ROOT).contains(expected.toLowerCase(Locale.ROOT)));
         });
     }
+    ResponseContractRuleDefinition contentTypeJson() {
+        return rule("content-type-json", "Content-Type JSON", (response, table) -> {
+            var actual = response.header(HttpHeader.CONTENT_TYPE.value());
+            table.add("Content-Type JSON", "JSON media type", actual == null ? "<missing>" : actual,
+                    MediaTypes.isJson(actual));
+        });
+    }
     ResponseContractRuleDefinition headerPresent(String name) {
         return rule("header:" + name.toLowerCase(Locale.ROOT), "Header " + name, (response, table) -> {
             var actual = response.header(name);
@@ -63,7 +71,7 @@ final class ResponseContractRuleSet {
     ResponseContractRuleDefinition jsonPathEquals(String path, String expected) {
         return contextual("json-equals:" + path + ":" + expected, "JSON path equals: " + path, context -> {
             var value = context.at(path);
-            context.table().add("JSON path equals: " + path, expected, value.text(), value.present() && expected.equals(value.text()));
+            context.table().add("JSON path equals: " + path, expected, value.text(), value.matchesScalar(expected));
         });
     }
     ResponseContractRuleDefinition jsonPathType(String path, String expectedType) {
@@ -88,7 +96,7 @@ final class ResponseContractRuleSet {
             var value = context.at(path);
             boolean passed = value.present() && value.node().isArray()
                     && StreamSupport.stream(value.node().spliterator(), false)
-                    .allMatch(item -> item.has(property) && expected.equals(item.get(property).asText()));
+                    .allMatch(item -> item.isObject() && JsonPathSupport.scalarEquals(item.get(property), expected));
             context.table().add("Every " + path + " item " + property, expected, value.display(), passed);
         });
     }

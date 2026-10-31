@@ -5,6 +5,7 @@ import atf.eventuate.mock.ScriptedApiTransport;
 import atf.eventuate.validation.OrderContract;
 import atf.eventuate.tests.support.EventuateComponentTest;
 import atf.eventuate.tests.support.fixtures.EventuateFixtures;
+import atf.eventuate.tests.support.fixtures.TerminalFailureFixtures;
 import atf.testkit.assertions.RecordedAssertions;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -12,8 +13,15 @@ import static atf.eventuate.tests.support.fixtures.EventuateFixtures.route;
 
 @EventuateComponentTest
 public class EventuateApiContractComponentTest extends atf.eventuate.tests.support.EventuateComponentSupport {
+    @org.junit.jupiter.api.BeforeEach void terminalSetup(EventuateEvidence evidence) {
+        TerminalFailureFixtures.failIfSelected(evidence, "SETUP");
+    }
+    @org.junit.jupiter.api.AfterEach void terminalTeardown(EventuateEvidence evidence) {
+        TerminalFailureFixtures.failIfSelected(evidence, "TEARDOWN");
+    }
     @Test @org.junit.jupiter.api.DisplayName("API contract · approved order")
     void validatesObservedOrderAgainstIndependentContract(RecordedAssertions checks, EventuateEvidence evidence) throws java.io.IOException {
+        TerminalFailureFixtures.failIfSelected(evidence);
         try (var transport = new ScriptedApiTransport(List.of(route("GET", "/orders/42", 200, EventuateFixtures.order("APPROVED"))))) {
             var observed = new EventuateApiClient(transport, evidence::record).observe(42);
             checks.equals("Execution provenance", "ACCEPTANCE_MOCK", evidence.exchanges().getFirst().provenance().name());

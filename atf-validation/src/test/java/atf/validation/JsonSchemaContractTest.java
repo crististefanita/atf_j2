@@ -37,7 +37,9 @@ class JsonSchemaContractTest {
     }
     static Stream<Arguments> instances() {
         return Stream.of(
-                Arguments.of("{}", "null", true), Arguments.of("true", "{}", true), Arguments.of("false", "null", false),
+                Arguments.of("{}", "null", true),
+                Arguments.of("{\"const\":42}", "99", false),
+                Arguments.of("{\"const\":42}", "42", false), Arguments.of("true", "{}", true), Arguments.of("false", "null", false),
                 Arguments.of("{\"additionalProperties\":false}", "{\"extra\":1}", false),
                 Arguments.of("{\"additionalProperties\":false}", "{}", true),
                 Arguments.of("{\"additionalProperties\":{\"type\":\"integer\"}}", "{\"x\":1}", true),

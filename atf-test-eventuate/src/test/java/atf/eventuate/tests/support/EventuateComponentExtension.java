@@ -9,6 +9,7 @@ import atf.reporting.contract.AtfAssertion;
 import atf.reporting.contract.AtfReportStatus;
 import org.junit.jupiter.api.extension.*;
 import java.nio.file.Path;
+import java.lang.reflect.Method;
 
 /** JUnit owns scope and outcome; main owns publication and reusable support. */
 public final class EventuateComponentExtension implements ComponentAuditAdapter {
@@ -16,6 +17,17 @@ public final class EventuateComponentExtension implements ComponentAuditAdapter 
     private final ComponentAuditExtension audit = ComponentAuditExtension.scoped(EventuateComponentExtension.class,
             Owner.class, EventuateComponentExtension::owner, EventuateComponentExtension::publication);
     @Override public ComponentAuditExtension auditExtension() { return audit; }
+    @Override public void interceptBeforeEachMethod(Invocation<Void> call, ReflectiveInvocationContext<Method> method,
+                                                    ExtensionContext context) throws Throwable {
+        try (var scope = evidence(context).inPhase("SETUP")) { audit.interceptBeforeEachMethod(call, method, context); }
+    }
+    @Override public void interceptAfterEachMethod(Invocation<Void> call, ReflectiveInvocationContext<Method> method,
+                                                   ExtensionContext context) throws Throwable {
+        try (var scope = evidence(context).inPhase("TEARDOWN")) { audit.interceptAfterEachMethod(call, method, context); }
+    }
+    private static EventuateEvidence evidence(ExtensionContext context) {
+        return context.getStore(DATA).get(EventuateEvidence.class, EventuateEvidence.class);
+    }
     private static Owner owner(ExtensionContext context) {
         Path output = Path.of(System.getProperty("atf.eventuate.report.directory", "target/eventuate-reports")).toAbsolutePath().normalize();
         var renderer = ComponentReportRun.Renderer.valueOf(System.getProperty("atf.eventuate.report.renderer", "EXTENT").toUpperCase(java.util.Locale.ROOT));

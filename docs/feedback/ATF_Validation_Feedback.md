@@ -1,21 +1,18 @@
-# Validation — contracte semantice rămase
+# Validation — contracte și feedback
 
 ## Pe scurt
 
-Parsarea completă, prezența typed și subsetul schema fail-closed sunt contracte
-livrate în [README Validation](../../atf-validation/README.md#json--prezență-document-și-capabilități).
-Regresiile publice și acceptanța Extent/fallback rămân permanente; criteriile
-închise nu sunt păstrate ca ToDo. Limita deschisă este clasificarea media type
-în contractele canonice, nu rendererul.
-## VALIDATION-MEDIA-92 — prioritate 86
+Contractele implementate și limitele lor sunt în [README Validation](../../atf-validation/README.md).
+[Dovada J2](../ATF_J2_Verification.md) păstrează rezultatele și perimetrul
+acceptanței; criteriile demonstrate sunt retrase din registrul activ.
 
-ContractValidators.userItem acceptă text/plain cu parametrul profile care
-conține application/json, deși clasificarea strictă din Core îl refuză ca JSON.
-Regula contentTypeContains face literal ce spune numele; callerul canonic o
-folosește pentru o cerință semantică mai strictă.
+| Responsabilitate | Owner și probă |
+|---|---|
+| reguli și verdict | Validation; API public, strict/warning și comparație înainte de preview |
+| clasificare media type | vocabular Core C1; regula semantică rămâne distinctă de contains literal |
+| publicarea rezultatului | port neutru în Validation și adaptorul consumerului; fără reevaluare în renderer |
+| randare și regresii generice | J0 Reporting și Reporting Tests; consumerul păstrează numai acceptanța sa |
 
-- Păstrați compatibilitatea operației contains; adăugați regula semantică necesară și folosiți vocabularul Core C1.
-- Actualizați contractele canonice, nu rendererul; testați charset, sufix +json și parametrul care imită alt tip.
-
-Închidere: parametrul înșelător nu satisface contractul JSON, iar tipurile
-acceptate sunt explicite și verificate fără trafic extern.
+Un criteriu nou trebuie să identifice un contraexemplu public, impactul,
+ownerul și proba de închidere. Feedback-ul nu dublează contractele stabile
+sau backlog-ul rendererului.

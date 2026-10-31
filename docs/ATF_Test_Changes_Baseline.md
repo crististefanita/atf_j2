@@ -4322,3 +4322,130 @@ testChanges:
 ```
 
 </details>
+
+
+<details>
+<summary><strong>Control tehnic — EVT-TERMINAL-CAPTURE-95</strong></summary>
+
+```yaml
+testChanges:
+  - id: EVT-TERMINAL-CAPTURE-95
+    status: VERIFIED
+    base: a1a57bb41d1023aac409c96c0ceaf529ea9d528a
+    expires: 2026-11-30
+    reason: Capturează snapshot-ul terminal fără răspuns inventat, păstrează aceeași excepție și cauza originală, iar erorile sink-ului devin suppressed. Probele consumer individual sau suită păstrează trei clase canonice și nu relaxează assertions, timeout-uri sau controale existente.
+    proof: mvn -B -pl atf-test-eventuate,atf-tests -am "-Dtest=EventuateTerminalEvidenceTest,EventuateOrderContractTest,EventuateComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=a1a57bb41d1023aac409c96c0ceaf529ea9d528a" test
+    paths:
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/EventuateApiContractComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentSupport.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/TerminalFailureFixtures.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/ExpectedTerminalProbe.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/EventuateTerminalEvidenceTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/TerminalEvidenceReportAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/TerminalArtifactAudit.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control tehnic — J2-J7-CATALOG-96</strong></summary>
+
+```yaml
+testChanges:
+  - id: J2-J7-CATALOG-96
+    status: VERIFIED
+    base: a1a57bb41d1023aac409c96c0ceaf529ea9d528a
+    expires: 2026-11-30
+    reason: Adoptarea J7 a adăugat ReportingStandaloneObservationTest în catalogul nativ al JAR-ului. Consumerul revizuiește această singură intrare în setul finit, cu egalitate exactă păstrată; fără wildcard, skip sau modificarea surselor Reporting.
+    proof: mvn -B -pl atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=a1a57bb41d1023aac409c96c0ceaf529ea9d528a" test
+    paths:
+      - atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control tehnic — VALIDATION-SCALAR-98</strong></summary>
+
+```yaml
+testChanges:
+  - id: VALIDATION-SCALAR-98
+    status: VERIFIED
+    base: a1a57bb41d1023aac409c96c0ceaf529ea9d528a
+    expires: 2026-11-30
+    reason: Regresie publică pentru cele două reguli scalare, containere refuzate, compatibilitate string gol, număr, boolean și null, port neutru strict sau warning și comparație integrală înainte de preview. Păstrează probele și controalele existente.
+    proof: mvn -B -pl atf-validation,atf-test-eventuate,atf-tests -am "-Dtest=JsonScalarEqualityContractTest,JsonPresenceContractTest,JsonSchemaContractTest,EventuateComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=a1a57bb41d1023aac409c96c0ceaf529ea9d528a" test
+    paths:
+      - atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control tehnic — VALIDATION-MEDIA-100</strong></summary>
+
+```yaml
+testChanges:
+  - id: VALIDATION-MEDIA-100
+    status: VERIFIED
+    base: a1a57bb41d1023aac409c96c0ceaf529ea9d528a
+    expires: 2026-11-30
+    reason: Regresie publică pentru clasificarea media type din Core C1 în toate cele cinci contracte canonice; nominal, sufix JSON, parametru înșelător, header absent sau malformat, strict și warning. Operația contains rămâne literală; niciun prag sau test existent nu este relaxat.
+    proof: mvn -B -pl atf-validation,atf-test-eventuate,atf-tests -am "-Dtest=JsonMediaTypeContractTest,JsonScalarEqualityContractTest,ResponseContractTest,ResponseContractRuleSetTest,ResponseContractReporterTest,EventuateComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=a1a57bb41d1023aac409c96c0ceaf529ea9d528a" test
+    paths:
+      - atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control tehnic verificat — CONTRACTS-J2-96</strong></summary>
+
+```yaml
+testChanges:
+  - id: CONTRACTS-J2-96
+    status: VERIFIED
+    base: bd30bcbc2f514e2fbd728145c4ee0f4a6ffb6872
+    expires: 2026-11-30
+    reason: Reconcilează Validation strict din candidatul J2 la owner/consumer, cu missing-null-document invalid distincte și subset de schemă refuzat explicit; adaugă toleranța numerică denumită în Kit, fără relaxarea verdicturilor ori a preview-ului 240.
+    proof: 'mvn -B -ntp -pl atf-validation,atf-tests -am "-Dtest=JsonPresenceContractTest,JsonSchemaContractTest,AuditedAssertionsTest,TestChangeGovernanceTest" "-Dsurefire.failIfNoSpecifiedTests=false" test'
+    paths:
+      - atf-validation/src/test/java/atf/validation/JsonPresenceContractTest.java
+      - atf-test-kit/src/test/java/atf/testkit/assertions/AuditedAssertionsTest.java
+      - atf-validation/src/test/java/atf/validation/JsonSchemaContractTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control reconciliere live — J2-LIVE-SYNC-20261031</strong></summary>
+
+Controalele istorice rămân la baza lor originală. Acest control revizuiește
+snapshot-ul concurent păstrat la HEAD-ul actual; nu rebazează înregistrările
+vechi și nu modifică testele ori implementarea Eventuate.
+
+```yaml
+testChanges:
+  - id: J2-LIVE-SYNC-20261031
+    status: VERIFIED
+    base: bd30bcbc2f514e2fbd728145c4ee0f4a6ffb6872
+    expires: 2026-11-30
+    reason: Reconciliere explicită a modificărilor live Eventuate și a regresiilor scalare și MIME Validation, păstrate byte cu byte. Actuala bază Git diferă de baza controalelor istorice; proba verifică snapshot-ul prezent fără relaxarea assertion-urilor, timeout-urilor, catalogului sau regulilor de guvernanță.
+    proof: 'mvn -B -ntp -pl atf-test-eventuate,atf-tests -am "-Dtest=JsonMediaTypeContractTest,JsonPresenceContractTest,JsonSchemaContractTest,JsonScalarEqualityContractTest,TestChangeGovernanceTest,J2DeploymentGovernanceTest,DocumentationLinkGovernanceTest" "-Dsurefire.failIfNoSpecifiedTests=false" test'
+    paths:
+      - atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/EventuateApiContractComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentSupport.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/ValidationReportAcceptance.java
+      - atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/TerminalArtifactAudit.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/TerminalEvidenceReportAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/ExpectedTerminalProbe.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/TerminalFailureFixtures.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/EventuateTerminalEvidenceTest.java
+      - atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java
+```
+
+</details>

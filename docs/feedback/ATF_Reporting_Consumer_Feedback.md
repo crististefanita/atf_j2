@@ -3,12 +3,18 @@
 ## Pe scurt
 
 J2 deține adaptorul și acceptanța sa, nu implementarea bibliotecii.
-J6 are proveniență istorică demo2 și owner curent J0; contractul local este
+J7 este binarul consumat; J6 păstrează proveniența istorică demo2, cu owner curent J0. Contractul local este
 în [atlasul JAR](../ATF_Reporting_Library_Atlas.md).
+
+Auditul scalar J2 confirmă valorile și verdicturile în ambele renderere, dar
+validarea API fallback nu are disclosure propriu. [Criteriul și regresia J0](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-fallback-validation-disclosure-99--validarea-api-colapsabilă)
+păstrează acest gap; acceptanța structurală locală nu îl declară rezolvat.
+
+- Matricea media type confirmă valori și verdicturi, dar badge-ul Warning depășește RESULT în fallback. Criteriul REPORT-FALLBACK-RESULT-WIDTH-101 și componentele neutre necesare sunt în [feedback-ul J0](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md).
 
 ## REPORT-J2-ADOPTION-62 — prioritate 89
 
-Pe J6, inspectorul generic refuză scenariul fără HTTP și aplică cerințe
+Pe J7, matricea J2 nominală repetată păstrează nouă rezultate neconforme ale inspectorului implicit: șapte fallback și două assertion-only. Inspectorul generic refuză scenariul fără HTTP și aplică cerințe
 Extent pe fallback. Raportul este inspectabil, iar receipt-ul J2 păstrează
 rezultatul original și verdictul oracolului pe tabele, fără fals verde universal.
 
@@ -18,7 +24,8 @@ rezultatul original și verdictul oracolului pe tabele, fără fals verde univer
 
 Închidere locală: noul binar este adoptat cu proveniență și oracol explicit
 assertion-only/HTTP și renderer. Green-ul J0 sau J1 nu certifică J2.
-Nu este declarată remedierea J6 în acest increment documentar.
+
+Catalogul nativ finit J2 este reconciliat explicit cu J7, fără wildcard sau skip. Această acceptanță nu închide automat guvernanța ori adopția din J0/J1.
 
 ## REPORT-J2-TIMING-83 — prioritate 88
 

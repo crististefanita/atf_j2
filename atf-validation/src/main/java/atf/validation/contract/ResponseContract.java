@@ -35,6 +35,11 @@ public final class ResponseContract {
         return add(ruleSet.contentTypeContains(expected));
     }
 
+    /** Requires a concrete JSON type/subtype as classified by Core; parameters do not determine the type. */
+    public ResponseContract contentTypeJson() {
+        return add(ruleSet.contentTypeJson());
+    }
+
     public ResponseContract headerPresent(String name) {
         requireText(name, "name");
         return add(ruleSet.headerPresent(name));
@@ -50,6 +55,7 @@ public final class ResponseContract {
         return add(ruleSet.jsonPathExists(path));
     }
 
+    /** Compares a present JSON scalar's text; objects and arrays cannot match, including empty expected text. */
     public ResponseContract jsonPathEquals(String path, String expected) {
         requireText(path, "path");
         if (expected == null) throw new IllegalArgumentException("expected must not be null");
@@ -82,6 +88,7 @@ public final class ResponseContract {
         return add(ruleSet.jsonArraySize(path, expectedSize));
     }
 
+    /** Requires each array item to have a scalar property matching the text; an empty array satisfies this rule. */
     public ResponseContract everyArrayItemEquals(String path, String property, String expected) {
         requireText(path, "path");
         requireText(property, "property");

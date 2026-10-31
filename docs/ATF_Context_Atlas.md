@@ -11,20 +11,23 @@ J2 are șapte module și exclude UI/Debug; auditul HTML rămâne extern.
 | Subiect | Intrare în cod / hartă | Invariant și limită |
 |---|---|---|
 | catalog și ownership | [scop J2](ATF_J2_Scope.md), [POM](../pom.xml) | 7 module fără browser; profilul rămâne Eventuate |
-| request/response | [EventuateApiClient](../atf-test-eventuate/src/main/java/atf/eventuate/api/EventuateApiClient.java) | binding concret ScriptedApiTransport; POST o tentativă, GET 503 cel mult două; provenance ACCEPTANCE_MOCK |
+| request/response | [EventuateApiClient](../atf-test-eventuate/src/main/java/atf/eventuate/api/EventuateApiClient.java) | binding MOCK implicit: POST o tentativă, GET 503 cel mult două; seam separat pentru executori/politici/provenance explicite |
+| snapshot terminal | [EventuateExchange](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateExchange.java), [collector](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateEvidence.java) | Completed sau Terminal în ordinea și faza capturării; aceeași excepție, fără răspuns inventat și fără dublarea callback-ului |
 | script finit | [ScriptedApiTransport](../atf-test-eventuate/src/main/java/atf/eventuate/mock/ScriptedApiTransport.java) | ordonat, strict, fără răspuns verde când se epuizează ruta |
 | convergență | [OrderAwaiter](../atf-test-eventuate/src/main/java/atf/eventuate/await/OrderAwaiter.java) | clock/pause injectate; aplică OrderContract integral la fiecare observație; un răspuns corect sosit după deadline nu converge |
 | identitate business | [OrderContract](../atf-test-eventuate/src/main/java/atf/eventuate/validation/OrderContract.java) | expected independent: ID, stare și rejectionReason; decodorul refuză overflow înainte de long și păstrează limitele signed long |
 | decodare comenzi | [OrderResponseDecoder](../atf-test-eventuate/src/main/java/atf/eventuate/api/OrderResponseDecoder.java) | document complet și neambiguu; integral/canConvertToLong înainte de conversie; evidence HTTP capturat înaintea decodării |
 | mesagerie | [MessageEvidenceContract](../atf-test-eventuate/src/main/java/atf/eventuate/validation/MessageEvidenceContract.java) | livrări MOCK_EVENT_FEED și witness de efecte; ordinalul fixture-ului nu este offset Kafka |
-| validare JSON | [Validation](../atf-validation/README.md#json--prezență-document-și-capabilități) | document complet, stări typed pentru invalid/absent/null și subset schema fail-closed; media type rămâne criteriu distinct |
+| validare JSON | [Validation](../atf-validation/README.md#json--prezență-document-și-capabilități) | document complet, stări typed și schema fail-closed; egalitatea textuală cere scalar prezent, iar containerele rămân JSON în ACTUAL |
+| comparație scalară | [contract](../atf-validation/README.md#egalitate-scalară--fără-coerciția-containerelor), [regresie](../atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java) | aceeași regulă pentru path și fiecare proprietate din array; string gol real acceptat, containere refuzate; null textual compatibil, tipul cerut separat |
+| media type JSON | [contract](../atf-validation/README.md#content-type--clasificare-semantică-json), [regresie](../atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java) | cinci contracte canonice delegă tipul/subtipul către Core C1; parametrii nu imită JSON; contains literal și validarea body-ului sunt independente |
 | audit JUnit | [EventuateComponentExtension](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java) | Kit decide o singură dată; adaptorul transferă comparațiile fără reevaluare |
 | raport | [ComponentReportRun](../atf-test-eventuate/src/main/java/atf/eventuate/reporting/ComponentReportRun.java) | owner serial class/suite; trei faze, close înaintea notificării căii absolute |
 | infrastructură | [Setup atlas](ATF_Setup_Atlas.md) | Kafka remote și Java Windows demonstrate individual/prin două runde; revalidarea engine-ului și rutei rămâne obligatorie |
-| selecție și artifact | [ghid Eventuate](ATF_Eventuate_Testing.md) | trei componente, matrice cu 12 artifacte și patru FAIL-uri intenționate |
+| selecție și artifact | [ghid Eventuate](ATF_Eventuate_Testing.md) | trei componente; matrice nominală de 14 artifacte, plus 36 de probe terminale individual/suită în toate fazele |
 | guvernanță | [ATF Tests](../atf-tests/README.md), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | inventar explicit și probe negative pentru modul lipsă, UI shadow și dependențe browser |
 
-Reporting J6 păstrează originea istorică demo2; mentenanța bibliotecii este în atf_j0.
+Reporting J7 este binarul consumat; proveniența J6 demo2 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
 
 ## Boundary-uri de fidelitate
 

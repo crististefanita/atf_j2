@@ -37,10 +37,10 @@ public final class ComponentReportRun implements AutoCloseable {
         requireOwner();
         try (var scenario = session.startScenario(testClass, testPackage, title, List.of("component", "eventuate", "mock"))) {
             for (var data : phases) try (var phase = scenario.startPhase(data.name())) {
-                phase.detail("Evidence source", evidence.source());
+                phase.detail("HTTP evidence source", evidence.source());
                 if (data.timing() != null) phase.executionTiming(data.timing());
-                if (data.name().equals("TEST BODY")) ApiEvidencePublisher.publish(phase, evidence.exchanges());
-                AssertionAuditReport.publishStep(phase, "Component assertions", data.checks(), data.status());
+                ApiEvidencePublisher.publish(phase, evidence.entries(data.name()), data.status());
+                AssertionAuditReport.publishStep(phase, "Component assertions", data.checks(), AtfReportStatus.INFO);
                 if (!data.diagnostic().isBlank()) phase.diagnostic(ReportPhaseDiagnostic.Kind.EXECUTION_FAILURE, redactor.redactText(data.diagnostic()));
                 phase.complete(data.status());
             }

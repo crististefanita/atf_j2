@@ -12,8 +12,8 @@ Kafka și clientul Java de infrastructură sunt demonstrate în Setup; nu recrea
 această restanță. Lipsește laboratorul aplicației cu servicii, CDC și baze,
 împreună cu clientul/observerul framework-ului și efectele independente.
 
-- Injectați portul transportului și politica de execuție/provenance la composition root; constructorul curent acceptă concret ScriptedApiTransport și fixează modul MOCK.
-- Păstrați implicit lipsa traficului LIVE și activarea explicită a laboratorului; source MOCK hardcodat nu poate eticheta dovezi reale.
+- Compuneți executori LIVE din configurația laboratorului; seam-ul de injectare există, iar binding-ul implicit rămâne MOCK. Adaptați profilul și tag-urile run-ului, nu numai transportul.
+- Păstrați implicit lipsa traficului LIVE și activarea explicită a laboratorului. Provenance-ul schimburilor este capturat, însă lipsesc observerul Kafka, corelarea și politica de ownership pentru callbacks asincrone.
 - Verificați compatibilitatea versiunilor aplicației și readiness-ul observerului înaintea primei mutații; brokerul standalone nu certifică outbox/CDC/saga.
 - Implementați aprobare, respingere și client necunoscut cu date și cleanup proprii; nu adăugați module ori un simulator de business în Kit.
 
@@ -47,24 +47,6 @@ regresii negative și probe consumer individual/suită; nu sunt ToDo-uri deschis
 
 Închidere: timpul real este bounded prin port/transport și probat individual
 și prin suită. Clock-ul virtual dovedește politica de verdict, nu SLA-ul rețelei.
-## EVT-TERMINAL-EVIDENCE-87 — snapshot-ul Core înaintea excepției
-
-**Prioritate: 92/100.** Failure-ul real trebuie să-și păstreze dovada disponibilă.
-**Owner:** EventuateEvidence și adaptorul de publicare J2.
-
-Cu transportul scriptat epuizat, observe produce ApiExecutionException cu
-snapshot terminal Core disponibil; collectorul Eventuate are zero exchanges.
-Callback-ul de record este executat numai după returnarea reușită a executorului.
-
-- [ ] Păstrați separat rezultatul și eșecul terminal typed, inclusiv request, tentative, provenance și timing deja capturate.
-- [ ] Propagați aceeași excepție originală spre JUnit; nu transformați excepția în PASS și nu inventați un răspuns HTTP.
-- [ ] Probați script epuizat, timeout/cancel și eroare de transport, apoi verificați artifactul Extent/fallback și cauza exactă.
-
-Închidere: lipsa rezultatului normal nu elimină snapshot-ul disponibil din
-raport; failure-ul și metadatele sale rămân corelate și publicate o singură dată.
-Constatarea collectorului este reprodusă offline; artifactul negativ complet
-rămâne proba de închidere, nu este declarat verificat în acest audit documentar.
-
 ## EVT-CONSOLE-PATH-79 — prioritate 79
 
 Cu reporting.console.enabled false, loaderul Console confirmă disabled,

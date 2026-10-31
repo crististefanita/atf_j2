@@ -10,17 +10,16 @@ consumată. Reporting se întreține în J0; Shop/AutoEx, UI și Debug UI au own
 
 | Ordine | Owner J2 / impact local | Prioritate | Dovada care lipsește |
 |---:|---|---:|---|
-| 1 | [Eventuate](ATF_Eventuate_Feedback.md) | 92 | snapshot terminal păstrat înaintea excepției; apoi aplicație și observer LIVE |
-| 2 | [Adoptare Reporting](ATF_Reporting_Consumer_Feedback.md) | 89 | profil artifact și timing la owner, apoi revalidate pe binarul livrat |
-| 3 | [Validation](ATF_Validation_Feedback.md) | 86 | clasificarea semantică media type în contractele canonice |
-| 4 | [Mock](ATF_Mock_Feedback.md) | 85 | expected și response malformed sunt acceptate ca fixture-uri valide |
-| 5 | [Setup](ATF_Setup_Feedback.md) | 84 | cauza primară la eșecul salvării dovezii, ownership fizic și reluarea după restart |
+| 1 | [Eventuate](ATF_Eventuate_Feedback.md) | 90 | aplicație și observer LIVE, deadline propagat și efecte independente |
+| 2 | [Adoptare Reporting](ATF_Reporting_Consumer_Feedback.md) | 89 | profil artifact și timing demonstrate pe binarul consumat |
+| 3 | [Mock](ATF_Mock_Feedback.md) | 85 | expected și response malformed sunt acceptate ca fixture-uri valide |
+| 4 | [Setup](ATF_Setup_Feedback.md) | 84 | cauza primară la eșecul receipt-ului, ownership fizic și reluare după restart |
 
 Scorurile sunt priorități de intervenție, nu note ale modulelor. Ordinea
 executării ține cont de dependențe: un engine și un witness funcționale
 preced certificarea saga sau idempotency business.
 
-Parsarea JSON, schemele și identitatea integrală au contracte și regresii
+Parsarea JSON, schemele, egalitatea scalară, media type și identitatea integrală au contracte și regresii
 permanente; criteriile rezolvate sunt retrase din registrul activ.
 
 <details>
@@ -28,12 +27,10 @@ permanente; criteriile rezolvate sunt retrase din registrul activ.
 
 | Criteriu | Prioritate | Owner și dovadă de închidere |
 |---|---:|---|
-| EVT-TERMINAL-EVIDENCE-87 | 92 | Eventuate: snapshot terminal publicat o dată, fără răspuns inventat |
 | EVT-LOCAL-01 | 90 | aplicație, observer și efecte independente LIVE, individual/suită |
 | REPORT-J2-ADOPTION-62 | 89 | adoptare JAR cu profil artifact și acceptanță J2 distinctă |
 | EVT-IDEMPOTENCY-02 | 88 | duplicat de transport, business și POST separate, cu efecte independente |
 | REPORT-J2-TIMING-83 | 88 | latență controlată și intervale coerente captură/publicare |
-| VALIDATION-MEDIA-92 | 86 | contractele canonice verifică tipul/subtipul real |
 | MOCK-STRICT-FIXTURE-85 | 85 | JSON complet pentru expected și response |
 | EVT-CONVERGENCE-CONTRACT-86 | 84 | citirea LIVE bounded prin timpul rămas; identitatea și overflow sunt deja protejate |
 | SETUP-PRIMARY-FAILURE-87 | 84 | eșecul scrierii receipt-ului păstrează cauza inițială |

@@ -8,9 +8,11 @@ Proveniența și inventarul native sunt la rădăcină; istoricul J6 este păstr
 
 Cele trei componente Eventuate MOCK, guvernanța binară și controlul schimbării POM au trecut. Aceasta nu certifică brokerul, Podman sau un client Kafka real; lucrul Setup concurent este păstrat.
 
-J0 deține implementarea și probele generice: 52 native, regresii Extent/fallback,
-JAR fizic, refuz cu asset lipsă și artifact anterior păstrat. Două build-uri
-curate produc aceiași bytes. Inventarul public/protected are zero eliminări;
+- J0 deține implementarea și probele generice: 52 native, regresii Extent/fallback,
+JAR fizic, refuz cu asset lipsă și artifact anterior păstrat.
+- Două build-uri
+curate produc aceiași bytes.
+- Inventarul public/protected are zero eliminări;
 noile variante sealed cer revizuirea switch-urilor exhaustive.
 
 [Contractul observațiilor](../../atf_j0/atf-reporting/README.md#observații-publice-fără-transport)

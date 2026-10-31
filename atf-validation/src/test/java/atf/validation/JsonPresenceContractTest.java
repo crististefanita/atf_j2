@@ -60,6 +60,16 @@ class JsonPresenceContractTest {
         assertEquals(240, longValue.rows().getFirst().actual().length());
         assertThrows(IllegalArgumentException.class, () -> new ResponseContract().jsonPathType("$.x", "unsupported"));
     }
+    @Test void containersCannotMasqueradeAsEmptyScalarValues() {
+        for (String container : new String[]{"{}", "[]"}) {
+            var scalar = evaluate(new ResponseContract().jsonPathEquals("$.x", ""), "{\"x\":" + container + "}", false);
+            assertEquals(AtfReportStatus.FAIL, scalar.status());
+            assertEquals(container, scalar.rows().getFirst().actual());
+            assertEquals(AtfReportStatus.FAIL, evaluate(new ResponseContract().everyArrayItemEquals("$", "x", ""),
+                    "[{\"x\":" + container + "}]", false).status());
+        }
+        assertEquals(AtfReportStatus.PASS, evaluate(new ResponseContract().jsonPathEquals("$.x", ""), "{\"x\":\"\"}", false).status());
+    }
     private static atf.validation.evaluation.ValidationDecision evaluate(ResponseContract contract, String body, boolean warning) {
         return new ValidationEvaluator().evaluate(contract, new ApiResponse(200, body, Map.of(), Duration.ZERO, ""), warning);
     }

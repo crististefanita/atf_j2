@@ -1,5 +1,85 @@
 # J2 — perimetru verificat
 
+## Media type JSON — contracte canonice
+
+Cele cinci contracte canonice folosesc contentTypeJson, delegat către Core C1.
+Headerul text/plain cu parametrul profile="application/json" produce un singur
+rând nereușit, cu statusul HTTP și câmpurile payload nominale păstrate.
+
+| Probă în staging media | Rezultat și limită |
+|---|---|
+| baseline | 27 invocări, 12 eșecuri pe implementarea anterioară; clasificarea literală accepta parametri și refuza nominale cu sufix JSON |
+| regresie dedicată | 31 invocări verzi; toate cele cinci contracte în strict/warning, charset, tipuri concrete, header absent sau malformat și compunere cu contains |
+| Validation | 214 verificări selectate, zero eșecuri, erori sau skip; inclusiv JSON, scalar, schemă, port neutru și preview |
+| consumer și guvernanță | trei componente Eventuate prin suită și 166 controale verzi, pe Core C1 și Reporting J7 |
+| artifacte | 40 HTML-uri, inclusiv cele 28 de regresii anterioare; oracole de coloane, cardinalitate, verdict și ACTUAL exact, cu mutanți refuzați |
+| verdict per rând | 12 artifacte media type verificate independent; opt mutații care mută verdictul negativ pe alt rând sunt refuzate, chiar cu același număr de eșecuri |
+| browser | șase rapoarte Extent/fallback: FAIL, WARNING și nominal; patru coloane, vecini PASS, Fails către dovada originală și Enter/Space Extent |
+| Reporting rămas | disclosure API fallback absent și badge Warning mai lat decât RESULT; backlog-ul și componentele neutre dedicate sunt la J0 |
+
+Contractul stabil este în [README Validation](../atf-validation/README.md#content-type--clasificare-semantică-json).
+
+- Datele și log-urile sunt în TMP, incrementul atf-j2-media-cd3973d608:
+media-before.log, media-final-gates.log, media-matrix/acceptance.json,
+media-matrix/row-verdict-audit.json, browser-audit.json și promovările controlate J2/J0.
+
+- Randarea fallback warning a măsurat RESULT de aproximativ 56,9 px și badge
+de 61,8 px; wrapperul de 870 px are scrollWidth 877 px. [Feedback-ul J0](../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md)
+păstrează criteriul REPORT-FALLBACK-RESULT-WIDTH-101 și proba de componentă,
+fără a transfera clasificarea MIME către renderer.
+
+- J0 păstrează încă sursa canonică veche și propriul criteriu Validation.
+Acceptanța J2 nu certifică reconcilierea ori execuția J0/J1/J3; implementările
+Core/Reporting și cele șapte module J2 sunt păstrate.
+
+## Egalitate scalară Validation — containere refuzate
+
+Cele trei PASS-uri false pentru obiect/array comparat cu șir gol sunt
+corectate prin aceeași regulă scalară, fără modificarea Reporting J7 sau Core C1.
+Contractul stabil este în [README Validation](../atf-validation/README.md#egalitate-scalară--fără-coerciția-containerelor).
+
+| Probă în staging scalar | Rezultat și limită |
+|---|---|
+| regresie înaintea corecției | 43 invocări, 12 eșecuri pe codul anterior; include verdict, diagnostic și portul neutru |
+| Validation după corecție | 183 verificări selectate, inclusiv 43 scalare; strict/warning, string gol real, număr, boolean, null și comparație înainte de preview |
+| integrare consumer | cele trei componente Eventuate trec prin suită; fără trafic extern sau certificare Kafka |
+| matrice publică | 28 HTML-uri Extent/fallback; cele nouă fixture-uri existente și cinci cazuri scalare în fiecare renderer |
+| oracole de artifact | patru coloane, cardinalitate, verdict și ACTUAL exact; eliminarea coloanei, coruperea verdictului și pierderea valorii sunt refuzate |
+| structură de teste | noua regresie are subpachet scalar; limita de opt clase per pachet este păstrată fără excepție |
+| guvernanță finală | 166 verificări, zero eșecuri, erori sau skip; controalele Git, proveniența și stilul documentelor rămân active |
+
+Dovezile sunt în TMP, incrementul atf-j2-scalar-517c733433: baseline,
+scalar-before.log, scalar-final-gates.log, scalar-governance-final.log,
+scalar-matrix/acceptance.json, browser-audit.json și promovarea
+selectivă. Valoarea null textuală rămâne compatibilă; un contract care cere
+distincția de tip adaugă jsonPathType.
+
+Auditul browser verifică șase rapoarte nominal/FAIL/WARNING în cele două
+renderere, coloanele, tastatura Extent și legătura
+din Fails la ultima comparație. Fallback-ul păstrează verdicturile și valorile,
+dar validarea API nu are disclosure propriu; [limita rendererului are owner J0](../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-fallback-validation-disclosure-99--validarea-api-colapsabilă).
+
+## Snapshot terminal Eventuate — captură și ownership
+
+Pierderea la eșec este corectată în consumer, pe Core C1 și Reporting J7.
+Rezultatul Completed și snapshot-ul Terminal sunt capturate în ordine, cu
+aceeași excepție originală și faza efectivă a callback-ului JUnit.
+
+| Probă TMP | Rezultat și limită |
+|---|---|
+| baseline live | snapshot Core prezent, o tentativă și zero intrări în collector pentru script epuizat; failure-ul inițial este păstrat |
+| regresii terminale | 11 teste noi: epuizare, transport, timeout/cancel, retry, ordine după succes, suppressed, self-suppression, encoding fără snapshot și scope-uri restaurate |
+| regresii consumer | 19 identitate/overflow și cele trei componente canonice rămân verzi |
+| matrice terminală | 36 HTML-uri în Extent/fallback, 72 invocări, 32 failure-uri controlate și patru probe de excepție așteptată cu verdict PASS |
+| ownership | SETUP publică și fără TEST BODY; TEARDOWN nu preia răspunsul nominal anterior; statusul assertions este separat de eroarea fazei |
+| oracole negative | snapshot omis, fază greșită, coloană ACTUAL eliminată și assertions trecute marcate FAIL sunt refuzate |
+| integritate | aceeași excepție ajunge la JUnit; lipsa răspunsului rămâne explicită și timpul capturat nu este recalculat |
+| guvernanță J7 | catalogul finit al consumerului include explicit noul test Observation publicat; egalitatea exactă și controalele de boundary sunt păstrate |
+| revizie adiacentă istorică | trei PASS-uri pentru container JSON comparat cu string gol; corectate și reverificate în incrementul scalar de mai sus |
+
+Contractul și diagrama sunt la [ownerul Eventuate](../atf-test-eventuate/README.md#snapshot-uri-terminale-și-faze).
+[Acceptanța reproductibilă](ATF_Eventuate_Testing.md#snapshot-terminal--acceptanță-consumer)
+folosește binarul consumat; sursele Reporting și Core nu sunt modificate.
 ## Contracte JSON și identitate Eventuate — implementare verificată
 
 Incrementul implementează parsarea completă, prezența typed și subsetul schema
@@ -166,7 +246,7 @@ actuale se citesc la owner și nu sunt redeschise automat prin acest tabel.
 |---|---|---|
 | OrderAwaiter direct, istoric | APPROVED cu orderId 99 acceptat de predicatul state-only; corectat de incrementul de mai sus | [contractul curent](../atf-test-eventuate/README.md) |
 | buget virtual 25 ms, citire 40 ms | PASS refuzat, revenire la 40 ms; fără dovada anulării citirii | același criteriu; SLA LIVE separat |
-| transport scriptat epuizat | Core păstrează snapshot terminal; collectorul Eventuate are zero exchanges | [dovadă terminală](feedback/ATF_Eventuate_Feedback.md#evt-terminal-evidence-87--snapshot-ul-core-înaintea-excepției) |
+| transport scriptat epuizat, istoric | pierderea în collector este corectată; snapshot-ul și cauza originală sunt păstrate | [contractul terminal actual](../atf-test-eventuate/README.md#snapshot-uri-terminale-și-faze) |
 | redacție Core | JSON valid mascat; quoted text și fallback JSON invalid păstrează canary-ul sintetic | [Core](../../atf_j0/atf-core/README.md#media-type-headere-și-vocabular-de-protocol) |
 | media type | text/plain cu parametrul profile=json clasificat ca JSON | istoric; [contractul Core actual](../../atf_j0/atf-core/README.md#media-type-headere-și-vocabular-de-protocol) |
 | Content-Type construit | default JSON și override form apar simultan; oprire înainte de send | istoric; contract Core și proba de precedență header |

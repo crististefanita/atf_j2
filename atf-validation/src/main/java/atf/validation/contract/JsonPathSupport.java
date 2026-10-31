@@ -12,7 +12,8 @@ final class JsonPathSupport {
     record Value(State state, JsonNode node, String diagnostic) {
         boolean present() { return state == State.PRESENT; }
         String display() { return present() ? node.toString() : diagnostic; }
-        String text() { return present() ? node.asText() : diagnostic; }
+        String text() { return present() ? node.isValueNode() ? node.asText() : node.toString() : diagnostic; }
+        boolean matchesScalar(String expected) { return present() && scalarEquals(node, expected); }
         String type() {
             if (!present()) return diagnostic;
             return node.isNull() ? "null" : node.isObject() ? "object" : node.isArray() ? "array"
@@ -22,6 +23,11 @@ final class JsonPathSupport {
     }
     private static final Pattern TOKEN = Pattern.compile("\\.([\\p{L}_][\\p{L}\\p{N}_-]*)|\\[(0|[1-9][0-9]*)]");
     private JsonPathSupport() { }
+
+    /** String DSL compatibility applies to scalar values only, never to container coercions. */
+    static boolean scalarEquals(JsonNode node, String expected) {
+        return node != null && node.isValueNode() && expected.equals(node.asText());
+    }
 
     static Value read(JsonDocument document, String path) {
         final JsonPointer pointer;

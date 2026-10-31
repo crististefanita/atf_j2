@@ -71,12 +71,52 @@ Comanda execută cele trei componente MOCK și produce un raport comun; nu porne
 [Atlasul J2](../docs/ATF_Context_Atlas.md) identifică ownerul și proba.
 [Ghidul testării](../docs/ATF_Testing_Guide.md) separă componentele mock de acceptanța aplicației reale.
 
+## Snapshot-uri terminale și faze
+
+Clientul publică un rezultat Completed sau un Terminal cu snapshot-ul Core și
+aceeași excepție originală. Terminal nu fabrică răspuns HTTP; lipsa răspunsului
+rămâne explicită în proiecția bibliotecii.
+
+| Boundary | Contract |
+|---|---|
+| EventuateApiClient | un singur callback per execuție; eroarea capturării devine suppressed, fără reexecuție |
+| EventuateExchange | sumă typed Completed / Terminal; request, provenance și response availability provin din Core |
+| EventuateEvidence | ordine per invocare și fază; entries include ambele variante, exchanges este numai proiecția Completed compatibilă |
+| adaptor JUnit | scope SETUP și TEARDOWN restaurat după excepții; TEST BODY este faza implicită |
+| publisher | publică fiecare intrare în faza sa, inclusiv când body-ul nu pornește; păstrează tentativele și timpul capturat |
+| assertions audit | status derivat din comparații; eroarea execuției rămâne pe fază/request, fără a marca FAIL comparațiile trecute |
+| verdict | excepția neconsumată produce FAIL; o excepție așteptată și verificată prin assertions păstrează PASS-ul testului și faptele transportului |
+
+```mermaid
+%%{init: {"themeVariables":{"fontSize":"15px"},"themeCSS":".nodeLabel, .nodeLabel p { font-size: 15px !important; line-height: 1.35 !important; } .edgeLabel, .edgeLabel p { font-size: 12px !important; font-weight: 400 !important; line-height: 1.2 !important; } .edgeLabel .labelBkg, .edgeLabel p { background: transparent !important; } .edgeLabel foreignObject { transform: translateY(-18px); overflow: visible; } .node rect { rx: 6px; ry: 6px; }","flowchart":{"curve":"linear","nodeSpacing":24,"rankSpacing":40,"padding":10,"diagramPadding":16}}}%%
+flowchart LR
+    Core["Core<br/>result / snapshot"] -->|capturează| Client["Client"]
+    Client -->|Completed / Terminal| Evidence["Evidence<br/>fază + ordine"]
+    Evidence -->|snapshot| Publisher["Publisher"]
+    Client -->|aceeași excepție| JUnit["JUnit"]
+    JUnit -->|verdict fază| Publisher
+    Publisher -->|API JAR| Report["Extent / fallback"]
+```
+
+<details>
+<summary><strong>Legendă — fapte capturate și verdict independent</strong></summary>
+
+- Clientul capturează snapshot-ul înainte să propage excepția; callback-ul pentru Completed este separat de catch-ul execuției.
+- Collectorul rămâne serial și local invocării; scope-ul fazei nu transferă ownership între thread-uri asincrone.
+- HTTP evidence source reflectă provenance-ul capturat; NO_HTTP_EXECUTION nu certifică sursa evenimentelor de mesagerie.
+- Request-ul terminal păstrează cauza și outcome-ul; callback-ul de finalizare folosește verdictul fazei, fără să transforme o excepție așteptată în test FAIL.
+- Indexul Fails poate prezenta diagnosticul și execuția ca dovezi distincte; snapshot-ul request-ului este publicat o singură dată.
+
+</details>
+
+[Regresia terminală](src/test/java/atf/eventuate/tests/unit/EventuateTerminalEvidenceTest.java)
+și [acceptanța artifactului](../docs/ATF_Eventuate_Testing.md#snapshot-terminal--acceptanță-consumer)
+protejează cauza originală, faza, lipsa răspunsului și nominalele existente.
 ## Limite curente ale scaffold-ului
 
 | Criteriu rămas | Owner și probă de închidere |
 |---|---|
 | identitate și deadline | [convergență](../docs/feedback/ATF_Eventuate_Feedback.md#evt-convergence-contract-86--identitate-și-deadline-real): identitatea și overflow sunt protejate; rămâne propagarea bugetului către citirea bounded LIVE |
-| execuție terminală | [snapshot înaintea excepției](../docs/feedback/ATF_Eventuate_Feedback.md#evt-terminal-evidence-87--snapshot-ul-core-înaintea-excepției): rezultatul normal absent nu trebuie să elimine evidence-ul disponibil |
 | notificare consolă | [politica căii](../docs/feedback/ATF_Eventuate_Feedback.md#evt-console-path-79--prioritate-79): adaptorul emite direct calea și ocolește console.enabled |
 
 Identitatea integrală și decodarea fără overflow au regresii în [EventuateOrderContractTest](src/test/java/atf/eventuate/tests/unit/EventuateOrderContractTest.java) și în componenta de convergență. API-ul await primește OrderContract, nu o stare izolată. ID-ul, starea și rejectionReason trebuie să corespundă în aceeași observație; istoricul păstrează observațiile respinse.
