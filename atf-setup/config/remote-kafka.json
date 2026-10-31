@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "profile": "REMOTE_KAFKA",
+  "owner": "atf-j2",
+  "baseRecipe": "local.json",
+  "podmanRecipe": "remote-podman.json",
+  "externalHost": "192.168.56.1",
+  "hostAccess": {
+    "listenAddress": "192.168.56.1",
+    "guestAddress": "192.168.56.101",
+    "port": 19092,
+    "connectAddress": "127.0.0.1",
+    "firewallRule": "ATF-J2-Kafka-HostOnly"
+  }
+}

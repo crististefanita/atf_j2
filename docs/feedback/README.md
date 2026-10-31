@@ -11,8 +11,8 @@ consumată. Reporting se întreține în J0; Shop/AutoEx, UI și Debug UI au own
 | Ordine | Owner J2 / impact local | Prioritate | Dovada care lipsește |
 |---:|---|---:|---|
 | 1 | [Eventuate](ATF_Eventuate_Feedback.md) | 95 | aplicație/saga reală; apoi identitate, convergență și dovezi terminale complete |
-| 2 | [Setup](ATF_Setup_Feedback.md) | 94 | virtualizare utilizabilă în guest, engine, Kafka real și client pe host |
-| 3 | [Adoptare Reporting](ATF_Reporting_Consumer_Feedback.md) | 89 | profil artifact și timing execuție/publicare clarificate la owner, apoi revalidate pe binarul livrat |
+| 2 | [Adoptare Reporting](ATF_Reporting_Consumer_Feedback.md) | 89 | profil artifact și timing execuție/publicare clarificate la owner, apoi revalidate pe binarul livrat |
+| 3 | [Setup](ATF_Setup_Feedback.md) | 80 | Kafka și Java VM validate; rămân ownership-ul fizic, transportul durabil și reluarea după restart |
 
 Scorurile sunt priorități de intervenție, nu note ale modulelor. Ordinea
 executării ține cont de dependențe: un engine și un witness funcționale

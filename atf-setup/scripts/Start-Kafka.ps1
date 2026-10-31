@@ -4,7 +4,7 @@ param([string]$ConfigPath = "$PSScriptRoot/../config/local.json", [string]$Outpu
 Import-Module "$PSScriptRoot/support/AtfSetup.psm1" -Force
 Import-Module "$PSScriptRoot/support/Kafka.psm1" -Force
 $ErrorActionPreference = 'Stop'
-$config = Read-AtfSetupConfig $ConfigPath
+$config = Read-AtfKafkaSetupConfig $ConfigPath
 $output = New-AtfSetupOutput $OutputDirectory
 Invoke-AtfPodman $config @('info', '--format', 'json') -OutputDirectory $output | Out-Null
 $spec = Get-AtfKafkaSpecification $config
@@ -29,7 +29,8 @@ if ($null -eq $container) {
 Wait-AtfKafkaReady $config $output
 $container = Get-AtfKafkaContainer $config $output
 [ordered]@{ source = 'REAL_KAFKA'; status = 'READY'; observedAtUtc = [DateTime]::UtcNow.ToString('O')
-    bootstrapServers = "127.0.0.1:$($config.kafka.hostPort)"; containerId = $container.Id; imageId = $container.Image
+    bootstrapServers = Get-AtfKafkaBootstrap $config; containerId = $container.Id; imageId = $container.Image
+    engineTarget = $config.podman.machine; readinessPath = 'container INTERNAL listener'
     image = $config.kafka.image; specification = $spec } |
     ConvertTo-Json | Set-Content -LiteralPath (Join-Path $output 'kafka-ready.json') -Encoding utf8
 Write-Output "ATF_SETUP_RECEIPT=$output"

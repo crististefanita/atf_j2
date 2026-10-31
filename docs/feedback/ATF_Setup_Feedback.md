@@ -2,37 +2,23 @@
 
 ## Pe scurt
 
-Scripturile și contractele offline există. Un PASS al parserului ori al unui
-fixture de ownership nu demonstrează engine sau broker funcțional.
+Kafka remote și clientul Java din VM sunt validate individual și în două
+runde complete. Contractul stabil este în [Setup](../../atf-setup/README.md),
+iar probele și eșecurile inițiale sunt în [registrul verificărilor](../ATF_J2_Verification.md#kafka-remote--broker-și-client-extern-validate).
+Backlog-ul păstrează durabilitatea și ownership-ul gazdei, fără a redeschide brokerul demonstrat.
 
-## SETUP-KAFKA-REAL-82 — prioritate 94
+## SETUP-REMOTE-TRANSPORT-84 — prioritate 80
 
-Noul boot de la 2026-10-31, 14:23:22 București, este confirmat;
-componentRestartPending este false și VirtualMachinePlatform activ.
-Podman 5.8.3 și WSL 2.7.14 răspund, dar importul real WSL2 eșuează din nou.
+API-ul funcțional folosește TCP fără TLS/autentificare. Limitarea firewall la
+host-only este declarată de operator. Scriptul și launcherul pentru bridge-ul
+Kafka există, însă serviciul API și forwarding-ul 8888 inițial nu au încă o
+rețetă completă verificată după restart.
 
-| Probă postrestart | Rezultat |
-|---|---|
-| podman machine init, rețeta existentă | exit 125; WSL CreateVm/HCS_E_HYPERV_NOT_INSTALLED |
-| jurnal boot, Hyper-V-Hypervisor | Event 41: VMX absent sau neactivat în BIOS |
-| setup.json | FAIL cu etapa Initialize-Podman; fără PASS inventat pentru pașii Kafka |
-| contracte și componente Setup | verifică ownership, procese, corelare după clock shift și refuzul dovezilor stale; nu închid acceptanța infrastructurii |
+- [ ] Capturați serviciul API și forwarding-ul său ca rețetă explicită, idempotentă, cu ownership și receipts; fără oprirea serviciilor altui proces.
+- [ ] Reconciliați sursa exactă aplicată de operator pe fizic cu rețeta J2; guest-ul a verificat accesul, fără să recitească metadatele firewall/portproxy. Configurația externă nu se adoptă automat.
+- [ ] Alegeți transportul durabil SSH sau mTLS înainte de lărgirea accesului; păstrați ruta actuală ca opt-in de laborator, fără relaxarea automată a firewall-ului.
+- [ ] Verificați reluarea după restart, refuzul endpoint-ului/conexiunii străine și comportamentul la serviciu inaccesibil, fără fallback spre alt engine.
 
-- [ ] Obțineți versiunea VirtualBox, configurația efectivă și liniile HM/NEM/VMX din VBox.log pe gazdă; nu repetați modificări speculative în guest după încă un restart fără efect.
-- [ ] Corectați expunerea utilizabilă a virtualizării conform [diagnosticului](../ATF_Setup_Atlas.md#reluare-și-limita-gazdei); checkbox-ul nu certifică funcționarea.
-- [ ] Reluați [Test-SetupE2e](../../atf-setup/tests/Test-SetupE2e.ps1) în guest, păstrând rețeta, bugetele și refuzul resurselor străine.
-
-Închidere: Setup.ps1 produce setup.json PASS; proba Kafka reală păstrează
-mesaj corelat, image/container ID, topic, grup, partiție și offset.
-Repetați pornirea fără recreare; ownerul sau specificația străină rămân refuzate.
-Această probă nu închide saga Eventuate ori idempotency business.
-
-## SETUP-HOST-CLIENT-83 — prioritate 81
-
-CLI-ul folosește listenerul intern; TCP-ul extern verifică numai portul.
-Adăugați un client Kafka Java pe host care negociază metadata și execută
-roundtrip prin 127.0.0.1:19092, cu diagnostic pentru advertised listener greșit.
-Păstrați-l ca integration explicită, separat de cele trei componente MOCK.
-
-Închidere: proba reală trece individual/prin suită, iar advertised listener
-greșit este refuzat înaintea verdictului PASS.
+Închidere: ruta autorizată este reproductibilă după restart; o țintă greșită
+ori lipsa autentificării cerute produce FAIL înainte de operații asupra resurselor.
+[Atlasul Setup](../ATF_Setup_Atlas.md#stare-curentă--engine-remote-validat) delimitează dovada actuală.

@@ -11,8 +11,10 @@ sunt la [ownerul Setup](../README.md), fără instalare ascunsă în testele ATF
 |---|---|
 | Java 21 / Maven | java --version, mvn --version; toolchain ATF separat de Java din imaginea Kafka |
 | Podman 5.8.3 | [Install-Podman](Install-Podman.ps1), winget oficial și versiune fizică verificată |
-| WSL 2.7.14 | [Enable-Wsl](Enable-Wsl.ps1), package Microsoft și VirtualMachinePlatform prin DISM /NoRestart |
-| engine rootless | [Initialize-Podman](Initialize-Podman.ps1), mașina atf-j2 și podman info pe conexiunea explicită |
+| WSL 2.7.14, numai engine local | [Enable-Wsl](Enable-Wsl.ps1), package Microsoft și VirtualMachinePlatform prin DISM /NoRestart |
+| engine local rootless | [Initialize-Podman](Initialize-Podman.ps1), mașina atf-j2 și podman info pe conexiunea explicită |
+| engine remote rootless | [Initialize-RemotePodman](Initialize-RemotePodman.ps1), profil separat și conexiunea atf-j2-host; fără WSL în guest |
+| fizic și guest | [pașii setup-ului remote](README_Remote_Host.md), API Podman, host-only și forwarding Kafka cu elevare numai pe fizic |
 | gazdă VirtualBox | [colector read-only](Get-VirtualBoxHostStatus.ps1): versiune, configurație și VBox.log; rulează pe gazdă, separat de guest |
 
 Instalarea prerequisites cere o sesiune PowerShell deja elevată. Niciun script
@@ -24,6 +26,11 @@ nu repornește hostul. Maven nu invocă acești pași.
 - [Get-SetupStatus](../scripts/Get-SetupStatus.ps1) păstrează și Event 41 de la boot; mesajul WSL1 nu certifică un defect WSL2.
 - WSL2 cere virtualizare; într-o VM, hostul trebuie să expună virtualizare imbricată.
 - Componentele Windows pot cere restart manual; păstrați cauza și reluați rețeta după schimbarea stării hostului.
+
+Traseul remote validat folosește clientul deja instalat și engine-ul gazdei,
+Linux amd64 5.7.0, prin rețeaua host-only. Nu cere elevare pentru conexiune
+sau smoke și nu activează funcții Windows. [Rețeta remote](../README.md#podman-remote-din-vm--traseul-validat)
+separă engine-ul remote de blocajul virtualizării imbricate și de Kafka.
 
 Referințe: [Podman Windows](https://podman.io/docs/installation),
 [WSL și virtualizare](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting).

@@ -11,9 +11,60 @@ externe, fiecare cu JAR/POM direct în lib.
 | reactor | șapte module sursă compilate; Core încărcat din JAR; fără UI/Debug sau Playwright |
 | native Core pe binar | 221 verificări, zero eșecuri/erori/skip; 220 native plus identitatea binarului |
 | Eventuate | trei componente individual și aceeași suită de trei; un singur HTML pentru suită |
-| limită | MOCK, fără broker Kafka real; acceptanța Reporting J6 istorică nu este rescrisă |
+| limită a probelor C1 | componente MOCK; Kafka are acceptanță nativă distinctă mai jos, fără rescrierea provenienței Reporting J6 |
 
 [Contractul Core C1](ATF_Core_Consumer.md) descrie publicarea, bootstrap-ul și ownership-ul.
+
+## Podman remote — acceptanță nativă din VM
+
+La 2026-10-31, clientul deja instalat în Windows VM, 5.8.3, comunică cu
+engine-ul Linux amd64 rootless 5.7.0 al gazdei prin tcp://192.168.56.1:8888.
+Scripturile Setup au rulat silent în staging TMP, fără modificarea rutei locale WSL2.
+
+| Probă nouă | Rezultat și limită |
+|---|---|
+| inițializare | podman info PASS prin URL explicit și conexiunea numită atf-j2-host; fără instalare necesară |
+| execuție individuală | hello-world cu digest fixat, exit 0 și output verificat; containerul unic este absent după --rm |
+| repetare E2E Podman | două runde PASS, probeId-uri independente, aceeași imagine și conexiune reutilizată |
+| negativ nativ | serverVersion 5.7.1 cerut față de 5.7.0 observat → inițializare FAIL, exit 1; smoke neexecutat |
+| componente remote | 30 comparații/refuzuri PASS; include câmpul Identity omis din JSON-ul TCP nativ, engine greșit și oprirea la configurație invalidă |
+| regresii Setup locale | 41 contracte offline și 31 comparații de componentă PASS; niciuna nu certifică brokerul |
+| limită | engine remote, nu WSL2 guest; Kafka, clientul Java și Eventuate real nu au fost rulate în acest increment |
+
+Receipts native remote-setup.json, remote-podman.json, podman-smoke.json și
+remote-e2e.json păstrează rutele, versiunile, probele și logurile comenzilor.
+Un defect inițial al adaptorului, care presupunea câmpul Identity prezent,
+a produs FAIL păstrat; proba permanentă verifică acum forma TCP observată.
+Contractul reproductibil este la [Setup](../atf-setup/README.md#podman-remote-din-vm--traseul-validat).
+
+## Kafka remote — broker și client extern validate
+
+La 2026-10-31, scripturile Kafka comune au rulat silent în staging TMP pe
+profilul remote. Sursa Core/Reporting și catalogul celor șapte module rămân
+separate de această acceptanță a infrastructurii.
+
+| Probă nativă | Rezultat și limită |
+|---|---|
+| Start-Kafka de două ori | aceeași identitate de container, imagine și specificație; Kafka 4.1.2 la digestul configurat |
+| două roundtrip-uri CLI | PASS, topic/grup/probeId distincte, partiția 0 și offset 0 pentru fiecare mesaj |
+| InternalOnly | hostTcpReachable false; receipt-ul păstrează explicit limita față de ruta externă |
+| biblioteci Java | kafka-clients 4.1.2 și SLF4J din imaginea pin-uită, copiate în TMP; hash-uri păstrate și fixate în rețeta clientului |
+| client Java în Windows VM | PASS individual și în două runde complete; metadata corectă, topic propriu, ack și consum la aceeași partiție/offset |
+| suita remote completă | două runde PASS după eliminarea exec -i; patru probe independente, aceeași resursă și buget readiness 60 s păstrat |
+| rute după intervenția fizică | API Podman _ping OK, engine rootless 5.7.0 și guest TCP 19092 accesibil |
+| negativ metadata | așteptarea unui listener greșit produce FAIL înainte de topic/publish, fără schimbarea brokerului |
+| negativ producer | destinație locală închisă produce status nonzero, propagat prin conducta fără stdin remote |
+| verificare argumente | text cu shell metacharacters rămâne literal într-o execuție reală, fără stdin remote |
+| controale Setup | 48 contracte, 31 componente locale, 30 componente Podman remote și 44 componente Kafka remote PASS |
+
+Probele inițiale FAIL rămân păstrate: port Kafka inaccesibil, API reset și
+exec -i eșuat la închiderea sesiunii. Aceste rezultate nu au fost transformate
+în PASS; producerul revizuit a fost verificat cu probe noi, fără replay.
+
+- Containerul final este identic cu cel creat la început; imaginea și specificația au rămas constante.
+- Regula aplicată pe fizic aparține intervenției operatorului; guest-ul demonstrează funcționarea, fără să pretindă readback-ul ownership-ului Windows sau o probă după reboot.
+- Infrastructura folosește receipts native; niciun rezultat nu certifică încă saga, efectele persistente ori idempotency business Eventuate.
+- Pașii și transferul launcherului sunt în [ghidul gazdei](../atf-setup/prerequisites/README_Remote_Host.md).
 
 ## Acceptanță anterioară — opt module fără UI
 
@@ -31,7 +82,7 @@ La 2026-10-31, J2 declară opt module: Test Kit, Core, Mock, Validation, Console
 
 README-urile, diagramele, linkurile și metadatele descriu perimetrul de opt module. Codul UI și testele sale rămân în J0/J1; nu sunt copiate pentru a satisface build-ul J2.
 
-## Verificare infrastructură după restart
+## Istoric — verificare infrastructură locală după restart
 
 La 2026-10-31, Setup și prima probă E2E de infrastructură au fost reluate
 silent din staging TMP. Ultimul boot observat este 14:23:22, ora București;

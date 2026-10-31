@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-Ținta este un framework Kafka cu un singur modul de test și Setup PowerShell în Podman. Componentele locale sunt MOCK; clientul Java, brokerul și scenariile reale au acceptanță WIP separată.
+Ținta este un framework Kafka cu un singur modul de test și Setup PowerShell în Podman. Kafka și clientul Java de infrastructură sunt validate din VM; clientul/observerul framework-ului și scenariile Eventuate reale rămân WIP.
 
 Documentația locală explică Eventuate, mesageria, Setup și platforma consumată.
 J0 deține Reporting, iar J1 deține scenariile web și runtime-ul browser.

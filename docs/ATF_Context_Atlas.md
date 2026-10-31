@@ -18,7 +18,7 @@ J2 are șapte module și exclude UI/Debug; auditul HTML rămâne extern.
 | mesagerie | [MessageEvidenceContract](../atf-test-eventuate/src/main/java/atf/eventuate/validation/MessageEvidenceContract.java) | livrări MOCK_EVENT_FEED și witness de efecte; ordinalul fixture-ului nu este offset Kafka |
 | audit JUnit | [EventuateComponentExtension](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java) | Kit decide o singură dată; adaptorul transferă comparațiile fără reevaluare |
 | raport | [ComponentReportRun](../atf-test-eventuate/src/main/java/atf/eventuate/reporting/ComponentReportRun.java) | owner serial class/suite; trei faze, close înaintea notificării căii absolute |
-| infrastructură | [Setup atlas](ATF_Setup_Atlas.md) | restart rezolvat; importul WSL2 eșuează nativ la HCS, înainte de Kafka; Maven nu pornește servicii |
+| infrastructură | [Setup atlas](ATF_Setup_Atlas.md) | Kafka remote și Java Windows demonstrate individual/prin două runde; revalidarea engine-ului și rutei rămâne obligatorie |
 | selecție și artifact | [ghid Eventuate](ATF_Eventuate_Testing.md) | trei componente, matrice cu 12 artifacte și patru FAIL-uri intenționate |
 | guvernanță | [ATF Tests](../atf-tests/README.md), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | inventar explicit și probe negative pentru modul lipsă, UI shadow și dependențe browser |
 
@@ -83,8 +83,10 @@ consumer MOCK nu justifică mutarea politicii Eventuate în Kit.
 | witness de mesagerie | validatorul identității și al efectului furnizat | Kafka, deduplicare SQL sau proiecție Mongo reală |
 | receipt Setup | pasul real executat și eroarea originală | engine sau broker doar din prezența executabilului |
 | artifact HTML | populația publicată, verdict și navigare inspectate | stabilitate statistică ori toate ramurile viitoare |
-| CLI Kafka în container, neexecutat pe hostul blocat | contract de roundtrip pe listener intern, cu topic/grup/poziție; TCP extern separat | nicio acceptanță reală până la engine funcțional și client Java pe host |
-| client Kafka Java · WIP | țintă de integrare, încă neimplementată | nicio acceptanță reală nu se deduce din scaffold-ul MOCK |
+| Podman remote real | client Windows → engine rootless pe gazdă; container hello-world și reutilizarea conexiunii verificate | nu certifică WSL2 în guest, listener Kafka ori saga |
+| CLI Kafka real | livrări corelate și aceeași resursă după pornire repetată; producer fără exec -i | nu certifică saga sau deduplicarea business |
+| client Java Setup | PASS din VM, individual și două runde; metadata verificată înainte de publish, ack și poziție corelată | nu este clientul/observerul framework-ului Eventuate; fără probă după restart fizic |
+| client/observer Kafka în framework · WIP | țintă de integrare, încă neimplementată | nicio acceptanță saga sau business nu se deduce din proba Setup |
 
 ## Întreținere fără drift
 

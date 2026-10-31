@@ -14,7 +14,7 @@ regresiile generice au owner în J0.
 | [Setup](atf-setup/README.md) | rețetă Kafka cu digest, readiness și producer/consumer; prerequisites ale hostului separate |
 | [Atlas](docs/ATF_Context_Atlas.md) | intrări în cod, invarianti și dovezi, pentru context progresiv |
 | [Scop J2](docs/ATF_J2_Scope.md) | catalogul explicit de șapte module, fără UI/Debug sau Playwright |
-| client Kafka Java · WIP | încă neimplementat; nu există dependență kafka-clients în POM-ul consumerului |
+| client/observer Kafka în framework · WIP | neimplementat; proba Java de infrastructură aparține Setup și nu adaugă kafka-clients în POM-ul consumerului |
 | [Feedback](docs/feedback/README.md) | numai restanțele J2 și efectele contractelor comune consumate |
 
 ## Diagramă de bază

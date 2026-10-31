@@ -4,7 +4,7 @@ param([string]$ConfigPath = "$PSScriptRoot/../config/local.json", [string]$Outpu
 Import-Module "$PSScriptRoot/support/AtfSetup.psm1" -Force
 Import-Module "$PSScriptRoot/support/Kafka.psm1" -Force
 $ErrorActionPreference = 'Stop'
-$config = Read-AtfSetupConfig $ConfigPath
+$config = Read-AtfKafkaSetupConfig $ConfigPath
 $output = New-AtfSetupOutput $OutputDirectory
 $container = Get-AtfKafkaContainer $config $output
 if ($container.State.Running) { Invoke-AtfPodman $config @('stop', '--time', '20', $config.kafka.container) -OutputDirectory $output | Out-Null }

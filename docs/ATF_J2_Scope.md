@@ -4,7 +4,7 @@
 
 J2 este WIP pentru un framework de mesagerie și un singur modul de test Kafka,
 cu Setup PowerShell în Podman. Reactorul are șapte module, fără UI/Debug;
-cele trei componente actuale sunt MOCK, iar integrarea Kafka Java rămâne de implementat.
+cele trei componente actuale sunt MOCK, iar integrarea Kafka Java în framework rămâne de implementat.
 
 | Stare live | Contract |
 |---|---|
@@ -17,7 +17,7 @@ cele trei componente actuale sunt MOCK, iar integrarea Kafka Java rămâne de im
 
 | Suprafață | Sursă / probă | Invariant |
 |---|---|---|
-| reactor | [POM](../pom.xml), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | exact cele opt identități; modul obligatoriu lipsă sau modul străin refuzat |
+| reactor | [POM](../pom.xml), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | exact cele șapte identități; modul obligatoriu lipsă sau modul străin refuzat |
 | dependențe | [ATF Tests POM](../atf-tests/pom.xml), [guard J2](../atf-tests/src/test/java/atf/j2/governance/J2DeploymentGovernanceTest.java) | fără atf-ui, atf-debug-ui sau Playwright |
 | catalog comun | [GovernanceDeployment](../atf-tests/src/test/java/atf/api/tests/governance/distribution/GovernanceDeployment.java) | profil explicit; absența directorului nu reduce catalogul |
 | documente | același resolver de deployment | țintele UI externe sunt mapate explicit la documente J2; țintele active lipsă rămân erori |
@@ -59,7 +59,7 @@ flowchart LR
 <details>
 <summary><strong>Legendă — infrastructură și integrare încă deschisă</strong></summary>
 
-Setup citește rețeta JSON și configurează Podman/Kafka numai la lansare explicită; Maven nu pornește servicii. Muchia punctată arată clientul Kafka Java de implementat, iar muchia MOCK arată intrarea folosită astăzi.
+Setup configurează Kafka și verifică clientul Java de infrastructură numai la lansare explicită; Maven nu pornește servicii. Muchia punctată arată clientul/observerul de implementat în framework, iar muchia MOCK arată intrarea actuală a testelor Eventuate.
 
 Modulul de test deține expected-ul și verdictul. Reporting JAR publică faptele și HTML-ul; muchiile reprezintă operații și flux de date, nu dependențe Maven.
 

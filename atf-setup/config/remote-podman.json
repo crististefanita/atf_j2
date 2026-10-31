@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "owner": "atf-j2",
+  "podman": {
+    "version": "5.8.3",
+    "connection": "atf-j2-host",
+    "url": "tcp://192.168.56.1:8888",
+    "transport": "VIRTUALBOX_HOST_ONLY_TCP",
+    "serverVersion": "5.7.0"
+  },
+  "probe": {
+    "image": "docker.io/library/hello-world@sha256:c567b231f65614688711a75f31518a064258a51d442117a3e771a3a8fdba78ef",
+    "platform": "linux/amd64",
+    "expectedOutput": "Hello from Docker!"
+  }
+}

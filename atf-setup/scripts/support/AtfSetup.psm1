@@ -106,7 +106,9 @@ function Invoke-AtfPodman {
     param([Parameter(Mandatory)]$Config, [Parameter(Mandatory)][string[]]$Arguments,
         [Parameter(Mandatory)][string]$OutputDirectory, [int]$TimeoutSeconds = 30,
         [AllowNull()][string]$InputText, [switch]$AllowFailure)
-    Invoke-AtfSetupProcess -File (Resolve-AtfPodman) -Arguments (@('--connection', $Config.podman.machine) + $Arguments) `
+    $target = if ($Config.podman.provider -eq 'remote') { @('--url', $Config.podman.url) }
+        else { @('--connection', $Config.podman.machine) }
+    Invoke-AtfSetupProcess -File (Resolve-AtfPodman) -Arguments ($target + $Arguments) `
         -OutputDirectory $OutputDirectory -TimeoutSeconds $TimeoutSeconds -InputText $InputText -AllowFailure:$AllowFailure
 }
 
