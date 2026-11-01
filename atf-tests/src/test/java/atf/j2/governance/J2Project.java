@@ -5,7 +5,7 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 /** Explicit J2 deployment; absent modules never shrink the expected perimeter. */
 final class J2Project {
-    static final List<String> MODULES = List.of("atf-test-kit", "atf-mock", "atf-validation", "atf-console", "atf-setup", "atf-test-eventuate", "atf-tests");
+    static final List<String> MODULES = List.of("atf-test-kit", "atf-mock", "atf-sql", "atf-validation", "atf-console", "atf-setup", "atf-test-eventuate", "atf-tests");
     static Path root() {
         Path current = Path.of("").toAbsolutePath();
         while (current != null && !Files.isRegularFile(current.resolve("platform-provenance.json"))) current = current.getParent();
@@ -23,7 +23,7 @@ final class J2Project {
         var declared = new java.util.ArrayList<String>();
         var nodes = pom.getElementsByTagName("module");
         for (int i = 0; i < nodes.getLength(); i++) declared.add(nodes.item(i).getTextContent().strip());
-        if (!declared.equals(MODULES)) throw new IllegalStateException("J2 requires its exact seven-module perimeter: " + declared);
+        if (!declared.equals(MODULES)) throw new IllegalStateException("J2 requires its exact eight-module perimeter: " + declared);
         for (String module : MODULES) if (!Files.isRegularFile(root.resolve(module).resolve("pom.xml"))) throw new IllegalStateException("Missing module POM: " + module);
         try (var children = Files.list(root)) {
             for (Path child : children.filter(Files::isDirectory).toList()) {

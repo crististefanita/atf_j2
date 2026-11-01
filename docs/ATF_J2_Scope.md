@@ -3,21 +3,21 @@
 ## Pe scurt
 
 J2 este WIP pentru un framework de mesagerie și un singur modul de test Kafka,
-cu Setup PowerShell în Podman. Reactorul are șapte module, fără UI/Debug;
-trei componente sunt MOCK și trei verifică SQL embedded H2, iar integrarea Kafka Java în framework rămâne de implementat.
+cu Setup PowerShell în Podman. Reactorul are opt module, fără UI/Debug;
+trei componente sunt MOCK și trei verifică witness-ul Eventuate H2. Biblioteca SQL generică are cinci invocări componente; observerul Kafka este implementat și probat real, iar aplicația completă rămâne NOT RUN.
 
 | Stare live | Contract |
 |---|---|
-| catalog | Kit, Mock, Validation, Console, Setup, Eventuate, Tests, în ordinea declarată |
+| catalog | Kit, Mock, SQL, Validation, Console, Setup, Eventuate, Tests, în ordinea declarată |
 | profil | eventuate; foundation are alt catalog și nu substituie acest deployment |
 | browser | fără surse UI/Debug și fără dependență Playwright |
-| Reporting | JAR/POM J8, fără sursă ori harness în J2 |
+| Reporting | JAR/POM J10, fără sursă ori harness în J2 |
 
 ## Limita executabilă
 
 | Suprafață | Sursă / probă | Invariant |
 |---|---|---|
-| reactor | [POM](../pom.xml), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | exact cele șapte identități; modul obligatoriu lipsă sau modul străin refuzat |
+| reactor | [POM](../pom.xml), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | exact cele opt identități; modul obligatoriu lipsă sau modul străin refuzat |
 | dependențe | [ATF Tests POM](../atf-tests/pom.xml), [guard J2](../atf-tests/src/test/java/atf/j2/governance/J2DeploymentGovernanceTest.java) | fără atf-ui, atf-debug-ui sau Playwright |
 | catalog comun | [GovernanceDeployment](../atf-tests/src/test/java/atf/api/tests/governance/distribution/GovernanceDeployment.java) | profil explicit; absența directorului nu reduce catalogul |
 | documente | același resolver de deployment | țintele UI externe sunt mapate explicit la documente J2; țintele active lipsă rămân erori |
@@ -53,15 +53,17 @@ flowchart LR
     Setup["Setup<br/>PowerShell + JSON"] -->|provisioning| Podman["Podman<br/>Kafka"]
     Mock["Fixture MOCK"] -->|astăzi| Tests["Modul de test"]
     SQL["H2 embedded"] -->|JDBC independent| Tests
-    Podman -.->|integrare Java WIP| Tests
+    Podman -->|observer probat real| Tests
     Tests -->|fapte și verdict| Report["Reporting JAR<br/>Extent / fallback"]
 ```
 
 <details>
 <summary><strong>Legendă — infrastructură și integrare încă deschisă</strong></summary>
 
-Setup configurează Kafka și verifică clientul Java de infrastructură numai la lansare explicită; Maven nu pornește servicii. Muchia punctată arată clientul/observerul de implementat în framework, iar muchiile MOCK și H2 arată intrările locale ale componentelor Eventuate.
+Setup configurează Kafka și verifică clientul Java de infrastructură numai la lansare explicită; Maven nu pornește servicii. Observerul are probă reală de infrastructură, iar muchiile MOCK și H2 arată intrările locale. Aceste dovezi nu certifică aplicația cu saga/CDC.
 
 Modulul de test deține expected-ul și verdictul. Reporting JAR publică faptele și HTML-ul; muchiile reprezintă operații și flux de date, nu dependențe Maven.
 
 </details>
+
+Modulul [atf-sql](../atf-sql/README.md) este adăugat explicit prin incrementul SQL generic, autorizat separat; catalogul anterior de șapte module rămâne istoric. Nu este o redenumire ori o relaxare a guard-ului de module.

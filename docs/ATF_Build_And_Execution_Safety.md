@@ -7,7 +7,7 @@ Pentru sursele Core și Reporting din `atf_j0` și țintele J1/J2, aplică [prot
 staging-ul producătorului `atf_j0`; [ghidul consumerului](ATF_Reporting_Consumer.md) separă gate-urile și ownership-ul.
 
 UI și Debug UI sunt retrase din J2; [scopul deployment-ului](ATF_J2_Scope.md)
-delimitează catalogul de șapte module. Sync-ul nu restaurează modulele browser
+delimitează catalogul de opt module. Sync-ul nu restaurează modulele browser
 și nu copiază POM-ul altui deployment peste J2.
 
 ## Pe scurt

@@ -4670,3 +4670,72 @@ testChanges:
 ```
 
 </details>
+<details>
+<summary><strong>Control verificat — Reporting J10</strong></summary>
+
+```yaml
+testChanges:
+  - id: REPORT-J10-ATF-J2
+    status: VERIFIED
+    base: 3c013eb9b5940381340d46cbf137c046c44f8973
+    expires: 2026-11-30
+    reason: Adoptă J10 și catalogul nativ finit, cu bridge binar deprecated verificat prin inventar exact și negative de creștere sau substituție. Limita de coeziune opt și API-ul vechi rămân; Core C2 este păstrat. Același POM adoptă explicit al optulea modul J2 atf-sql cerut de utilizator, cu catalog strict și probe native; nu restaurează UI/Debug.
+    proof: mvn -B -pl atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - pom.xml
+      - atf-tests/src/test/java/atf/api/tests/governance/AtfPackageCohesionGovernanceTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control verificat — SQL-LIVE-117</strong></summary>
+
+```yaml
+testChanges:
+  - id: SQL-LIVE-117
+    status: VERIFIED
+    base: 3c013eb9b5940381340d46cbf137c046c44f8973
+    expires: 2026-11-30
+    reason: Adaugă explicit biblioteca SQL JDK-only, cinci invocări componente, matrice Extent/fallback cu eșecuri controlate și porturi LIVE opt-in. Păstrează testele existente, catalog strict de opt module și limita de coeziune opt; nicio relaxare sau ștergere. POM-ul root rămâne acoperit de controlul paralel REPORT-J10-ATF-J2 la aceeași bază.
+    proof: mvn -B -pl atf-sql,atf-test-eventuate,atf-tests -am "-Dtest=SqlQueryContractTest,SqlExecutorFailureTest,SqlComponentSuite,BoundedConvergenceTest,KafkaObserverContractTest,LiveHttpPolicyTest,InfrastructureReportOracleTest,SqlEffectsContractTest,EventuateComponentSuite,EventuateSqlComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-sql/pom.xml
+      - atf-sql/src/test/java/atf/sql/tests/component/SqlCaptureFailureComponentTest.java
+      - atf-sql/src/test/java/atf/sql/tests/component/SqlResultComponentTest.java
+      - atf-sql/src/test/java/atf/sql/tests/component/SqlTransactionComponentTest.java
+      - atf-sql/src/test/java/atf/sql/tests/suites/SqlComponentSuite.java
+      - atf-sql/src/test/java/atf/sql/tests/support/H2SqlDatabase.java
+      - atf-sql/src/test/java/atf/sql/tests/support/JdbcFaults.java
+      - atf-sql/src/test/java/atf/sql/tests/support/SqlComponentExtension.java
+      - atf-sql/src/test/java/atf/sql/tests/support/SqlComponentTest.java
+      - atf-sql/src/test/java/atf/sql/tests/support/SqlTestEvidence.java
+      - atf-sql/src/test/java/atf/sql/tests/support/acceptance/SqlReportAcceptance.java
+      - atf-sql/src/test/java/atf/sql/tests/support/acceptance/SqlReportOracle.java
+      - atf-sql/src/test/java/atf/sql/tests/unit/SqlExecutorFailureTest.java
+      - atf-sql/src/test/java/atf/sql/tests/unit/SqlQueryContractTest.java
+      - atf-test-eventuate/pom.xml
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/e2e/EventuateApprovedOrderE2eTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/e2e/EventuateInsufficientCreditE2eTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/e2e/EventuateUnknownCustomerE2eTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/e2e/support/LiveOrderChecks.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/suites/EventuateLiveE2eSuite.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateLiveTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/live/InfrastructureAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/live/InfrastructureReportOracle.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/live/InfrastructureReportOracleTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/live/BoundedConvergenceTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/live/KafkaObserverContractTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/live/LiveHttpPolicyTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/ArchitectureModuleBoundaryTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/WholeAtfGovernanceSuiteTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/GovernanceDeployment.java
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/GovernanceDeploymentTest.java
+      - atf-tests/src/test/java/atf/j2/governance/J2Project.java
+      - atf-tests/src/test/java/atf/j2/governance/J2DocumentationGovernanceTest.java
+      - atf-tests/src/test/java/atf/j2/governance/J2SqlModuleGovernanceTest.java
+```
+
+</details>

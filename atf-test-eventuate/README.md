@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-Acesta este singurul modul de test J2. Clientul/observerul Kafka al framework-ului este în lucru; [Setup](../atf-setup/README.md) are deja o probă Java de infrastructură validată pe broker real, separată de integrarea Eventuate.
+Acesta este modulul de teste business J2; SQL are separat teste native ale bibliotecii. Observerul Kafka al framework-ului este implementat și probat pe broker real; [Setup](../atf-setup/README.md) are deja o probă Java de infrastructură validată pe broker real, separată de integrarea Eventuate.
 
 Modulul compune platforma ATF cu trei oracole deterministe pentru Eventuate:
 contract API, convergență cu retry de citire și validarea dovezilor de mesagerie. Trei componente SQL embedded verifică separat witness-ul JDBC pe H2.
@@ -42,7 +42,7 @@ fallback, prin aceeași bibliotecă externă.
 
 | Sursă | Rol în investigație |
 |---|---|
-| [EventuateApiClient](src/main/java/atf/eventuate/api/EventuateApiClient.java) | binding concret MOCK; POST o tentativă, GET 503 maximum două tentative prin Core |
+| [EventuateApiClient](src/main/java/atf/eventuate/api/EventuateApiClient.java) | MOCK implicit; LIVE prin compoziție explicită, POST o tentativă; politica de GET depinde de profil |
 | [OrderAwaiter](src/main/java/atf/eventuate/await/OrderAwaiter.java) | clock/pause injectate, buget unic și OrderContract integral; observațiile respinse rămân în istoric |
 | [MessageEvidenceContract](src/main/java/atf/eventuate/validation/MessageEvidenceContract.java) | identitate, livrări distincte și witness independent; nu implementează deduplicarea aplicației |
 | [JdbcOrderEffectsReader](src/main/java/atf/eventuate/sql/JdbcOrderEffectsReader.java) | witness JDBC independent; [contract și atlas de pachet](src/main/java/atf/eventuate/sql/README.md), cu H2 exclusiv în test |
@@ -189,3 +189,8 @@ Celelalte criterii de mai sus și integrarea Kafka reală rămân deschise.
 
 
 Fixture-ul terminal after-success serializează răspunsul înaintea execuției măsurate. Deadline-ul Core de 250 ms și proba care păstrează excepția originală a sink-ului rămân distincte de pregătirea datelor de test.
+
+## LIVE și SQL generic — intrări curente
+
+- [Atlasul LIVE](src/main/java/atf/eventuate/live/README.md) delimitează portul bounded, observerul și schema candidat. [atf-sql](../atf-sql/README.md) deține execuția JDBC generică; mapperul aplicației rămâne în Eventuate.
+- [Dovada](../docs/ATF_SQL_Live_Verification.md) confirmă Kafka/MySQL reale pe memorie limitată, nu aplicația cu saga. Cele trei E2E sunt opt-in și încă NOT RUN pe aplicația completă.

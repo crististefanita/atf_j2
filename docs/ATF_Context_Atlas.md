@@ -2,15 +2,15 @@
 
 ## Pe scurt
 
-J2 dezvoltă framework-ul Kafka/mesagerie în jurul unui singur modul de test, configurat prin scripturi Setup în Podman. Clienții și observerii Kafka Java sunt WIP; componentele locale folosesc trei fixture-uri MOCK și trei probe SQL embedded H2.
+J2 dezvoltă framework-ul Kafka/mesagerie în jurul unui singur modul de test, configurat prin scripturi Setup în Podman. Observerul Kafka este implementat și probat pe broker real; componentele locale folosesc trei fixture-uri MOCK, trei witness-uri Eventuate H2 și cinci invocări componente SQL generice. Aplicația completă cu CDC/saga rămâne NOT RUN.
 
 J2 testează contracte Eventuate și mesagerie. Începe cu sursa și callerul
 indicate mai jos; extinde contextul numai când apare o dependență concretă.
-J2 are șapte module și exclude UI/Debug; auditul HTML rămâne extern.
+J2 are opt module și exclude UI/Debug; auditul HTML rămâne extern.
 
 | Subiect | Intrare în cod / hartă | Invariant și limită |
 |---|---|---|
-| catalog și ownership | [scop J2](ATF_J2_Scope.md), [POM](../pom.xml) | 7 module fără browser; profilul rămâne Eventuate |
+| catalog și ownership | [scop J2](ATF_J2_Scope.md), [POM](../pom.xml) | 8 module fără browser; profilul rămâne Eventuate |
 | request/response | [EventuateApiClient](../atf-test-eventuate/src/main/java/atf/eventuate/api/EventuateApiClient.java) | binding MOCK implicit: POST o tentativă, GET 503 cel mult două; seam separat pentru executori/politici/provenance explicite |
 | snapshot terminal | [EventuateExchange](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateExchange.java), [collector](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateEvidence.java) | Completed sau Terminal în ordinea și faza capturării; aceeași excepție, fără răspuns inventat și fără dublarea callback-ului |
 | script finit | [ScriptedApiTransport](../atf-test-eventuate/src/main/java/atf/eventuate/mock/ScriptedApiTransport.java) | ordonat, strict, fără răspuns verde când se epuizează ruta |
@@ -32,7 +32,7 @@ J2 are șapte module și exclude UI/Debug; auditul HTML rămâne extern.
 | selecție și artifact | [ghid Eventuate](ATF_Eventuate_Testing.md) | trei componente MOCK și trei SQL; suite finite distincte și matrice SQL de 18 artifacte, inclusiv combinația cu MOCK; acceptanțele terminale rămân separate |
 | guvernanță | [ATF Tests](../atf-tests/README.md), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | inventar explicit și probe negative pentru modul lipsă, UI shadow și dependențe browser |
 
-Reporting J9 este binarul consumat; proveniența J6 (demo2) și J7 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
+Reporting J10 este binarul consumat; proveniența J6 (demo2) și J7 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
 
 ## Boundary-uri de fidelitate
 
@@ -97,7 +97,7 @@ consumer MOCK nu justifică mutarea politicii Eventuate în Kit.
 | Podman remote real | client Windows → engine rootless pe gazdă; container hello-world și reutilizarea conexiunii verificate | nu certifică WSL2 în guest, listener Kafka ori saga |
 | CLI Kafka real | livrări corelate și aceeași resursă după pornire repetată; producer fără exec -i | nu certifică saga sau deduplicarea business |
 | client Java Setup | PASS din VM, individual și două runde; metadata verificată înainte de publish, ack și poziție corelată | nu este clientul/observerul framework-ului Eventuate; fără probă după restart fizic |
-| client/observer Kafka în framework · WIP | țintă de integrare, încă neimplementată | nicio acceptanță saga sau business nu se deduce din proba Setup |
+| observer Kafka framework | probă reală: readiness înaintea publicării sintetice, offset/partition/ID corelate | nu certifică outbox/CDC/saga sau idempotency business |
 
 ## Întreținere fără drift
 
@@ -111,7 +111,7 @@ aduce înapoi aceste domenii în atlasul și backlog-ul J2.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C2 și Reporting J9 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C2 și Reporting J10 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C2](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
@@ -124,3 +124,24 @@ separă observations neutre de comparații, inclusiv în raportul combinat.
 
 Mock nu preia saga sau witness-ul SQL. [Criteriul real rămas](feedback/ATF_Eventuate_Feedback.md#evt-idempotency-02--prioritate-88)
 cere efectele aplicației și corelare SQL/Kafka; proba H2 nu îl închide.
+
+
+### Limita actuală a dovezii SQL
+
+- [SqlEvidencePublisher](../atf-test-eventuate/src/main/java/atf/eventuate/reporting/SqlEvidencePublisher.java) publică fapte prin ReportObservation și rânduri JSON, nu un pas SQL dedicat. Snapshot-ul vechi Eventuate este o proiecție de domeniu.
+- Noul [atf-sql](../atf-sql/README.md) capturează template, binds typed, schema ordonată și celule din aceeași execuție. Adaptorul său publică momentan observations JSON, fără pas SQL nativ.
+
+[Cererea canonică J0](../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-sql-steps-116--query-uri-și-rezultate-auditabile)
+propune pași SQL neutri și bugete distincte pentru query și rezultate.
+[Adoptarea J2](feedback/ATF_Reporting_Consumer_Feedback.md#sql--handoff-către-j0-și-adoptare-ulterioară)
+cere integrarea snapshot-ului generic cu un candidat JAR verificat; J10 și preview-ul
+assertion-urilor 240 rămân contractul curent, fără proprietăți SQL inventate.
+
+## Intrare progresivă — SQL și LIVE
+
+1. [SQL README](../atf-sql/README.md): query → execuție → snapshot → consumer; fără driver sau Reporting main.
+2. [Atlas LIVE](../atf-test-eventuate/src/main/java/atf/eventuate/live/README.md): deadline comun, observer înaintea mutației și witness read-only.
+3. [Rețeta Setup](../atf-setup/README_Eventuate.md): engine pe gazdă, client în VM, limite RAM și resurse împrumutate.
+4. [Dovada](ATF_SQL_Live_Verification.md): nominale, negative, randări și delimitarea NOT RUN.
+
+Nu transformați un SELECT sintetic sau un eveniment fabricat într-un verdict asupra aplicației Eventuate. Politica de query/result HTML rămâne la J0; bugetele JDBC și preview-ul assertions 240 sunt contracte diferite.

@@ -128,3 +128,8 @@ delimitează eroarea WSL2. Colectorul nu oprește VM-ul și nu modifică setări
 
 Contractul operării este în [README](../atf-setup/README.md);
 criteriile neînchise sunt în [feedback](feedback/ATF_Setup_Feedback.md).
+
+## Eventuate — extindere cu memorie limitată
+
+- [Rețeta](../atf-setup/README_Eventuate.md) separă Build, DB-only, runtime export și proba mică. [Dovada curentă](ATF_SQL_Live_Verification.md) include 14 comparații Kafka/MySQL reale, un eveniment sintetic și două SELECT-uri.
+- Aplicația completă este NOT RUN; gate-ul MemAvailable nu oprește resurse pentru a obține RAM. [Componentele offline](../atf-setup/tests/Test-EventuateSetupComponents.ps1) verifică identitatea rețetei, memoria și păstrarea cauzei la receipt failure.

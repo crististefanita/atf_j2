@@ -9,9 +9,9 @@ primește și verifică livrarea potrivită propriului deployment.
 | Workspace | Rol | Suprafață existentă |
 |---|---|---|
 | `atf_j0` | sursă Core/Reporting, teste native și `atf-reporting-tests`; referință pentru contractele comune | 12 module sursă; Core și guvernanța comune reconciliate |
-| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 9 module journeys; C2/J9 în lib și acceptanță proprie |
-| `atf_j2` | WIP: framework și teste Kafka/mesagerie, fără module browser ori Shop/AutoEx | 7 module sursă; Core și Reporting JAR; trei componente MOCK și trei SQL embedded; Kafka remote și clientul Java de infrastructură validate, clientul/observerul framework-ului rămâne WIP |
-| `atf_j3` | consumer speech, șapte module sursă; Core și Reporting prin JAR | C2/J9 în lib și acceptanță proprie, fără module web ori mesagerie |
+| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 9 module journeys; C2/J10 în lib și acceptanță proprie |
+| `atf_j2` | WIP: framework și teste Kafka/mesagerie, fără module browser ori Shop/AutoEx | 8 module sursă; Core și Reporting JAR; SQL generic JDK-only, componente MOCK/H2 și observer Kafka probat pe infrastructură reală; aplicația Eventuate completă NOT RUN |
+| `atf_j3` | consumer speech, opt module sursă; Core și Reporting prin JAR | C2/J10 în lib și acceptanță proprie, fără module web ori mesagerie |
 | `demo2` | origine istorică a livrării J6 existente | nu mai este destinație activă de mentenanță sau sync |
 
 J1 poate avea schimbări comune în lucru. Referința J0 nu autorizează
@@ -51,8 +51,7 @@ flowchart LR
 | infrastructură comună | ownerul comportamentului și consumatorii afectați; reconciliere selectivă, fără mirror sau proprietate exclusivă asupra întregului ATF |
 
 J2 este WIP: trei componente verifică oracole MOCK și trei witness-ul JDBC pe H2 embedded; Setup configurează
-Kafka în Podman prin scripturi. Clientul Kafka Java și acceptanța reală
-rămân distincte; infrastructura copiată nu le demonstrează.
+Kafka în Podman prin scripturi. Observerul Kafka are acum probă reală proprie, iar biblioteca SQL este owner J2. Acceptanța aplicației rămâne distinctă; infrastructura copiată nu o demonstrează.
 
 ## Ce se propagă
 
@@ -117,7 +116,7 @@ Acceptanța J2 Eventuate și limita hostului sunt în [dovada consumerului](../.
 
 ## J2 fără module browser — perimetru distinct
 
-J2 declară șapte module sursă: patru platformă, Setup, Eventuate și guvernanță; Core este bibliotecă externă.
+J2 declară opt module sursă: cinci platformă, Setup, Eventuate și guvernanță; Core este bibliotecă externă.
 [Scope-ul J2](../../atf_j2/docs/ATF_J2_Scope.md) delimitează contractul fără
 UI/Debug sau Playwright; retragerea este implementată în checkout-ul J2.
 
@@ -127,11 +126,11 @@ selectiv, iar backlog-ul Reporting și cel web rămân la ownerii J0/J1.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C2 și Reporting J9 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C2 și Reporting J10 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C2](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
 [Livrarea observations J7](ATF_Reporting_J7_Verification.md) păstrează acceptanțele și istoricul versiunilor separat.
 
-[Livrarea Reporting J9](ATF_Reporting_J8_Verification.md) închide disclosure-ul API fallback, cu acceptanță proprie a fiecărui consumer.
+[Livrarea Reporting J10](ATF_Reporting_J8_Verification.md) închide disclosure-ul API fallback, cu acceptanță proprie a fiecărui consumer.

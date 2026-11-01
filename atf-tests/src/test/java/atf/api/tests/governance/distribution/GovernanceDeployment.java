@@ -35,6 +35,7 @@ public record GovernanceDeployment(Path root, List<String> sourceModules, boolea
                 .filter(module -> !profile.equals("eventuate") || !List.of(AtfModuleIds.UI, AtfModuleIds.DEBUG_UI).contains(module)).toList();
         if (profile.equals("eventuate")) {
             var expanded = new ArrayList<>(binaryGate);
+            expanded.add(expanded.indexOf("atf-mock") + 1, "atf-sql");
             int index = expanded.indexOf(AtfModuleIds.TESTS);
             expanded.addAll(index, List.of("atf-setup", "atf-test-eventuate"));
             binaryGate = List.copyOf(expanded);

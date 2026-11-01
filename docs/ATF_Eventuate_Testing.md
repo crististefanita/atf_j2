@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-Cele trei teste MOCK și trei componente SQL embedded au suite distincte și folosesc aceeași extensie de audit. Clientul/observerul framework-ului și saga reală sunt WIP; proba Java Setup pe Kafka real are [acceptanță de infrastructură separată](../atf-setup/README.md#kafka-remote--provisioning-și-client-extern).
+Cele trei teste MOCK și trei componente SQL embedded au suite distincte și folosesc aceeași extensie de audit. Observerul framework-ului are probă reală, dar saga rămâne NOT RUN; proba Java Setup pe Kafka real are [acceptanță de infrastructură separată](../atf-setup/README.md#kafka-remote--provisioning-și-client-extern).
 
 Componenta este aleasă explicit prin `@EventuateComponentTest`, compusă cu
 adnotarea Kit și extensia de audit. Cele trei cazuri MOCK normale au fiecare un
@@ -221,3 +221,7 @@ scroll-ul interior al assertions și întoarcerea Fails în Tests. [Contractul S
 separă limitele adaptorului de acceptanța aplicației.
 
 </details>
+
+## SQL generic și LIVE cu RAM limitat
+
+[Incrementul verificat](ATF_SQL_Live_Verification.md) adaugă matricea nativă SQL și proba infrastructurii Kafka/MySQL. [Suita LIVE](../atf-test-eventuate/src/test/java/atf/eventuate/tests/suites/EventuateLiveE2eSuite.java) este finită și opt-in; un skip sau compilarea nu închid EVT-LOCAL-01. Rularea ei pe aplicație cere readiness HTTP/CDC și mapping SQL confirmat, fără replay de POST.

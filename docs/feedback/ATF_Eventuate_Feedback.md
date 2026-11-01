@@ -1,54 +1,54 @@
-# Eventuate — feedback deschis
+# Eventuate — criterii rămase după porturile LIVE
 
 ## Pe scurt
 
-Cele trei componente MOCK și trei SQL embedded verifică oracolele și integrarea ATF pe fixture-uri.
-Acceptanța aplicației reale rămâne deschisă; raportul MOCK nu este dovadă
-pentru procesarea brokerului sau pentru tranzacțiile bazei de date.
+- Observerul Kafka, portul HTTP bounded și witness-ul bazat pe atf-sql sunt implementate. [Dovada incrementului](../ATF_SQL_Live_Verification.md) include 14 comparații pe Kafka/MySQL reale, dar evenimentul business este sintetic.
+- Aplicația Eventuate cu servicii/CDC/saga este **NOT RUN**. Resursele altor procese rămân active; testele controlate sunt alese explicit când RAM-ul nu permite laboratorul complet.
 
 ## EVT-LOCAL-01 — prioritate 90
 
-Kafka și clientul Java de infrastructură sunt demonstrate în Setup; nu recreați
-această restanță. Lipsește laboratorul aplicației cu servicii, CDC și baze,
-împreună cu clientul/observerul framework-ului și efectele independente.
+Lipsa observerului și compoziției LIVE nu mai sunt ToDo-uri de implementare.
+Cele trei clase E2E sunt opt-in, finite și compilate; nu sunt încă acceptate pe aplicația reală.
 
-- Compuneți executori LIVE din configurația laboratorului; seam-ul de injectare există, iar binding-ul implicit rămâne MOCK. Adaptați profilul și tag-urile run-ului, nu numai transportul.
-- Păstrați implicit lipsa traficului LIVE și activarea explicită a laboratorului. Provenance-ul schimburilor este capturat, însă lipsesc observerul Kafka, corelarea și politica de ownership pentru callbacks asincrone.
-- Verificați compatibilitatea versiunilor aplicației și readiness-ul observerului înaintea primei mutații; brokerul standalone nu certifică outbox/CDC/saga.
-- Implementați aprobare, respingere și client necunoscut cu date și cleanup proprii; nu adăugați module ori un simulator de business în Kit.
+- Confirmați readiness HTTP și CDC înainte de prima mutație, împreună cu end offsets capturate de observer.
+  Start înregistrează STARTED_REQUIRES_READINESS; proces pornit nu înseamnă aplicație pregătită.
+- Validați schema și migrațiile commit-ului upstream fixat, cele două query-uri și contul SELECT-only.
+  Proba MySQL sintetică nu certifică mapperul business; [criteriul SQL](ATF_SQL_Feedback.md#sql-application-witness-118--prioritate-85) delimitează această parte.
+- Rulați aprobare, credit insuficient și client necunoscut individual și prin suită cu date owned,
+  un singur POST per operație, corelare message/aggregate/order/customer și efecte independente.
+- Documentați cleanup-ul datelor business și starea topic-urilor care lipsesc; nu creați automat
+  un topic aplicație numai pentru a trece readiness-ul și nu introduceți simulator în Kit.
+- Păstrați memoria ca precondiție explicită. Nu opriți engine-ul sau alte containere și nu afirmați
+  acceptanță saga din raportul de infrastructură ori dintr-un skip E2E.
 
-Închidere: aceleași cazuri trec individual și în suită, cu provenance live,
-identități corelate, citiri independente și randări Extent/fallback inspectate.
-Nu mări timeout-ul pentru a ascunde o precondiție neconfirmată.
+Închidere: aceleași trei cazuri trec individual/prin suită, Extent/fallback au faptele corelate
+și randările inspectate; readiness, schema și cleanup-ul sunt probate inclusiv negativ.
+Fără timeout mărit sau replay al mutațiilor. Mongo/CQRS nu este inclus în rețeta redusă actuală.
 
 ## EVT-IDEMPOTENCY-02 — prioritate 88
 
-Separă duplicatul de transport cu același message ID de repetarea operației
-business cu ID nou și de repetarea POST-ului. Proiecția Mongo folosește un
-detector fără deduplicare; replay-ul vechi este un risc static de reprodus.
+După acceptanța aplicației, separați duplicatul de transport cu același message ID de operația
+business cu ID nou și de repetarea POST-ului. Proiecția Mongo upstream și detectorul său cer
+reproducere pe varianta fixată; nu deduceți un defect executat din inspecția statică.
 
-Închidere: demonstrează procesarea duplicatului, efectul SQL unic și starea
-CQRS coerentă; verifică și creditul concurent și recuperarea CDC. Un defect
-upstream se raportează cu dovadă, fără relaxarea oraclelor ATF.
+- Demonstrați două livrări și un singur efect SQL, rezervarea creditului și proiecția CQRS coerentă.
+- Includeți credit concurent și recuperarea CDC, cu witness-uri independente.
+- Păstrați H2 ca regresie locală, fără a confunda UNIQUE-ul fixture-ului cu deduplicarea upstream.
 
-- Incrementul [SQL embedded](../../atf-test-eventuate/src/main/java/atf/eventuate/sql/README.md) este livrat: witness JDBC, trei componente și matrice individual/suită/combinate pe H2. Schema fixture și tranzacțiile locale nu închid criteriul real de mai sus.
-
-- Înaintea adoptării LIVE, delimitați bugetele de conectare/SELECT și anularea lor, contul read-only și consistența citirii; H2 local nu demonstrează aceste limite de rețea.
-- Următorul pas este adaptorul read-only pentru schema aplicației și corelarea cu observerul Kafka, cu provenance și identitate independentă.
-- Demonstrați două livrări ale aceluiași mesaj, efectul SQL unic și proiecția CQRS, inclusiv credit concurent și recuperare CDC.
-- Păstrați H2 ca regresie locală a adaptorului/oraclelor; nici modul de compatibilitate, nici un UNIQUE care împiedică fixture-ul duplicat nu certifică deduplicarea upstream.
+Închidere: efecte reale și raport corelat pentru nominal, duplicat și eșec; defectele upstream
+sunt raportate cu dovadă, fără relaxarea oracolelor. Criteriul depinde de EVT-LOCAL-01.
 
 ## EVT-CONVERGENCE-CONTRACT-86 — deadline al citirii LIVE
 
-**Prioritate: 84/100.** Criteriul rămas este citirea bounded în integrarea LIVE.
-[Contractul livrat](../../atf-test-eventuate/README.md#limite-curente-ale-scaffold-ului) și clock-ul virtual nu certifică anularea unei citiri HTTP blocate.
+**Prioritate: 84/100.** Propagarea timpului rămas este implementată prin BoundedOrderReader,
+LiveDeadline și transportul HTTP cu o tentativă. Componentele controlate verifică reducerea
+bugetului, expirarea înainte de dispatch și absența replay-ului; nu le redeschideți ca API lipsă.
 
-- Propagați timpul rămas către portul de citire LIVE și timeout-ul transportului, fără reînnoirea bugetului la retry.
-- Păstrați cauza originală la expirare; fără timeout mărit sau replay de mutații.
-- Verificați răspuns lent, cancel și deadline expirat înaintea citirii; fiecare buget și observație trebuie să fie auditabile.
+Rămâne proba pe rețea: răspuns lent sau blocat, anulare reală, starea terminală și cauza originală,
+individual/prin suită. Timpul total nu se reînnoiește între GET-uri; raportul păstrează istoricul
+și absența răspunsului. Proba MySQL bounded verifică JDBC, nu anularea socket-ului HTTP.
 
-Închidere: timpul real este bounded prin port/transport și probat individual
-și prin suită. Clock-ul virtual dovedește politica de verdict, nu SLA-ul rețelei.
+- Închidere: portul și transportul real sunt măsurate sub deadline, inclusiv negative, fără timeout mărit. Clock-ul virtual și transportul injectat dovedesc politica, nu SLA-ul serviciului.
 
 ## EVT-CONSOLE-PATH-79 — prioritate 79
 

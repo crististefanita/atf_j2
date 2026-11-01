@@ -43,10 +43,14 @@ public final class EventuateComponentExtension implements ComponentAuditAdapter 
         }
     }
     private static ComponentAuditExtension.Publication publication(Owner owner, ExtensionContext context) {
-        var evidence = new EventuateEvidence();
+        var live = org.junit.platform.commons.support.AnnotationSupport.isAnnotated(context.getRequiredTestClass(), EventuateLiveTest.class);
+        var evidence = new EventuateEvidence(live ? EventuateEvidence.Profile.LIVE_E2E : EventuateEvidence.Profile.COMPONENT);
         context.getStore(DATA).put(EventuateEvidence.class, evidence);
         owner.printPath |= AtfReportPathPolicyResolver.resolve(context.getRequiredTestClass()) == AtfReportPath.Policy.ENABLED;
         return new ComponentAuditExtension.Publication() {
+            @Override public ComponentAssertionAudit.AssertionRequirement assertionRequirement() {
+                return ComponentAssertionAudit.AssertionRequirement.TEST_BODY;
+            }
             @Override public AssertionValueDisplay display() { return new AssertionValueDisplay(owner.report.previewLimit(), owner.report::display); }
             @Override public void publish(ComponentAssertionAudit.Result result) {
                 var phases = result.phases().stream().map(phase -> new PhaseEvidence(phase.phase().name().replace('_', ' '),

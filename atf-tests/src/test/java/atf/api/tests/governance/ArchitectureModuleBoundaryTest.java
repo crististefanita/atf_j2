@@ -78,6 +78,7 @@ public class ArchitectureModuleBoundaryTest {
         if (GovernanceDeployment.text(properties, "atf.consumer.profile").equals("eventuate"))
         {
             expected.removeAll(List.of(AtfModuleIds.UI, AtfModuleIds.DEBUG_UI));
+            expected.add(expected.indexOf("atf-mock") + 1, "atf-sql");
             expected.addAll(expected.indexOf(AtfModuleIds.TESTS), List.of("atf-setup", "atf-test-eventuate"));
         }
         assertEquals(expected, deployment.sourceModules());

@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-**WIP J2:** Kafka remote este validat din VM, prin CLI intern și client Java extern, individual și în două runde complete. Transportul durabil și reluarea după restart au [feedback separat](../docs/feedback/ATF_Setup_Feedback.md). Setup este infrastructură, iar `atf-test-eventuate` rămâne singurul modul de test.
+**WIP J2:** Kafka remote este validat din VM, prin CLI intern și client Java extern, individual și în două runde complete. Transportul durabil și reluarea după restart au [feedback separat](../docs/feedback/ATF_Setup_Feedback.md). Setup este infrastructură, iar `atf-test-eventuate` deține testele business; `atf-sql` are separat regresiile native ale bibliotecii.
 
 Modulul deține instalarea și configurarea Kafka în Podman, prin scripturi
 reutilizabile. Java și Podman sunt prerequisites ale hostului. Maven inventariază
@@ -184,3 +184,7 @@ Hostul furnizează Java și engine-ul. Rețeta fixează imaginea și KRaft cu un
 broker. Receipt-ul este dovadă de infrastructură, separat de MOCK și saga.
 
 </details>
+
+## Eventuate și SQL pe memorie limitată
+
+[Rețeta Eventuate](README_Eventuate.md) documentează engine-ul pe gazdă, clientul în VM, imaginile/commit-ul pin-uite, DB-only, exportul runtime și proba mică Kafka/MySQL. Resursele existente nu se opresc. Aplicația completă și CDC/saga rămân NOT RUN; testele offline și embedded nu le substituie.

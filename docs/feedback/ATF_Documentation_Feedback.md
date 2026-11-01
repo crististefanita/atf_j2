@@ -1,25 +1,27 @@
-# Documentație J2 — fidelitate semantică
+# Documentație — fidelitatea deployment-ului J2
 
 ## Pe scurt
 
-README-urile și atlasele descriu deployment-ul verificat, nu catalogul unui
-alt workspace. Regulile editoriale rămân la [ownerul documentației](../README_Atf_DocumentationBestPractices.md);
-acest registru păstrează numai protecția semantică încă nedemonstrată.
+Guard-ul factual pentru arhitectură există și compară modulele și scope-urile
+Kit cu POM-urile. Nu îl mai listați drept implementare lipsă. Restanța este
+acoperirea afirmațiilor curente despre versiunile binare și reducerea duplicării.
 
 ## DOC-DEPLOYMENT-FACTS-105 — prioritate 81
 
-Guvernanța structurală verde nu a detectat afirmațiile curente J6 în pagini
-care consumă J7, nici tabelul cu opt module J2 față de cele șapte din POM.
-Adoptarea J8 a repetat deriva: primul ecran root și Core consumer încă indicau J7, iar scope-ul indica J6. Textele sunt reconciliate; lipsește proba permanentă care previne reapariția contradicției.
+- DocumentedBuildContractTest păstrează nominalul și mutanții pentru numărul
+  modulelor și scope-ul Kit; incrementul SQL a refuzat inclusiv o formulare
+  care nu mai expunea declarația factuală. Controalele nu au fost relaxate.
+- Deriva rămasă este demonstrată în indexul docs: Core C1/J8 și șapte module,
+  în timp ce consumerul actual folosește C2/J10 și catalogul SQL de opt module.
+  Textele curente sunt reconciliate; dovezile istorice păstrează versiunea execuției.
+- Extindeți faptele verificate la versiunile curente din index/owner README și
+  proveniența JAR/POM. Folosiți un contract mic, fără matching al întregii proze.
+- Reduceți footerele care repetă catalogul; navigarea către owner este preferabilă
+  duplicării aceleiași afirmații în fiecare atlas.
 
-- Owner: guvernanța documentației din J2; sursele faptelor sunt POM-ul, catalogul explicit și proveniența bibliotecilor.
-- Delimitați afirmațiile curente de inventarele istorice J6; nu înlocuiți global numerele ori versiunile din istoricul livrării.
-- Definiți un set mic de fapte verificabile la owner și referințe către el; evitați duplicarea acelorași numere în fiecare footer.
-- Păstrați documentele self-explanatory și regulile actuale; nu introduceți skip-uri, praguri permisive sau matching rigid al întregii proze.
+Închidere: mutantul unei versiuni curente greșite este refuzat, iar istoricul
+legitim J6/J8/J9 și catalogul unui alt deployment rămân valide. Păstrați
+probele existente de module/scope, limitele editoriale și linkurile reale.
 
-Închidere: mutanți controlați cu modul lipsă, versiune curentă greșită și
-inventar istoric legitim. Primele două sunt refuzate, al treilea rămâne valid;
-testele native ale guvernanței și documentele reale trec în același staging.
-
-[ATF Tests](../../atf-tests/README.md#alege-gate-ul-după-schimbare) delimitează
-gate-ul structural existent; succesul său nu constituie încă această probă semantică.
+[Guvernanța documentară](../../atf-tests/README.md#alege-gate-ul-după-schimbare)
+și [stilul proiectului](../README_Atf_DocumentationBestPractices.md) rămân ownerii regulilor.

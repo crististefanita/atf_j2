@@ -119,9 +119,9 @@ public class GovernanceDeploymentTest {
 
     @Test void eventuateDeclaresBothSetupAndConsumerAndRefusesMissingModules() throws Exception {
         eventuate();
-        assertEquals(List.of("atf-test-kit", "atf-core", "atf-mock", "atf-validation", "atf-console", "atf-setup", "atf-test-eventuate", "atf-tests"), GovernanceDeployment.read(root).sourceModules());
+        assertEquals(List.of("atf-test-kit", "atf-core", "atf-mock", "atf-sql", "atf-validation", "atf-console", "atf-setup", "atf-test-eventuate", "atf-tests"), GovernanceDeployment.read(root).sourceModules());
         Path pom = root.resolve("pom.xml"); String original = Files.readString(pom);
-        for (String required : List.of("atf-setup", "atf-test-eventuate", "atf-core")) {
+        for (String required : List.of("atf-setup", "atf-test-eventuate", "atf-core", "atf-sql")) {
             Files.writeString(pom, original.replace("<module>" + required + "</module>", ""));
             assertTrue(assertThrows(IllegalStateException.class, () -> GovernanceDeployment.read(root)).getMessage().startsWith("GOV-REACTOR:"));
         }
@@ -154,7 +154,9 @@ public class GovernanceDeploymentTest {
         String withoutUi = Files.readString(pom).replace("<module>atf-ui</module>", "").replace("<module>atf-debug-ui</module>", "");
         Files.writeString(pom, withoutUi);
         for (String excluded : List.of("atf-ui", "atf-debug-ui")) { Files.delete(root.resolve(excluded + "/pom.xml")); Files.delete(root.resolve(excluded)); }
-        for (String module : List.of("atf-setup", "atf-test-eventuate")) {
+        Path sqlPom = root.resolve("pom.xml");
+        Files.writeString(sqlPom, Files.readString(sqlPom).replace("<module>atf-mock</module>", "<module>atf-mock</module><module>atf-sql</module>"));
+        for (String module : List.of("atf-setup", "atf-test-eventuate", "atf-sql")) {
             Files.createDirectory(root.resolve(module)); Files.writeString(root.resolve(module + "/pom.xml"), "<project/>");
         }
     }

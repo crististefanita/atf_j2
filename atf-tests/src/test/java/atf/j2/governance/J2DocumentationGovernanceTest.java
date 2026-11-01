@@ -30,7 +30,7 @@ public class J2DocumentationGovernanceTest {
     @Test void documentsTheActualDeploymentAndLibraryOwner() throws Exception {
         Path root = J2Project.root();
         String architecture = Files.readString(root.resolve("docs/ATF_Architecture.md"));
-        assertTrue(architecture.contains("exact cele 7 module"));
+        assertTrue(architecture.contains("exact cele " + J2Project.MODULES.size() + " module"));
         String atlas = Files.readString(root.resolve("docs/ATF_Context_Atlas.md"));
         assertTrue(atlas.contains("demo2") && atlas.contains("atf_j0") && atlas.contains("MOCK"));
     }

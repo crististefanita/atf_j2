@@ -15,10 +15,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-/** Mock-only binding with explicit mutation/read policies; only eligible GET responses may retry. */
+/** Explicit mutation/read policies; the scripted constructor remains the offline default. */
 public final class EventuateApiClient {
     private final ApiExecutor writes;
     private final ApiExecutor reads;
+    private final ApiExecutor customers;
     private final Consumer<EventuateExchange> evidence;
     private final ObjectMapper json = new ObjectMapper();
     public EventuateApiClient(ScriptedApiTransport transport, Consumer<EventuateExchange> evidence) {
@@ -26,12 +27,24 @@ public final class EventuateApiClient {
         writes = new ApiExecutor(transport, new ApiSettings(base, "none", Duration.ofSeconds(2), Set.of(), 1).snapshot(), ApiTransportMode.ACCEPTANCE);
         reads = new ApiExecutor(transport, new ApiSettings(base, "none", Duration.ofSeconds(2), Set.of(503), 2).snapshot(), ApiTransportMode.ACCEPTANCE);
         this.evidence = java.util.Objects.requireNonNull(evidence);
+        customers = writes;
     }
     /** Explicit composition seam; the caller owns executor policies and truthful provenance. */
     public EventuateApiClient(ApiExecutor writes, ApiExecutor reads, Consumer<EventuateExchange> evidence) {
+        this(writes, reads, writes, evidence);
+    }
+    public EventuateApiClient(ApiExecutor writes, ApiExecutor reads, ApiExecutor customers, Consumer<EventuateExchange> evidence) {
         this.writes = java.util.Objects.requireNonNull(writes, "writes");
         this.reads = java.util.Objects.requireNonNull(reads, "reads");
         this.evidence = java.util.Objects.requireNonNull(evidence, "evidence");
+        this.customers = java.util.Objects.requireNonNull(customers, "customers");
+    }
+    public ApiExecutionResult createCustomer(String name, String creditLimit) {
+        String body;
+        try { body = json.writeValueAsString(Map.of("name", name, "creditLimit", Map.of("amount", new java.math.BigDecimal(creditLimit)))); }
+        catch (java.io.IOException failure) { throw new IllegalArgumentException("Cannot encode customer", failure); }
+        return execute(customers, new ApiRequest(HttpRequest.BodyPublishers.ofString(body), "POST", "/customers",
+                Map.of(), Map.of("Content-Type", "application/json"), "none", null, body));
     }
     public ApiExecutionResult createOrder(long customerId, String amount) {
         String body;

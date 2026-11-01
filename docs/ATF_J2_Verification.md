@@ -1,5 +1,50 @@
 # J2 — perimetru verificat
 
+## Acceptanța curentă SQL/LIVE pe C2/J10
+
+[Incrementul SQL/LIVE](ATF_SQL_Live_Verification.md) adaugă explicit al optulea modul și separă probele reale de aplicația NOT RUN.
+
+### Livrarea anterioară J10 — înaintea modulului SQL
+
+[J10](ATF_Reporting_J10_Verification.md) fixează candidatul curent: guvernanța
+completă J2, componentele API individual/prin suită în Extent/fallback și
+suita SQL H2 au acceptanță proprie. Core C2 și scope-ul de șapte module rămân.
+
+Matricele SQL/browser J9 de mai jos păstrează execuțiile și hash-urile lor
+istorice. Selecția J10 nu declară repetate toate cele 18 artifacte SQL,
+brokerul remote ori o capabilitate SQL Reporting încă nelivrată.
+
+## Istoric C2/J9 și incrementuri anterioare
+
+## Revizie live — priorități și handoff SQL
+
+La 1 noiembrie 2026, snapshot-ul inițial de 372 de fișiere era identic cu
+staging-ul final Kit. În timpul reviziei, livrarea paralelă Core C2/Reporting
+J9 a schimbat codul, binarele și documentele; staging-ul este resincronizat
+cu cele 374 de fișiere curente înainte de validarea finală.
+
+| Dovadă | Rezultat și limită |
+|---|---|
+| anti-undo | guard-ul a refuzat promovarea pe feedback-ul J0 schimbat concurent; noile criterii SQL sunt adăugate peste versiunea live, fără restaurarea ToDo-urilor închise |
+| contraexemplu Mock inițial | pe C1, nominalul și zecimala distinctă peste 2^53 selectau ambele 201, iar controlul 42.0 selecta fallback 409 |
+| reconfirmare după sync | pe sursele Mock curente și Core C2: 201 pentru nominal, 409 pentru valoarea distinctă și 409 pentru control; criteriul numeric este închis |
+| verificări curente | 14 controale Git/documentare și 11 teste Eventuate trec pe C2/J9; opt documente J2 și trei J0 sunt verificate cu validatorii ownerilor, fără a declara guvernanța J0 completă verde |
+| matrice SQL pe binarul curent | 18 HTML-uri Extent/fallback, 40 invocări, opt FAIL-uri controlate, oracole și mutanți refuzați; individual/suită/combinate, CodeSource și SHA-256 C2/J9 confirmate |
+| limită vizuală | matricea verifică artifactele și semantica; nu este un audit browser nou al stării vecinilor, restanța J0 114 rămâne deschisă |
+| ownership și scop | Reporting J0, șapte module J2 și preview 240; această revizie schimbă numai documente, fără implementare sau teste de proiect |
+| restanță SQL de raportare | query/bind-uri/schema lipsesc din snapshot; cererea J0 116 și componentele dedicate sunt backlog, fără capabilitate SQL nouă în J9 |
+
+Topul J2 rămas este laborator LIVE, idempotency pe aplicație și păstrarea
+cauzei primare Setup. Citirea bounded precede primul LIVE, iar idempotency
+urmează laboratorului; adoptările J0 au acceptanță separată în [registru](feedback/README.md).
+
+Dovezi TMP: atf-j2-live-review-156e509f8a, snapshot.json,
+atf_j2-initial-baseline.json, atf_j2-baseline.json,
+mock-numeric-live-review.log, mock-numeric-c2-review.log, c2-j9-review-gates.log,
+c2-j9-runtime-identity.log și sql-c2-j9-matrix/acceptance.json. Rezultatele
+anterioare de mai jos rămân istorice pentru C1/J8; nu sunt prezentate ca
+rerulări C2/J9. Infrastructura Kafka nu este rulată în revizia documentară.
+
 ## Coeziune Kit — relocare verificată în J2
 
 Snapshot-ul are 373 de intrări la baza Git
@@ -481,3 +526,7 @@ Acceptanța consumerului nu declară acest API universal verde;
 - Rapoartele, cache-urile și logurile sunt în TMP și nu se promovează în checkout.
 [Ghidul Eventuate](ATF_Eventuate_Testing.md) și [Setup](../atf-setup/README.md)
 descriu reproducerea; saga, SQL/Mongo și idempotency business reale rămân necertificate.
+
+## SQL generic și Eventuate LIVE — 2026-11-01
+
+[Registrul incrementului](ATF_SQL_Live_Verification.md) fixează dovezile pe Core C2/Reporting J10, cele opt module, probele SQL individual/prin suită și infrastructura Kafka/MySQL. Aplicația cu CDC/saga rămâne NOT RUN; istoricul anterior nu este rebazat.

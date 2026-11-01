@@ -5,6 +5,7 @@ import atf.api.tests.governance.changes.GitTestChangesTest;
 import atf.api.tests.governance.console.ConsoleDefaultsGovernanceTest;
 
 import atf.testkit.AtfIntegrationTest;
+import atf.j2.governance.J2SqlModuleGovernanceTest;
 import atf.api.tests.governance.distribution.GovernanceDeploymentTest;
 import atf.api.tests.governance.distribution.ReportingGovernanceSurfaceTest;
 import atf.api.tests.governance.distribution.ReportingHarnessOwnershipTest;
@@ -31,6 +32,7 @@ import org.junit.platform.suite.api.Suite;
         atf.j2.governance.J2OwnershipGovernanceTest.class,
         atf.j2.governance.J2ConsumerSelectionGovernanceTest.class,
         atf.j2.governance.J2DocumentationGovernanceTest.class,
+        J2SqlModuleGovernanceTest.class,
         atf.api.tests.governance.distribution.core.CoreGovernanceSurfaceTest.class,
         GovernanceDeploymentTest.class,
         ReportingGovernanceSurfaceTest.class,

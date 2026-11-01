@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-J2 verifică șapte module Eventuate, fără UI/Debug sau Playwright. Guvernanța
+J2 verifică opt module Eventuate, fără UI/Debug sau Playwright. Guvernanța
 protejează platforma, selecțiile, documentele și integritatea Reporting JAR;
 testele de produs aparțin consumerului Eventuate.
 
@@ -41,7 +41,7 @@ business și nu mută rendererul Reporting în guvernanță.
 | sursă J0 | 12 | implementare și regresii Reporting native |
 | journeys J1 | 9 | consumeri Shop/AutoEx și Reporting JAR |
 | foundation | 7 / 8 | Core binar, fără / cu harness Reporting; alt catalog decât Eventuate |
-| eventuate J2 | 7 | patru module platformă, Setup, Eventuate și Tests; Core/Reporting binare, fără browser |
+| eventuate J2 | 8 | cinci module platformă, Setup, Eventuate și Tests; Core/Reporting binare, fără browser |
 
 [Resolverul comun](src/test/java/atf/api/tests/governance/distribution/README.md)
 și [guard-ul J2](src/test/java/atf/j2/governance/J2DeploymentGovernanceTest.java)
@@ -268,3 +268,17 @@ inclusiv când documentul vizat nu se numește README.
 - Citește [scopul J2](../docs/ATF_J2_Scope.md), baza Git și sursa actuală înaintea schimbării.
 - Rulează gate-ul ownerului și proba comportamentală relevantă; proof nu se execută automat prin parser.
 - Închide feedback-ul numai cu dovada cerută; păstrează contractul stabil și limitele în [atlas](../docs/ATF_Context_Atlas.md).
+
+### Puntea binară din modelul Reporting
+
+Pragul general de coeziune rămâne opt. Inventarul exact pentru model admite
+opt contracte active și unica fațadă deprecated ReportTagNormalizer, a cărei
+implementare este în ownerul semantic ReportTags.
+
+- O a zecea clasă este refuzată.
+- Înlocuirea unui contract cu alt tip, la același număr fizic, este refuzată.
+- API-ul vechi rămâne executabil; puntea nu primește o politică nouă de taguri.
+
+## Modulul SQL și profilul Eventuate
+
+Catalogul Eventuate are explicit opt module după adăugarea `atf-sql`. [Guard-ul SQL](src/test/java/atf/j2/governance/J2SqlModuleGovernanceTest.java) verifică main JDK-only, dependențe test-scoped, suita finită și opt-in-ul E2E. Fundația fără Eventuate păstrează propriul catalog; nu se detectează modulele prin absență. [Contractul SQL](../atf-sql/README.md) separă regresiile native de cele trei componente SQL business existente.

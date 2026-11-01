@@ -14,6 +14,7 @@
     <modules>
         <module>atf-test-kit</module>
         <module>atf-mock</module>
+        <module>atf-sql</module>
         <module>atf-validation</module>
         <module>atf-console</module>
         <module>atf-setup</module>
@@ -28,7 +29,7 @@
         <jackson.version>2.17.2</jackson.version>
         <atf.consumer.profile>eventuate</atf.consumer.profile>
         <atf.core.version>1.0.0-c2</atf.core.version>
-        <atf.reporting.version>1.0.0-j9</atf.reporting.version>
+        <atf.reporting.version>1.0.0-j10</atf.reporting.version>
         <atf.test.heap.max>2g</atf.test.heap.max>
     </properties>
 

@@ -2,9 +2,9 @@
 
 ## Pe scurt
 
-J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente sunt MOCK, iar Reporting J9 nu certifică un broker ori un client Kafka Java.
+J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente MOCK și trei SQL embedded folosesc fixture-uri, iar Reporting J10 nu certifică un broker ori un client Kafka Java.
 
-J2 integrează JAR/POM J8 și propriul adaptor Eventuate. Implementarea,
+J2 integrează JAR/POM J10 și propriul adaptor Eventuate. Implementarea,
 documentația bibliotecii și regresiile generice au owner J0; J1 deține
 scenariile web și platforma comună, reconciliate selectiv.
 
@@ -47,7 +47,7 @@ de alt JVM pe Windows.
 ## Compatibilitatea acestui increment
 
 [Atlasul J6](ATF_Reporting_Library_Atlas.md) descrie callerii efectivi.
-Catalogul live are șapte module; [scopul J2](ATF_J2_Scope.md) exclude UI/Debug
+Catalogul live are opt module; [scopul J2](ATF_J2_Scope.md) exclude UI/Debug
 și Playwright. Nu copiați catalogul journeys sau foundation peste Eventuate.
 
 ## Reporting Tests la producător
@@ -80,5 +80,5 @@ impactul local și revalidarea cerută; backlog-ul generic este numai în J0.
 
 [Gate-ul la producător](#gate-ul-extern-reporting) păstrează regresiile, fără harness local.
 
-Adopția curentă este J8. [Verificarea livrării](ATF_Reporting_J8_Verification.md)
-separă proba acestui increment de acceptanțele istorice J6/J7.
+Adopția curentă este J10. [Verificarea livrării](ATF_Reporting_J10_Verification.md)
+separă proba acestui increment de acceptanțele istorice J6/J7/J8/J9.

@@ -2,9 +2,9 @@
 
 ## Pe scurt
 
-[Reporting J8 — validare API colapsabilă](ATF_Reporting_J8_Verification.md) păstrează dovada livrării și limitele ei.
+[Reporting J10 — livrarea curentă](ATF_Reporting_J10_Verification.md) păstrează dovada livrării și limitele ei.
 
-Ținta este un framework Kafka cu un singur modul de test și Setup PowerShell în Podman. Kafka și clientul Java de infrastructură sunt validate din VM; clientul/observerul framework-ului și scenariile Eventuate reale rămân WIP.
+Ținta este un framework Kafka cu un singur modul de test și Setup PowerShell în Podman. Kafka și clientul Java de infrastructură sunt validate din VM; observerul framework-ului este probat real, iar aplicația Eventuate completă rămâne NOT RUN.
 
 Documentația locală explică Eventuate, mesageria, Setup și platforma consumată.
 J0 deține Reporting, iar J1 deține scenariile web și runtime-ul browser.
@@ -17,7 +17,8 @@ Sincronizarea comună nu face identice atlasele sau backlog-urile deployment-uri
 | Cum construiesc laboratorul? | [Setup](../atf-setup/README.md), [atlas Setup](ATF_Setup_Atlas.md) |
 | Ce demonstrează testele? | [Ghid](ATF_Testing_Guide.md), [Eventuate](ATF_Eventuate_Testing.md), [verificări](ATF_J2_Verification.md) |
 | Cum adaug un test API? | [Ghid API J2](ATF_Api_Test_Guide.md), [integrare Eventuate](ATF_Eventuate_Integration.md) |
-| Cum folosesc Reporting fără sursă? | [Atlas J6](ATF_Reporting_Library_Atlas.md), [consum binar](ATF_Reporting_Consumer.md) |
+| Cum folosesc Reporting fără sursă? | [Atlas JAR](ATF_Reporting_Library_Atlas.md), [consum binar](ATF_Reporting_Consumer.md) |
+| Cum folosesc SQL independent? | [SQL JDK-only](../atf-sql/README.md), [dovadă și limite](ATF_SQL_Live_Verification.md) |
 | Ce mai trebuie rezolvat aici? | [Feedback J2](feedback/README.md) |
 | Cum păstrez sursele live? | [Build TMP](ATF_Build_And_Execution_Safety.md), [sync](ATF_Workspace_Synchronization.md) |
 
@@ -62,7 +63,7 @@ guvernanței; ele trimit către J0 și nu dublează backlog-ul producătorului.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C1 și Reporting J8 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C2 și Reporting J10 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.

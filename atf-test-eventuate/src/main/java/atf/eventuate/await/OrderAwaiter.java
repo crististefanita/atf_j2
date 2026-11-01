@@ -31,6 +31,10 @@ public final class OrderAwaiter {
     }
     public Result await(Supplier<OrderObservation> read, OrderContract expected, Duration budget, Duration interval) {
         Objects.requireNonNull(read, "read");
+        return awaitBounded(remaining -> read.get(), expected, budget, interval);
+    }
+    public Result awaitBounded(BoundedOrderReader read, OrderContract expected, Duration budget, Duration interval) {
+        Objects.requireNonNull(read, "read");
         Objects.requireNonNull(expected, "expected");
         Objects.requireNonNull(budget, "budget"); Objects.requireNonNull(interval, "interval");
         if (budget.isNegative() || budget.isZero() || interval.isNegative() || interval.isZero())
@@ -68,14 +72,14 @@ public final class OrderAwaiter {
             budgetNanos = budget.toNanos(); intervalNanos = interval.toNanos();
         }
         private long elapsed() { return Math.max(0, ticks.getAsLong() - start); }
-        private Result execute(Supplier<OrderObservation> read) {
+        private Result execute(BoundedOrderReader read) {
             start = ticks.getAsLong();
             while (true) {
                 stage = CLOCK_FAILURE;
                 long elapsed = elapsed();
                 if (elapsed >= budgetNanos) return finish(false, elapsed);
                 stage = READ_FAILURE;
-                var actual = Objects.requireNonNull(read.get(), "Order observation");
+                var actual = Objects.requireNonNull(read.read(Duration.ofNanos(budgetNanos - elapsed)), "Order observation");
                 int number = trace.size() + 1;
                 trace.add(new OrderConvergenceSnapshot.Observation(number, Optional.empty(), actual));
                 stage = CLOCK_FAILURE;

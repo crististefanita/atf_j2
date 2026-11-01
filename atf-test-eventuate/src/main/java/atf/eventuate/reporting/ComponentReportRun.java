@@ -35,7 +35,8 @@ public final class ComponentReportRun implements AutoCloseable {
     public void publish(String testClass, String testPackage, String title, List<PhaseEvidence> phases,
                         AtfReportStatus status, EventuateEvidence evidence) {
         requireOwner();
-        var tags = evidence.sql().isEmpty() ? List.of("component", "eventuate", "mock")
+        var live = evidence.profile() == EventuateEvidence.Profile.LIVE_E2E;
+        var tags = live ? List.of("e2e", "eventuate", "live", "kafka", "sql") : evidence.sql().isEmpty() ? List.of("component", "eventuate", "mock")
                 : List.of("component", "eventuate", "sql", "embedded");
         try (var scenario = session.startScenario(testClass, testPackage, title, tags)) {
             for (var data : phases) try (var phase = scenario.startPhase(data.name())) {
@@ -44,7 +45,8 @@ public final class ComponentReportRun implements AutoCloseable {
                 ApiEvidencePublisher.publish(phase, evidence.entries(data.name()), data.status());
                 ConvergenceEvidencePublisher.publish(phase, evidence.convergences(data.name()));
                 SqlEvidencePublisher.publish(phase, evidence.sql(data.name()));
-                AssertionAuditReport.publishStep(phase, "Component assertions", data.checks(), AtfReportStatus.INFO);
+                LiveEvidencePublisher.publish(phase, evidence, data.name());
+                AssertionAuditReport.publishStep(phase, live ? "E2E assertions" : "Component assertions", data.checks(), AtfReportStatus.INFO);
                 if (!data.diagnostic().isBlank()) phase.diagnostic(ReportPhaseDiagnostic.Kind.EXECUTION_FAILURE, redactor.redactText(data.diagnostic()));
                 phase.complete(data.status());
             }

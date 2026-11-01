@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "owner": "atf-j2-eventuate",
+  "connection": "atf-j2-host",
+  "network": "atf-j2-kafka-net",
+  "borrowedKafka": "atf-j2-kafka",
+  "bootstrap": "atf-j2-kafka:29092",
+  "upstreamCommit": "8632d030301c2a477141350df1e77f3f991f64e0",
+  "builderImage": "docker.io/library/gradle:8.14.5-jdk17@sha256:38cc14c6936a74fba051090399b592fec24a618174719a6a94b8b7e0e8c2632e",
+  "javaImage": "docker.io/library/eclipse-temurin:21.0.9_10-jre-noble@sha256:d3eb69add1874bc785382d6282db53a67841f602a1139dee6c4a1221d8c56568",
+  "databaseImage": "docker.io/library/mysql:8.4.7@sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903",
+  "cdcImage": "docker.io/eventuateio/eventuate-cdc-service:0.20.0.RELEASE@sha256:054cca8f745795354c2371e4e9aa0bab8a4e75e6a6034d0e3331971ca83862ed",
+  "minimumAvailableMiB": 2560,
+  "startupSeconds": 120
+}

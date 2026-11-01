@@ -3,7 +3,7 @@
 ## Pe scurt
 
 J2 deține adaptorul și acceptanța sa, nu implementarea bibliotecii.
-J8 este binarul consumat; J6/J7 păstrează proveniența istorică, cu owner curent J0. Contractul local este
+J10 este binarul consumat; J6/J7/J8/J9 păstrează proveniența istorică, cu owner curent J0. Contractul local este
 în [atlasul JAR](../ATF_Reporting_Library_Atlas.md).
 
 [Livrarea J8](../ATF_Reporting_J8_Verification.md) închide lipsa disclosure-ului API fallback. Regresia neutră J0 și matricea Validation păstrează valorile, verdicturile per rând, preview-ul 240 și tastatura. Inspectorul, timing-ul și geometria badge-ului rămân criterii distincte.
@@ -42,3 +42,28 @@ delimitarea execuției de publicarea dovezii.
 - J2 verifică adaptorul ComponentReportRun și adoptă contractul demonstrat; nu atribuie automat întreaga diferență rendererului.
 - Suita Eventuate pe J8 reconfirmă vizual TEST BODY 141 ms și copilul GET 215 ms în componenta API. Este o observație nouă, fără latență controlată; închiderea cere corelarea modelului Core, timpului capturat al fazei și publicării, fără a atribui automat diferența unui singur owner.
 - Închiderea locală cere latență controlată la publicare, individual/suită și Extent/fallback, fără clamp sau mutarea assertions pentru a ascunde diferența.
+
+
+[Contractul J10](../ATF_Reporting_J10_Verification.md) închide resetarea vecinilor,
+cu regresie permanentă neutră în J0 și acceptanță separată pe JAR. Handoff-ul
+rezolvat nu rămâne criteriu activ; inspectorul și timing-ul sunt distincte.
+
+## SQL — handoff către J0 și adoptare ulterioară
+
+J2 are trei componente SQL embedded și matricea de 18 HTML-uri, cu rânduri,
+erori și assertions auditabile prin API-ul generic observations. Noul atf-sql capturează query/bind-uri/schema/rânduri typed; nu există încă tabel SQL semantic în J10.
+
+- [REPORT-SQL-STEPS-116 în J0](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-sql-steps-116--query-uri-și-rezultate-auditabile) deține implementarea cerută: query și rezultate configurabile separat, defaults propuse 4.096 și 16.384, bind-uri 2.048 și payload SQL cumulat 1.048.576; preview-ul assertions 240 rămâne separat.
+- [Probele componente dedicate](../../../atf_j0/docs/feedback/ATF_Reporting_Tests_Feedback.md#report-test-sql-steps-116--probe-dedicate-sql) rămân în Reporting Tests, cu fixture-uri neutre; nu se copiază harness-ul în J2.
+- După release, J2 va proiecta snapshot-ul atf-sql deja capturat din aceeași execuție JDBC și va verifica sursa faptelor față de HTML, fără replay SELECT sau interpolare executabilă.
+- Adoptarea cere JAR/POM și CodeSource exacte, individual/suită/combinate în Extent/fallback, limite efective și lipsa payload-ului integral ascuns. Nu injectați CSS/JS și nu inventați HTTP pentru inspector.
+
+Acesta este un handoff și un criteriu viitor de adoptare; upgrade-ul J10 nu
+implementează contractul SQL. Bugetele propuse nu sunt proprietăți disponibile
+acum și nu închid profilul inspectorului ori timing-ul.
+
+### Reconfirmare pe J10 — SQL generic
+
+- Matricea nouă are 12 HTML-uri și 36 invocări, inclusiv patru FAIL-uri controlate. Oracolul SQL independent și mutanții trec.
+- Inspectorul generic refuză toate cele 12: șase Extent fără HTTP și șase fallback evaluate după contracte Extent. Rezultatele originale sunt în [dovada incrementului](../ATF_SQL_Live_Verification.md); criteriul 62 rămâne deschis.
+- Captura SQL este acum implementată în J2; API-ul SQL semantic și bugetele HTML rămân cerute în J0.

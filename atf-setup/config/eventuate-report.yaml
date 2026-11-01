@@ -1,0 +1,8 @@
+reporting:
+  assertionMaxDisplayCharacters: 240
+  # Generic observation bodies; dedicated SQL display budgets remain a J0 feature request.
+  bodyMaxDisplayCharacters: 12000
+  extent:
+    enabled: true
+    outputDirectory: reports
+    fileName: infrastructure.html

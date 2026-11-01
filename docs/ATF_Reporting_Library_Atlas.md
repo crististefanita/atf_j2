@@ -1,7 +1,7 @@
 # Reporting J6 — atlasul integrării J2
 
-Adopția curentă este J8; inventarul J6 de mai jos și delta J7 rămân istorice.
-[Proba J8](ATF_Reporting_J8_Verification.md) fixează colapsarea API; [delta J7](ATF_Reporting_J7_Verification.md) păstrează observațiile typed și limitele compatibilității.
+Adopția curentă este J10; inventarul J6 de mai jos și delta J7 rămân istorice.
+[Proba J10](ATF_Reporting_J10_Verification.md) fixează independența expandărilor și ABI-ul tagurilor; [proba istorică J8](ATF_Reporting_J8_Verification.md) fixează colapsarea API; [delta J7](ATF_Reporting_J7_Verification.md) păstrează observațiile typed și limitele compatibilității.
 
 ## Pe scurt
 

@@ -6,6 +6,23 @@ import java.util.ArrayList;
 
 /** Invocation-owned captured facts; the report consumes snapshots after execution. */
 public final class EventuateEvidence {
+    public enum Profile { COMPONENT, LIVE_E2E }
+    private final Profile profile;
+    public EventuateEvidence() { this(Profile.COMPONENT); }
+    public EventuateEvidence(Profile profile) { this.profile = java.util.Objects.requireNonNull(profile); }
+    public Profile profile() { return profile; }
+    private record LiveSqlEntry(String phase, atf.eventuate.live.sql.LiveSqlSnapshot snapshot) { }
+    private record KafkaEntry(String phase, atf.eventuate.live.kafka.KafkaEvidence snapshot) { }
+    private final List<LiveSqlEntry> liveSql = new ArrayList<>();
+    private final List<KafkaEntry> kafka = new ArrayList<>();
+    public void recordLiveSql(atf.eventuate.live.sql.LiveSqlSnapshot snapshot) { liveSql.add(new LiveSqlEntry(phase, java.util.Objects.requireNonNull(snapshot))); }
+    public void recordKafka(atf.eventuate.live.kafka.KafkaEvidence snapshot) { kafka.add(new KafkaEntry(phase, java.util.Objects.requireNonNull(snapshot))); }
+    public List<atf.eventuate.live.sql.LiveSqlSnapshot> liveSql(String phase) {
+        return liveSql.stream().filter(entry -> entry.phase().equals(phase)).map(LiveSqlEntry::snapshot).toList();
+    }
+    public List<atf.eventuate.live.kafka.KafkaEvidence> kafka(String phase) {
+        return kafka.stream().filter(entry -> entry.phase().equals(phase)).map(KafkaEntry::snapshot).toList();
+    }
     private record Entry(String phase, EventuateExchange exchange) { }
     private record ConvergenceEntry(String phase, OrderConvergenceSnapshot snapshot) { }
     private record SqlEntry(String phase, atf.eventuate.sql.SqlEffectsSnapshot snapshot) { }
