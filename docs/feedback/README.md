@@ -14,14 +14,14 @@ consumată. Reporting se întreține în J0; Shop/AutoEx, UI și Debug UI au own
 | 2 | [Adoptare Reporting](ATF_Reporting_Consumer_Feedback.md) | 89 | profil artifact și timing demonstrate pe binarul consumat |
 | 3 | [Mock](ATF_Mock_Feedback.md) | 86 | două valori decimale distincte pot selecta aceeași rută după conversia Double |
 | 4 | [Setup](ATF_Setup_Feedback.md) | 84 | cauza primară la eșecul receipt-ului, ownership fizic și reluare după restart |
-| 5 | [Documentație](ATF_Documentation_Feedback.md) | 77 | prevenirea contradicțiilor dintre deployment și afirmațiile curente din pagini |
+| 5 | [Documentație](ATF_Documentation_Feedback.md) | 81 | prevenirea contradicțiilor dintre deployment și afirmațiile curente din pagini |
 
 Scorurile sunt priorități de intervenție, nu note ale modulelor. Ordinea
 executării ține cont de dependențe: un engine și un witness funcționale
 preced certificarea saga sau idempotency business.
 
-Parsarea JSON, fixture-urile complete, schemele, egalitatea scalară, media type și identitatea integrală au contracte și regresii
-permanente; criteriile rezolvate sunt retrase din registrul activ.
+Parsarea JSON, fixture-urile complete, schemele, contractul JSON documentat o singură dată, egalitatea scalară, media type și identitatea integrală au contracte și regresii
+permanente; criteriile rezolvate sunt retrase din registrul activ. Snapshot-ul terminal al convergenței are acum contract și probe permanente; incrementul SQL embedded are contract și probe permanente, fără pretenție de acceptanță saga.
 
 <details>
 <summary><strong>Harta completă a criteriilor active</strong></summary>
@@ -32,21 +32,21 @@ permanente; criteriile rezolvate sunt retrase din registrul activ.
 | REPORT-J2-ADOPTION-62 | 89 | adoptare JAR cu profil artifact și acceptanță J2 distinctă |
 | EVT-IDEMPOTENCY-02 | 88 | duplicat de transport, business și POST separate, cu efecte independente |
 | REPORT-J2-TIMING-83 | 88 | latență controlată și intervale coerente captură/publicare |
-| MOCK-NUMERIC-MATCH-104 | 86 | matching numeric fără pierderea diferenței dintre valori distincte |
 | EVT-CONVERGENCE-CONTRACT-86 | 84 | citirea LIVE bounded prin timpul rămas; identitatea și overflow sunt deja protejate |
 | SETUP-PRIMARY-FAILURE-87 | 84 | eșecul scrierii receipt-ului păstrează cauza inițială |
+| DOC-DEPLOYMENT-FACTS-105 | 81 | mutanți pentru catalog/versiune curentă și istoric legitim; deriva este reconfirmată după J8 |
 | SETUP-REMOTE-TRANSPORT-84 | 80 | ownership, transport durabil și reluare după restart |
 | EVT-CONSOLE-PATH-79 | 79 | console.enabled și opt-in respectate de adaptorul J2 |
+| MOCK-FAULT-SCRIPT-111 | 78 | plan finit de fault-uri comun celor două fixture-uri, cu ownership și regresii native |
 | SETUP-PROBE-COVERAGE-85 | 78 | contracte pure pentru utilitarul Java în afara Maven |
-| DOC-DEPLOYMENT-FACTS-105 | 77 | mutanți pentru catalog/versiune curentă și istoric legitim, fără relaxarea guvernanței |
 | SETUP-STAGE-RUNNER-86 | 76 | un protocol de etape, cauză primară și NOT_RUN |
-| DOC-CONTRACT-OWNER-107 | 74 | un singur contract Validation, cu limite, probe și ancore păstrate |
 
 </details>
 
 ## Ce este livrat și unde se citește
 
-- Cele trei componente MOCK și matricea Extent/fallback au contract în [ghidul Eventuate](../ATF_Eventuate_Testing.md).
+- Coeziunea Kit este verificată în [contractul ownerului](../../atf-test-kit/README.md#pachetele-regresiilor-de-audit); criteriul închis nu rămâne în registrul activ.
+- Cele trei componente MOCK, trei SQL embedded și matricile Extent/fallback au contract în [ghidul Eventuate](../ATF_Eventuate_Testing.md).
 - Hostul și provisioning-ul silent au contract în [Setup](../../atf-setup/README.md) și [atlasul său](../ATF_Setup_Atlas.md).
 - Catalogul explicit cu șapte module și retragerea browserului sunt în [scopul J2](../ATF_J2_Scope.md); criteriul închis nu rămâne ToDo.
 - [Verificarea executată](../ATF_J2_Verification.md) păstrează limitele dovezilor; MOCK nu certifică broker sau efecte persistente.

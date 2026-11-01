@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente sunt MOCK, iar Reporting J8 nu certifică un broker ori un client Kafka Java.
+J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente sunt MOCK, iar Reporting J9 nu certifică un broker ori un client Kafka Java.
 
 J2 integrează JAR/POM J8 și propriul adaptor Eventuate. Implementarea,
 documentația bibliotecii și regresiile generice au owner J0; J1 deține

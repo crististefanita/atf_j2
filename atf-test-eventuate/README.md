@@ -5,12 +5,12 @@
 Acesta este singurul modul de test J2. Clientul/observerul Kafka al framework-ului este în lucru; [Setup](../atf-setup/README.md) are deja o probă Java de infrastructură validată pe broker real, separată de integrarea Eventuate.
 
 Modulul compune platforma ATF cu trei oracole deterministe pentru Eventuate:
-contract API, convergență cu retry de citire și validarea dovezilor de mesagerie.
+contract API, convergență cu retry de citire și validarea dovezilor de mesagerie. Trei componente SQL embedded verifică separat witness-ul JDBC pe H2.
 Suportul reutilizabil este în main; adaptorul JUnit și fixture-urile sunt în test.
 
 | Responsabilitate | Limită |
 |---|---|
-| Deține | clientul HTTP scriptat, deadline-ul de convergență, validatorul de dovezi și compoziția raportului |
+| Deține | clientul HTTP scriptat, convergența, witness-ul JDBC, oraclele de dovezi și compoziția raportului |
 | Kit | evaluarea unică a comparațiilor, lifecycle-ul fazelor și scope-ul class/suite |
 | Reporting JAR | contractele publice, redacția, preview-ul, HTML-ul și navigarea Extent/fallback |
 | Aplicația reală | saga, rezervarea creditului, deduplicarea, outbox-ul și proiecția CQRS; neexecutate în acest increment |
@@ -20,6 +20,7 @@ Suportul reutilizabil este în main; adaptorul JUnit și fixture-urile sunt în 
 flowchart LR
     Fixture["Fixture"] -->|MOCK| Client["Client"]
     Client -->|valori| Kit["Kit"]
+    SQL["Witness JDBC"] -->|SQL_EMBEDDED| Kit
     Kit -->|evaluat| Bridge["JUnit"]
     Bridge -->|API public și close| Report["Reporting<br/>Extent / fallback"]
 ```
@@ -44,6 +45,7 @@ fallback, prin aceeași bibliotecă externă.
 | [EventuateApiClient](src/main/java/atf/eventuate/api/EventuateApiClient.java) | binding concret MOCK; POST o tentativă, GET 503 maximum două tentative prin Core |
 | [OrderAwaiter](src/main/java/atf/eventuate/await/OrderAwaiter.java) | clock/pause injectate, buget unic și OrderContract integral; observațiile respinse rămân în istoric |
 | [MessageEvidenceContract](src/main/java/atf/eventuate/validation/MessageEvidenceContract.java) | identitate, livrări distincte și witness independent; nu implementează deduplicarea aplicației |
+| [JdbcOrderEffectsReader](src/main/java/atf/eventuate/sql/JdbcOrderEffectsReader.java) | witness JDBC independent; [contract și atlas de pachet](src/main/java/atf/eventuate/sql/README.md), cu H2 exclusiv în test |
 | [ComponentReportRun](src/main/java/atf/eventuate/reporting/ComponentReportRun.java) | owner serial, configurație capturată, trei faze și publicare la close |
 | [EventuateComponentExtension](src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java) | scope class/suite, collector per invocare; calea absolută numai după publicare |
 | [EventuateComponentSuite](src/test/java/atf/eventuate/tests/suites/EventuateComponentSuite.java) | selectează exact cele trei clase, fără execuție paralelă |
@@ -70,6 +72,25 @@ Comanda execută cele trei componente MOCK și produce un raport comun; nu porne
 
 [Atlasul J2](../docs/ATF_Context_Atlas.md) identifică ownerul și proba.
 [Ghidul testării](../docs/ATF_Testing_Guide.md) separă componentele mock de acceptanța aplicației reale.
+
+## SQL embedded — witness independent
+
+[Suita SQL](src/test/java/atf/eventuate/tests/suites/EventuateSqlComponentSuite.java)
+selectează exact trei clase: tranzacții, identitate/duplicate și failure JDBC.
+[Atlasul pachetului SQL](src/main/java/atf/eventuate/sql/README.md) deține
+schema fixture-ului, durata de viață și contractul main/test.
+
+```powershell
+mvn -B -pl atf-test-eventuate -am "-Dtest=EventuateSqlComponentSuite" "-Dsurefire.failIfNoSpecifiedTests=false" test
+```
+
+H2 este driver test-scoped cu versiune fixată; main folosește numai JDBC din
+JDK. Witness-ul citește prin altă conexiune, cu expected fixat independent,
+iar raportul păstrează SQL_EMBEDDED separat de MOCK_EVENT_FEED și HTTP.
+
+[Matricea SQL](../docs/ATF_Eventuate_Testing.md#sql-embedded--acceptanță-consumer)
+acoperă individual, suită, combinație cu cele trei MOCK și failure-uri controlate.
+Probele locale nu certifică saga, SQL-ul aplicației sau Kafka.
 
 ## Snapshot-uri terminale și faze
 
@@ -112,6 +133,49 @@ flowchart LR
 [Regresia terminală](src/test/java/atf/eventuate/tests/unit/EventuateTerminalEvidenceTest.java)
 și [acceptanța artifactului](../docs/ATF_Eventuate_Testing.md#snapshot-terminal--acceptanță-consumer)
 protejează cauza originală, faza, lipsa răspunsului și nominalele existente.
+## Istoricul convergenței — snapshot terminal
+
+[OrderAwaiter](src/main/java/atf/eventuate/await/OrderAwaiter.java) capturează
+un [snapshot imuabil](src/main/java/atf/eventuate/await/OrderConvergenceSnapshot.java)
+la convergență, deadline sau eșec. Istoricul convergenței și snapshot-ul HTTP
+sunt dovezi distincte, păstrate în aceeași fază a invocării.
+
+| Boundary | Contract stabil |
+|---|---|
+| execuție | un singur buget; ID, stare și rejectionReason evaluate împreună; niciun replay pentru captură sau raport |
+| observație | citirea finalizată este păstrată înaintea accesului următor la clock; eșecul clock-ului nu șterge ordinul observat |
+| timp | zero măsurat este diferit de unknown; timpul necunoscut rămâne Optional.empty, inclusiv în fiecare observație |
+| collector | constructorul cu Consumer publică exact un snapshot terminal; constructorul existent rămâne compatibil |
+| excepție | aceeași instanță și cauză sunt propagate; metadatele sunt suppressed, iar eroarea collectorului este secundară |
+| recuperare | OrderConvergenceFailure.find caută în suppressed/cause fără cicluri; collectorul explicit este autoritar dacă excepția dezactivează suppression |
+| rezultat normal | Result rămâne compatibil; lastObservedOrder oferă Optional, iar last păstrează excepția istorică pentru lista goală |
+| raport | observations neutre, colapsabile, cu expected, istoric și oprire; comparațiile și verdictul testului rămân independente |
+
+```mermaid
+%%{init: {"themeVariables":{"fontSize":"15px"},"themeCSS":".nodeLabel, .nodeLabel p { font-size: 15px !important; line-height: 1.35 !important; } .edgeLabel, .edgeLabel p { font-size: 12px !important; font-weight: 400 !important; line-height: 1.2 !important; } .edgeLabel .labelBkg, .edgeLabel p { background: transparent !important; } .edgeLabel foreignObject { transform: translateY(-18px); overflow: visible; } .node rect { rx: 6px; ry: 6px; }","flowchart":{"curve":"linear","nodeSpacing":24,"rankSpacing":40,"padding":10,"diagramPadding":16}}}%%
+flowchart LR
+    Execute["Citire / pauză"] -->|capturează| Snapshot["Snapshot terminal"]
+    Snapshot -->|o singură dată| Collector["Collector pe fază"]
+    Snapshot -->|metadate| Original["Aceeași excepție"]
+    Collector -->|fapte| Publisher["Publisher"]
+    Publisher -->|observations| Report["Extent / fallback"]
+```
+
+<details>
+<summary><strong>Legendă — execuție, captură și proiecție</strong></summary>
+
+- Snapshot-ul conține expected independent, buget, interval, observații ordonate, elapsed opțional și motivul terminal.
+- Read, pause și clock au motive distincte; eșecul capturării după convergență nu este reclasificat drept read failure.
+- Collectorul este local invocării și serial; callback-ul nu reîncearcă execuția și nu consumă încă o observație.
+- ConvergenceEvidencePublisher proiectează numai fapte prin API-ul J8. Nu inventează request HTTP sau assertion și nu deține HTML, redacția ori preview-ul de 240.
+- Un eșec neconsumat produce FAIL; un eșec așteptat și verificat explicit păstrează PASS și aceeași observație terminală neutră.
+
+</details>
+
+[Regresiile unitare](src/test/java/atf/eventuate/tests/unit/EventuateConvergenceEvidenceTest.java)
+și [matricea consumer](../docs/ATF_Eventuate_Testing.md#convergență--acceptanța-istoricului-terminal)
+protejează cauza originală, absența observațiilor, întreruperea, clock-ul și lipsa replay-ului.
+
 ## Limite curente ale scaffold-ului
 
 | Criteriu rămas | Owner și probă de închidere |

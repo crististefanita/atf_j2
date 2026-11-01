@@ -42,7 +42,7 @@ nu este o dependență runtime a testului. Muchiile complete sunt în POM-uri.
 
 | Modul | Dependență / stare relevantă |
 |---|---|
-| Eventuate | Core, Mock și Reporting compile; Kit, JUnit, Suite și Launcher test |
+| Eventuate | Core, Mock și Reporting compile; Kit, Validation, JUnit, Suite, Launcher și H2 test |
 | Console | Core compile; Kit optional compile pentru adaptorul JUnit generic |
 | ATF Tests | dependențe test pentru platforma activă, fără UI |
 | Setup | scripturi explicite; Maven nu execută provisioning |
@@ -62,6 +62,7 @@ nu sunt module ori backlog business ale acestui deployment.
 
 ## Responsabilități
 
+- Witness-ul SQL este în main și folosește JDBC; H2, schema și writerul sunt test-scoped, cu baze independente per invocare.
 - API-ul Eventuate este legat concret la transportul scriptat; schimbarea spre LIVE cere un binding separat și proveniență verificată.
 - OrderAwaiter observă starea într-un buget; OrderContract verifică identitatea și rejectionReason. Callerul trebuie să compună criteriul complet.
 - Mesageria verifică livrările furnizate și witness-ul independent; nu implementează deduplicarea aplicației.
@@ -111,7 +112,7 @@ infrastructurii reale rămâne o axă separată. [Ghidul](ATF_Testing_Guide.md)
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C1 și Reporting J8 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 7 module sursă. Core C2 și Reporting J9 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
-[Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
+[Contractul Core C2](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.

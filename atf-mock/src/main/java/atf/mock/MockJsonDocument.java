@@ -1,18 +1,12 @@
 package atf.mock;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import atf.core.json.JsonDocuments;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.io.IOException;
 import java.util.Optional;
 
 /** Complete, unambiguous JSON for mock fixtures and matching; parsed trees never escape this type. */
 final class MockJsonDocument {
-    private static final ObjectReader JSON = JsonMapper.builder()
-            .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS)
-            .enable(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY)
-            .build().reader();
     private final JsonNode value;
 
     private MockJsonDocument(JsonNode value) { this.value = value; }
@@ -32,9 +26,7 @@ final class MockJsonDocument {
     boolean sameValue(MockJsonDocument other) { return value.equals(other.value); }
 
     private static MockJsonDocument parse(String body) throws IOException {
-        if (body == null || body.isBlank()) throw new IllegalArgumentException("JSON document is empty");
-        JsonNode value = JSON.readTree(body);
-        if (value == null) throw new IllegalArgumentException("JSON document is empty");
+        JsonNode value = JsonDocuments.read(body);
         return new MockJsonDocument(value);
     }
 }

@@ -4543,3 +4543,130 @@ testChanges:
 ```
 
 </details>
+
+<details>
+<summary><strong>Control documentar — DOC-J2-BINARY-CONTEXT-109</strong></summary>
+
+```yaml
+testChanges:
+  - id: DOC-J2-BINARY-CONTEXT-109
+    status: VERIFIED
+    base: b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c
+    expires: 2026-11-30
+    reason: Actualizează exclusiv README-ul pachetului de guvernanță pentru versiunea binară efectiv consumată. Calea documentară aparține source-set-ului protejat; sursele Java, assertions, selecțiile și regulile rămân identice.
+    proof: mvn -B -pl atf-tests -am "-Dtest=TestChangeGovernanceTest,DocumentationTargetGovernanceTest,DocumentationLinkGovernanceTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c" test
+    paths:
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/README.md
+```
+
+</details>
+
+<details>
+<summary><strong>Control verificat — EVT-CONVERGENCE-CAPTURE-112</strong></summary>
+
+```yaml
+testChanges:
+  - id: EVT-CONVERGENCE-CAPTURE-112
+    status: VERIFIED
+    base: b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c
+    expires: 2026-11-30
+    reason: Regresii pentru snapshot-ul terminal al convergenței, aceeași excepție, zero replay, timp necunoscut și collector per invocare. Matricea lansează JUnit individual/suită pe Reporting J8, cu oracole și mutanți; niciun test existent ori control nu este relaxat.
+    proof: mvn -B -pl atf-test-eventuate,atf-tests -am "-Dtest=EventuateConvergenceEvidenceTest,EventuateOrderContractTest,EventuateTerminalEvidenceTest,EventuateComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c" test
+    paths:
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/EventuateConvergenceComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/EventuateConvergenceEvidenceTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/ConvergenceFailureFixtures.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/fixtures/ExpectedConvergenceProbe.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/ConvergenceEvidenceReportAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/ConvergenceArtifactAudit.java
+```
+
+</details>
+
+
+<details>
+<summary><strong>Control verificat — KIT-BODY-J2</strong></summary>
+
+```yaml
+testChanges:
+  - id: KIT-BODY-J2
+    status: VERIFIED
+    base: b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c
+    expires: 2026-11-30
+    reason: Adaugă politica neutră opt-in TEST BODY, cu comparație structurală actual=0 la lipsa auditului; păstrează implicit ANY_PHASE, verdicturile FAIL/SKIP, cauza originală și preview 240. Nativele permanente sunt la owner Kit, fără Reporting ori ASR.
+    proof: 'mvn -B -ntp -pl atf-test-kit test'
+    paths:
+      - atf-test-kit/src/test/java/atf/testkit/assertions/TestBodyAssertionRequirementTest.java
+      - atf-test-kit/src/test/java/atf/testkit/assertions/TestBodyAssertionRequirementComponentTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control verificat — EVT-SQL-EMBEDDED-113</strong></summary>
+
+```yaml
+testChanges:
+  - id: EVT-SQL-EMBEDDED-113
+    status: VERIFIED
+    base: b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c
+    expires: 2026-11-30
+    reason: Adaugă trei componente SQL embedded și suita lor exactă, H2 test-scoped, witness JDBC independent și matrice individual/suită/combinate. Guvernanța păstrează cele trei cazuri MOCK și adaugă inventarul finit SQL; nu relaxează reguli sau assertions existente.
+    proof: mvn -B -pl atf-test-eventuate,atf-tests -am "-Dtest=SqlEffectsContractTest,EventuateSqlComponentSuite,EventuateComponentSuite,J2ConsumerSelectionGovernanceTest,TestChangeGovernanceTest,Documentation*Test" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c" test
+    paths:
+      - atf-test-eventuate/pom.xml
+      - atf-test-eventuate/src/test/resources/sql/reservations.sql
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/sql/EventuateSqlTransactionComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/sql/EventuateSqlIdentityComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/component/sql/EventuateSqlFailureComponentTest.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/sql/H2SqlFixture.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/sql/JdbcFaultSource.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/sql/SqlTestChecks.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/sql/SqlReportProbe.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/sql/SqlArtifactAudit.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/sql/SqlEvidenceReportAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/suites/EventuateSqlComponentSuite.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/sql/SqlEffectsContractTest.java
+      - atf-tests/src/test/java/atf/j2/governance/J2ConsumerSelectionGovernanceTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control verificat — KIT-COHESION-115</strong></summary>
+
+```yaml
+testChanges:
+  - id: KIT-COHESION-115
+    status: VERIFIED
+    allowDelete: true
+    base: b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c
+    expires: 2026-11-30
+    reason: Mută cele două regresii TEST_BODY în subpachetul requirementss; schimbă numai package/import, păstrează toate corpurile testelor și zece invocări native. Pragul opt, allow-list-urile, sursele main și comportamentul SQL/Reporting rămân identice; manifestul reține path-urile și hash-urile istorice.
+    proof: mvn -B -pl atf-test-eventuate,atf-tests -am "-Dtest=TestBodyAssertionRequirementTest,TestBodyAssertionRequirementComponentTest,SqlEffectsContractTest,EventuateComponentSuite,EventuateSqlComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" "-Datf.governance.testChanges.baseRef=b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c" test
+    paths:
+      - atf-test-kit/src/test/java/atf/testkit/assertions/TestBodyAssertionRequirementTest.java
+      - atf-test-kit/src/test/java/atf/testkit/assertions/TestBodyAssertionRequirementComponentTest.java
+      - atf-test-kit/src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementTest.java
+      - atf-test-kit/src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementComponentTest.java
+```
+
+</details>
+<details>
+<summary><strong>Control VERIFIED — Core C2 și Reporting J9</strong></summary>
+
+```yaml
+testChanges:
+  - id: CORE-C2-J9-ATF-J2
+    status: VERIFIED
+    base: b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c
+    expires: 2026-11-30
+    reason: Adoptă aceiași bytes Core C2 și Reporting J9, catalogul nativ finit și contractele Mock stricte, cu precizie numerică independentă și nominalele păstrate. Fără praguri relaxate sau surse shadow.
+    proof: mvn -B -pl atf-tests,atf-mock,atf-validation -am "-Dtest=WholeAtfGovernanceSuiteTest,MockNumericContractComponentTest,MockJsonFixtureComponentTest,MockJsonCatalogComponentTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - pom.xml
+      - atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java
+      - atf-mock/src/test/java/atf/mock/json/MockNumericContractComponentTest.java
+```
+
+</details>

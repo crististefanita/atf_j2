@@ -25,10 +25,11 @@ assertion-only/HTTP și renderer. Green-ul J0 sau J1 nu certifică J2.
 
 Catalogul nativ finit J2 este reconciliat explicit cu J8, fără wildcard sau skip. Această acceptanță nu închide automat guvernanța ori adopția din J0/J1.
 
-- Matricea Mock JSON adaugă 14 artifacte assertion-only individuale și combinate;
-inspectorul J7 le refuză pe toate, iar rezultatele originale sunt păstrate.
-Oracolul J2 și auditul browser confirmă comparațiile și disclosure-urile;
-această probă întărește criteriul de profil, fără să certifice un candidat nou.
+- Matricea Mock JSON repetată pe J8 păstrează 14 artifacte assertion-only
+individuale/combinate, toate cu oracol per rând și mutanți refuzați.
+Inspectorul generic le refuză pe toate: pe Extent, check-ul request response
+evidence split este fals pentru cazul legitim fără HTTP. Rezultatele originale
+sunt păstrate; închiderea disclosure-ului API nu închide profilul inspectorului.
 
 ## REPORT-J2-TIMING-83 — prioritate 88
 
@@ -39,4 +40,5 @@ delimitarea execuției de publicarea dovezii.
 
 - [Ownerul J0](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-recorded-timing-83--execuție-capturată-și-cost-de-publicare) păstrează artifactul, analiza și regresia neutră necesară.
 - J2 verifică adaptorul ComponentReportRun și adoptă contractul demonstrat; nu atribuie automat întreaga diferență rendererului.
+- Suita Eventuate pe J8 reconfirmă vizual TEST BODY 141 ms și copilul GET 215 ms în componenta API. Este o observație nouă, fără latență controlată; închiderea cere corelarea modelului Core, timpului capturat al fazei și publicării, fără a atribui automat diferența unui singur owner.
 - Închiderea locală cere latență controlată la publicare, individual/suită și Extent/fallback, fără clamp sau mutarea assertions pentru a ascunde diferența.

@@ -1,4 +1,4 @@
-# Mock — precizia comparației numerice
+# Mock — precizie și reutilizarea probelor de eșec
 
 ## Pe scurt
 
@@ -6,16 +6,18 @@
 refuză documente incomplete, duplicate și constrângeri YAML coerced la gol.
 Regresia și acceptanța pe JAR rămân permanente; criteriul închis este retras.
 
-## MOCK-NUMERIC-MATCH-104 — prioritate 86
+## MOCK-FAULT-SCRIPT-111 — prioritate 78
 
-Prin API-ul public, două valori decimale distincte, 9007199254740992.0 și
-9007199254740993.0, se potrivesc în expected și actual. Parserul păstrează
-comportamentul numeric Jackson anterior; conversia Double pierde diferența.
+TerminalFailureFixtures și ConvergenceFailureFixtures repetă compoziția
+transportului finit, a erorilor și a numărării dispatch-urilor. Există acum
+două utilizări concrete de comparat înaintea unei extracții.
 
-- Definiți egalitatea numerică a matching-ului independent de reprezentarea Double; păstrați structura, tipurile și ordinea array-ului.
-- Verificați limite mari, fracții apropiate, exponent, zero și compatibilitatea nominală înainte de schimbarea readerului sau a egalității.
-- Adăugați regresie componentă publică și oracol de rutare: request-ul distinct trebuie să ajungă la fallback, iar wire body nu se rescrie.
+- Evaluați în atf-mock/main un plan imuabil de rezultate complete/fail/cancel/pending, cu stare locală invocării; păstrați adaptoarele JUnit și selecțiile probelor în test.
+- Construiți o excepție nouă per execuție; reutilizarea instanței poate transporta suppressed metadata din altă invocare. Distingeți tentativele expediate de rutele potrivite și de răspunsurile încheiate.
+- Păstrați matching-ul JSON, metoda, MIME, autentificarea, query-ul, wildcard-ul și ordinea strictă; epuizarea nu produce răspuns implicit verde.
+- Nu extrageți politica OrderContract, saga sau witness-ul SQL în Mock/Kit. H2 va proba adaptorul SQL în Eventuate; un transport scriptat nu certifică efecte persistente.
 
-Închidere: contraexemplul nu mai selectează ruta, nominalele sunt demonstrate
-și comparația integrală precede orice preview. Proba publică este în TMP,
-incrementul atf-j2-mock-json-615a89c6ad, mock-numeric-observation.log.
+Închidere: regresie componentă publică în Mock și aceleași două matrice
+consumer pe noua primitivă, inclusiv eșecul sink-ului și cauza originală.
+Extracția trebuie să reducă duplicarea fără alt modul ori modificări Reporting;
+în incrementul curent nu este implementată.

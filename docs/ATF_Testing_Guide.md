@@ -2,13 +2,14 @@
 
 ## Pe scurt
 
-J2 verifică Eventuate prin componente MOCK și are acceptanță separată pentru infrastructura Kafka reală.
+J2 verifică Eventuate prin componente MOCK și SQL embedded și are acceptanță separată pentru infrastructura Kafka reală.
 Reporting este consumat ca JAR; auditul HTML se face extern, fără a cere modulul UI.
 
 | Nivel | Intrare | Limita verdictului |
 |---|---|---|
 | unit | probele platformei | contractul primitivei; fără raport component/E2E obligatoriu |
-| component | [EventuateComponentSuite](../atf-test-eventuate/src/test/java/atf/eventuate/tests/suites/EventuateComponentSuite.java) | exact trei cazuri deterministe, cu assertions colapsabile |
+| component | [EventuateComponentSuite](../atf-test-eventuate/src/test/java/atf/eventuate/tests/suites/EventuateComponentSuite.java) | exact trei cazuri MOCK deterministe, cu assertions colapsabile |
+| component SQL | [EventuateSqlComponentSuite](../atf-test-eventuate/src/test/java/atf/eventuate/tests/suites/EventuateSqlComponentSuite.java) | exact trei cazuri H2/JDBC; fără certificare saga |
 | guvernanță | [WholeAtfGovernanceSuiteTest](../atf-tests/src/test/java/atf/api/tests/governance/WholeAtfGovernanceSuiteTest.java) | catalog, boundaries, selecții, documente, Git și JAR fizic |
 | infrastructură offline | [Setup contracts](../atf-setup/tests/Test-SetupContracts.ps1) | scripturi, configurație, ownership și proces; fără broker |
 | infrastructură reală | [Setup Kafka](../atf-setup/README.md) și proba Java Setup | engine, metadata și livrare corelată; fără certificarea efectelor Eventuate |
@@ -37,7 +38,7 @@ Auditul extern verifică HTML-ul publicat; nu partajează lifecycle-ul aplicați
 
 ## Auditul componentelor consumerilor
 
-Cele trei clase folosesc EventuateComponentTest, Kit și extensia locală.
+Cele șase clase folosesc EventuateComponentTest, Kit și extensia locală.
 SETUP, TEST BODY și TEARDOWN publică grupul standard Component assertions.
 
 - Comparația folosește valorile integrale; redacția și preview-ul 240 sunt ulterioare.
@@ -57,7 +58,7 @@ SETUP, TEST BODY și TEARDOWN publică grupul standard Component assertions.
 
 ## Proba fiecărui owner de resurse
 
-Rularea normală rămâne strict MOCK. Clock-ul virtual nu este SLA real;
+Suitele locale folosesc MOCK sau H2 embedded, fără infrastructură externă. Clock-ul virtual nu este SLA real;
 un witness furnizat nu demonstrează deduplicarea pe broker sau persistența.
 
 Scope-ul comun al raportului nu partajează scriptul, colecția de dovezi sau
@@ -65,7 +66,7 @@ starea unei invocări. O eroare la publicare rămâne observabilă în JUnit.
 
 ## Inventarul executabil după mutări și reclasificare
 
-Inventarul actual are exact trei componente și o suită explicită. Adăugarea
+Inventarul are exact șase componente în două suite explicite și disjuncte: trei MOCK și trei SQL embedded. Adăugarea
 unui caz cere cerință, review și reconcilierea selecției/guvernanței; nu se
 schimbă nivelul sau filtrele numai pentru obținerea unui raport.
 
@@ -83,7 +84,7 @@ mvn -B -pl atf-tests -Dtest=WholeAtfGovernanceSuiteTest -Datf.test.heap.max=384m
 ```
 
 [Ghidul Eventuate](ATF_Eventuate_Testing.md) deține proprietățile, CLI-ul de
-acceptanță și matricea celor 12 rapoarte. Testele negative cer exact verdictul
+acceptanță și matricile consumerului, cu număr fix de cazuri per contract. Testele negative cer exact verdictul
 și cauza așteptate; un container failure sau un SKIP nu este succes.
 
 ## Stabilitatea secțiunilor expandabile — verificare în browser
@@ -91,7 +92,7 @@ acceptanță și matricea celor 12 rapoarte. Testele negative cer exact verdictu
 - Deschide individualul și suita în Extent/fallback, identificând scenariul activ.
 - Expandează toate fazele și dovezile până la ultimul rând; verifică cele patru coloane și lățimea disponibilă.
 - Verifică FAIL-ul original, Enter/Space și backlink-ul, inclusiv mismatch-ul de după caracterul 240.
-- Păstrează rezultatul inspectorului generic J6; profilul lui nu este universal pentru assertion-only/fallback.
+- Păstrează rezultatul inspectorului generic pentru binarul efectiv consumat; profilul lui nu este universal pentru assertion-only/fallback.
 
 ## Criterii de finalizare
 

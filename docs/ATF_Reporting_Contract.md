@@ -4,7 +4,7 @@
 
 J2 deține modelul și adaptorul aplicației; J0 deține Reporting.
 Contractele complete ale bibliotecii sunt [la producător](../../atf_j0/docs/ATF_Reporting_Contract.md).
-Această pagină fixează cerințele aplicabile consumerului J6.
+Această pagină fixează cerințele aplicabile consumerului J2 pe Reporting J8.
 
 ## Arborele unui test
 
@@ -44,7 +44,7 @@ rând sunt verificate pe artifactul nou.
 ## Paritate de randare
 
 Extent și fallback păstrează populația și verdicturile, cu structuri DOM
-distincte. Inspectorul generic J6 are o limită de profil documentată în
+distincte. Inspectorul generic păstrează pe J8 o limită de profil documentată în
 [feedback-ul J2](feedback/ATF_Reporting_Consumer_Feedback.md).
 
 ## Dovezi obligatorii pentru schimbări

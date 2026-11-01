@@ -10,6 +10,7 @@ separat receipt-ul infrastructurii reale.
 |---|---|---|
 | HTTP scriptat | request/response, tentative și ACCEPTANCE_MOCK | nu demonstrează endpoint real |
 | message fixture | identități, livrări și witness MOCK_EVENT_FEED | ordinalul nu este offset broker |
+| JDBC embedded | rânduri, SQL_EMBEDDED, timp, SQLState și cauza originală; partial FAILED separat de empty COMPLETE | nu demonstrează SQL-ul aplicației sau deduplicarea business |
 | clock virtual | observații și durată virtuală | nu demonstrează SLA real |
 | Setup | comandă, exit code, durată și stdout/stderr în TMP | numai pasul efectiv executat |
 | Reporting | artifact și comparații publicate | fără reevaluarea verdictului din display |
@@ -34,5 +35,5 @@ Același obiect de excepție și evidence-ul fără răspuns inventat sunt proba
 ## Unde se aprofundează
 
 [Atlas J2](ATF_Context_Atlas.md), [Testing](ATF_Testing_Guide.md) și
-[Reporting J7](ATF_Reporting_J7_Verification.md) descriu compoziția curentă.
+[Reporting J8](ATF_Reporting_J8_Verification.md) descriu compoziția curentă.
 Contractele browser și screenshot-urile aplicațiilor web sunt la [J1](../../atf_j1/docs/ATF_Evidence_Capture_Contract.md).

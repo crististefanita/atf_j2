@@ -9,9 +9,9 @@ primește și verifică livrarea potrivită propriului deployment.
 | Workspace | Rol | Suprafață existentă |
 |---|---|---|
 | `atf_j0` | sursă Core/Reporting, teste native și `atf-reporting-tests`; referință pentru contractele comune | 12 module sursă; Core și guvernanța comune reconciliate |
-| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 9 module journeys; J8 în lib și acceptanță proprie |
-| `atf_j2` | WIP: framework și teste Kafka/mesagerie, fără module browser ori Shop/AutoEx | 7 module sursă; Core și Reporting JAR; componente Eventuate MOCK; Kafka remote și clientul Java de infrastructură validate, clientul/observerul framework-ului rămâne WIP |
-| `atf_j3` | consumer speech, opt module sursă; Core sursă locală, Reporting JAR | J8 în lib și acceptanță proprie, fără module web ori mesagerie |
+| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 9 module journeys; C2/J9 în lib și acceptanță proprie |
+| `atf_j2` | WIP: framework și teste Kafka/mesagerie, fără module browser ori Shop/AutoEx | 7 module sursă; Core și Reporting JAR; trei componente MOCK și trei SQL embedded; Kafka remote și clientul Java de infrastructură validate, clientul/observerul framework-ului rămâne WIP |
+| `atf_j3` | consumer speech, șapte module sursă; Core și Reporting prin JAR | C2/J9 în lib și acceptanță proprie, fără module web ori mesagerie |
 | `demo2` | origine istorică a livrării J6 existente | nu mai este destinație activă de mentenanță sau sync |
 
 J1 poate avea schimbări comune în lucru. Referința J0 nu autorizează
@@ -36,7 +36,7 @@ flowchart LR
   JAR/POM este oferită destinațiilor, fără rebuild separat sub aceeași versiune.
 - Fiecare muchie de livrare cere propria acceptanță. J2 are un Git separat,
   păstrat la baza sa existentă; profilul Eventuate exclude explicit Shop/AutoEx, UI și Debug UI, iar configurațiile lui evoluează separat.
-- J3 primește perechea Reporting din același candidat și o verifică separat; Core rămâne sursă în reactorul său.
+- J3 primește aceleași perechi Core/Reporting, cu acceptanță proprie; nu păstrează surse Core ori harness Reporting.
 - Muchiile sunt livrări și probe, nu dependențe Maven ori module suplimentare.
 
 </details>
@@ -50,7 +50,7 @@ flowchart LR
 | contracte pentru cozi și mesaje | J2, cu propriul catalog și bootstrap; nu moștenește automat scenariile web din J1 |
 | infrastructură comună | ownerul comportamentului și consumatorii afectați; reconciliere selectivă, fără mirror sau proprietate exclusivă asupra întregului ATF |
 
-J2 este WIP: trei componente verifică oracole MOCK, iar Setup configurează
+J2 este WIP: trei componente verifică oracole MOCK și trei witness-ul JDBC pe H2 embedded; Setup configurează
 Kafka în Podman prin scripturi. Clientul Kafka Java și acceptanța reală
 rămân distincte; infrastructura copiată nu le demonstrează.
 
@@ -127,11 +127,11 @@ selectiv, iar backlog-ul Reporting și cel web rămân la ownerii J0/J1.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C1 și Reporting J7 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 7 module sursă. Core C2 și Reporting J9 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
-[Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
+[Contractul Core C2](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
 [Livrarea observations J7](ATF_Reporting_J7_Verification.md) păstrează acceptanțele și istoricul versiunilor separat.
 
-[Livrarea Reporting J8](ATF_Reporting_J8_Verification.md) închide disclosure-ul API fallback, cu acceptanță proprie a fiecărui consumer.
+[Livrarea Reporting J9](ATF_Reporting_J8_Verification.md) închide disclosure-ul API fallback, cu acceptanță proprie a fiecărui consumer.

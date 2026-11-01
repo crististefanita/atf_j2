@@ -249,7 +249,7 @@ Aceste contracte sunt utilizabile independent de un evaluator general nou.
 ## JSON — prezență, document și capabilități
 
 Contractul parsează lazy un singur document complet per evaluare. Nu există
-cache global de răspunsuri.
+cache global de răspunsuri. Portul public ResponseValidationRule rămâne compatibil; contextul de parsare nu supraviețuiește apelului.
 
 Documentul invalid, calea nesuportată, proprietatea
 absentă și valoarea prezentă sunt stări distincte; JSON null este prezent.
@@ -311,8 +311,8 @@ necunoscut ori o valoare invalidă refuză contractul, fără ignorare implicit�
 | Grup | Capabilități acceptate |
 |---|---|
 | schemă | obiect, inclusiv obiect gol, sau boolean true/false |
-| tip și enum | cele șapte tipuri JSON Schema, uniuni fără duplicate, enum nevid cu egalitate numerică matematică |
-| obiect | required, properties, additionalProperties boolean ori subschemă |
+| tip și enum | cele șapte tipuri JSON Schema, uniuni fără duplicate, enum nevid cu egalitate numerică matematică; integer include numerele integrale |
+| obiect | required, properties, additionalProperties boolean ori subschemă; false se aplică și fără properties |
 | array | items boolean ori subschemă, minItems, maxItems |
 | string | minLength/maxLength în code points Unicode, pattern cu sintaxă Java regex |
 | număr | minimum/maximum fără conversie la int/long sau pierdere de precizie |
@@ -321,7 +321,7 @@ necunoscut ori o valoare invalidă refuză contractul, fără ignorare implicit�
 - Schema și instanța trebuie să fie fiecare un document JSON complet. Un fișier
 gol nu este schema obiect goală; true și obiectul gol nu acceptă un body invalid.
 
-- `$ref`, combinatorii, format și celelalte keywords sunt refuzate explicit;
+- `const`, `$ref`, combinatorii, format și celelalte keywords sunt refuzate explicit;
 acesta nu este un evaluator complet JSON Schema. Alegerea unei biblioteci mai
 largi trebuie să păstreze portul neutru și probele publice ale acestui subset.
 
@@ -463,32 +463,9 @@ verifică aceeași decizie nominală, refuzul unui tip diferit și identitatea r
 
 ## Contract JSON și subset de schemă
 
-Evaluarea parsează cel mult o dată body-ul în contextul apelului. Documentul
-trebuie consumat integral; JSON malformat, chei duplicate și trailing data
-produc comparații negative. Contextul nu supraviețuiește între evaluări; portul public
-`ResponseValidationRule` rămâne compatibil.
-
-| Boundary | Contract executabil |
-|---|---|
-| Prezență | document invalid, cale invalidă, missing și valoare prezentă sunt distincte; explicit null este prezent |
-| Căi | proprietăți/indexuri `$.item[0].id`, forma simplă `item.id` și JSON Pointer cu escape-uri valide; wildcard/filter/recursive descent sunt refuzate |
-| Egalitate scalară | obiectele/array-urile nu devin șir gol; `jsonPathEquals` și membrii `everyArrayItemEquals` cer scalari |
-| Schema | preflight independent de instanță, inclusiv ramuri neatinse; schemă obiect sau boolean |
-| Tipuri și valori | `type` unic sau listă, `enum`, comparații numerice exacte; integer include valoarea numerică integrală |
-| Obiecte | `required`, `properties`, `additionalProperties` boolean/schemă; false funcționează și fără properties |
-| Array-uri | `items` boolean/schemă, `minItems`, `maxItems` |
-| Șiruri | `minLength`/`maxLength` în codepoints Unicode; `pattern` folosește regex Java valid |
-| Numere | `minimum`/`maximum` inclusiv, cu BigDecimal; fără conversie la double pentru verdict |
-| Metadate | `$schema` acceptă numai URI-ul draft 2020-12; `$comment`, `title`, `description`, `default`, `examples` sunt adnotări |
-| Nesuportat | orice alt keyword, inclusiv `const`, `$ref` și `format`, ori formă invalidă este refuzată; nu pretindem întregul JSON Schema |
-
-URI-ul acceptat este `https://json-schema.org/draft/2020-12/schema`.
-Un keyword refuzat rămâne refuzat chiar dacă inputul i-ar satisface sensul;
-`const:42` nu este ignorat nici pentru 42, nici pentru 99.
-
-Strict produce FAIL, iar politica warning păstrează rândurile negative și
-starea WARNING. Valorile integrale decid verdictul; proiecția auditului
-păstrează preview-ul 240, fără reevaluare în renderer.
+Contractul canonic este [JSON — prezență, document și capabilități](#json--prezență-document-și-capabilități),
+cu [egalitatea scalară](#egalitate-scalară--fără-coerciția-containerelor) și
+[subsetul JSON Schema](#subsetul-json-schema). Acest traseu păstrează ancora existentă fără a dubla regulile normative.
 
 ### Probe și integrare
 
@@ -500,3 +477,9 @@ rândurile și preview-ul; nu demonstrează transport real sau acuratețe speech
 Contractul MIME comun este reconciliat la ownerul J0 și în J1/J3; originea
 candidatului J2 rămâne în istoricul său. Reporting consumă rezultatele deja
 evaluate, fără clasificare MIME în renderer.
+
+### Parser comun și proprietatea datelor
+
+Documentele complete folosesc JsonDocuments din Core C2: fără duplicate ori
+trailing content, cu decimale exacte. Validation păstrează diagnosticele și
+politica proprie pentru null; nu deține un mapper strict paralel.

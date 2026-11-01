@@ -22,7 +22,7 @@ nu selectează profilul, iar harness-ul nedeclarat nu este acceptat.
 
 `atf.consumer.profile=eventuate` declară Setup și Eventuate în locul celor două
 module browser ale fundației. Refuză UI/Debug UI shadow; verificările J2 resping
-și dependențele sau namespace-urile browser, păstrând J6 și limitele sale documentate.
+și dependențele sau namespace-urile browser, păstrând versiunea declarată și limitele demonstrate pe binarul consumat.
 
 Distribuția binară citește JAR-ul și POM-ul direct din `lib`, cu aceeași
 verificare de proveniență, POM inclus și CodeSource. O copie imbricată nu

@@ -1,15 +1,36 @@
 package atf.eventuate.evidence;
 import atf.core.http.response.ApiExecutionResult;
+import atf.eventuate.await.OrderConvergenceSnapshot;
 import java.util.List;
 import java.util.ArrayList;
 
 /** Invocation-owned captured facts; the report consumes snapshots after execution. */
 public final class EventuateEvidence {
     private record Entry(String phase, EventuateExchange exchange) { }
+    private record ConvergenceEntry(String phase, OrderConvergenceSnapshot snapshot) { }
+    private record SqlEntry(String phase, atf.eventuate.sql.SqlEffectsSnapshot snapshot) { }
     private final List<Entry> captured = new ArrayList<>();
+    private final List<ConvergenceEntry> convergences = new ArrayList<>();
+    private final List<SqlEntry> sql = new ArrayList<>();
     private String phase = "TEST BODY";
     public void record(EventuateExchange exchange) { captured.add(new Entry(phase, java.util.Objects.requireNonNull(exchange))); }
     public void record(ApiExecutionResult result) { record(new EventuateExchange.Completed(result)); }
+    public void recordConvergence(OrderConvergenceSnapshot snapshot) {
+        convergences.add(new ConvergenceEntry(phase, java.util.Objects.requireNonNull(snapshot)));
+    }
+    public List<OrderConvergenceSnapshot> convergences() {
+        return convergences.stream().map(ConvergenceEntry::snapshot).toList();
+    }
+    public void recordSql(atf.eventuate.sql.SqlEffectsSnapshot snapshot) {
+        sql.add(new SqlEntry(phase, java.util.Objects.requireNonNull(snapshot)));
+    }
+    public List<atf.eventuate.sql.SqlEffectsSnapshot> sql() { return sql.stream().map(SqlEntry::snapshot).toList(); }
+    public List<atf.eventuate.sql.SqlEffectsSnapshot> sql(String phase) {
+        return sql.stream().filter(entry -> entry.phase().equals(phase)).map(SqlEntry::snapshot).toList();
+    }
+    public List<OrderConvergenceSnapshot> convergences(String phase) {
+        return convergences.stream().filter(entry -> entry.phase().equals(phase)).map(ConvergenceEntry::snapshot).toList();
+    }
     public List<EventuateExchange> entries() { return captured.stream().map(Entry::exchange).toList(); }
     public List<EventuateExchange> entries(String phase) {
         return captured.stream().filter(entry -> entry.phase().equals(phase)).map(Entry::exchange).toList();

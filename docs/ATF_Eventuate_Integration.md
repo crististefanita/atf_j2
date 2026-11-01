@@ -6,7 +6,7 @@
 
 Aplicația de referință este [Customers and Orders](https://github.com/eventuate-tram/eventuate-tram-examples-customers-and-orders).
 Snapshot-ul analizat este `8632d030301c2a477141350df1e77f3f991f64e0`;
-implementarea ATF inițială folosește exclusiv fixture-uri mock.
+implementarea ATF inițială folosea exclusiv fixture-uri mock. Incrementul [SQL embedded](../atf-test-eventuate/src/main/java/atf/eventuate/sql/README.md) verifică acum adaptorul JDBC pe schema fixture ATF, separat de aplicația upstream.
 
 | Date | Contract |
 |---|---|
@@ -21,6 +21,7 @@ implementarea ATF inițială folosește exclusiv fixture-uri mock.
 | schema și identitatea răspunsului | componentă mock | API real cu identificatori proprii |
 | retry GET și convergență | clock virtual și HTTP scriptat | deadline măsurat pe aplicație |
 | dovezi duplicate și efecte | validator cu witness independent | replay și efecte SQL/Mongo observate |
+| witness JDBC embedded | H2, tranzacții, identitate și failure-uri locale | SQL-ul aplicației, schema reală, CDC și corelarea cu Kafka |
 | UI | exclus din reactorul J2; fără Playwright | inspecția manuală a portalului, Swagger și AsyncAPI nu este dependență de test |
 
 ## Laborator real

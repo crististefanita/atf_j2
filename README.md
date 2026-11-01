@@ -1,16 +1,16 @@
 # ATF J2 — Eventuate, Kafka și framework de mesagerie · WIP
 
 J2 compune teste Eventuate cu transport MOCK și infrastructură Kafka configurată
-prin scripturi. Reporting este biblioteca J7 distribuită ca JAR/POM; sursa și
+prin scripturi. Reporting este biblioteca J8 distribuită ca JAR/POM; sursa și
 regresiile generice au owner în J0.
 
 ## ATF Java — prezentare executivă
 
-Ținta este un framework de testare pentru cozi Kafka, cu un singur modul de test și Setup PowerShell în Podman. Cele trei componente existente sunt MOCK; clientul/observerul Kafka Java și scenariile reale rămân WIP.
+Ținta este un framework de testare pentru cozi Kafka, cu un singur modul de test și Setup PowerShell în Podman. Există trei componente MOCK și trei SQL embedded H2; clientul/observerul Kafka Java și scenariile reale rămân WIP.
 
 | Intrare | Rezultat și limită |
 |---|---|
-| [Eventuate](atf-test-eventuate/README.md) | trei componente: API, convergență și witness de mesagerie; încă MOCK |
+| [Eventuate](atf-test-eventuate/README.md) | trei componente MOCK: API, convergență și mesagerie; trei componente SQL embedded: tranzacții, identitate și eșecuri |
 | [Setup](atf-setup/README.md) | rețetă Kafka cu digest, readiness și producer/consumer; prerequisites ale hostului separate |
 | [Atlas](docs/ATF_Context_Atlas.md) | intrări în cod, invarianti și dovezi, pentru context progresiv |
 | [Scop J2](docs/ATF_J2_Scope.md) | catalogul explicit de șapte module, fără UI/Debug sau Playwright |
@@ -83,7 +83,7 @@ consumer. POM-urile sunt autoritatea pentru muchiile complete.
 | Nivel | Dovadă curentă sau criteriu |
 |---|---|
 | unit | primitivele platformei; fără obligativitatea raportului component/E2E |
-| component | exact trei cazuri MOCK, cu SETUP, TEST BODY și TEARDOWN auditabile |
+| component | trei cazuri MOCK și trei SQL embedded, în două suite explicite; SETUP, TEST BODY și TEARDOWN auditabile |
 | integration | engine/Kafka și apoi adaptoare reale; acceptanța hostului este încă deschisă |
 | E2E | saga Eventuate, efecte SQL/CQRS și idempotency business; încă nedemonstrate |
 
@@ -128,9 +128,11 @@ o sesiune elevată pregătită în prealabil permite rularea silent.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 7 module sursă. Core C1 și Reporting J8 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 7 module sursă. Core C2 și Reporting J9 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
-[Contractul Core C1](docs/ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
+[Contractul Core C2](docs/ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
-[Acceptanța Reporting J8](docs/ATF_Reporting_J8_Verification.md) păstrează catalogul existent și istoricul J6/J7.
+[Acceptanța Reporting J9](docs/ATF_Reporting_J8_Verification.md) păstrează catalogul existent și istoricul J6/J7.
+
+[Acceptanța JSON C2/J9](docs/ATF_JSON_Binary_Verification.md) separă sursa, JAR-ul, rendererele și limitele rămase.

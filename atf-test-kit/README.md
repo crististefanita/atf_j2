@@ -451,3 +451,53 @@ trecerea întregului modul. Rendererul, browserul și regula business aparțin o
 `double` execută JUnit o singură dată și publică expected ± delta, actual
 și mesajul în assertion-step-ul standard. Nu reduce comparația la true/true;
 preview-ul rămâne 240, iar verdictul și cauza JUnit sunt păstrate.
+
+## Audit obligatoriu în corpul testului
+
+`ComponentAssertionAudit.AssertionRequirement` este politică neutră, fără
+Reporting ori reguli de domeniu. Constructorii existenți și publicațiile
+existente păstrează `ANY_PHASE`; consumerul poate alege explicit `TEST_BODY`
+prin `ComponentAuditExtension.Publication.assertionRequirement()`.
+
+| Situație cu TEST_BODY | Rezultat |
+|---|---|
+| Setup/teardown au checks, corpul nu are | FAIL; setup-ul nu înlocuiește dovada corpului |
+| JUnit direct ori numai observație în corp | FAIL dacă nu există comparație Kit evaluată |
+| Corp cu o comparație Kit reală | verdictul evaluat, fără reevaluare de renderer |
+| Failure original sau abort | cauza și FAIL/SKIP rămân primare; fără corp inventat după setup abort |
+| Handler JUnit consumă eroarea sau comparația e prinsă | failure-ul auditat rămâne FAIL |
+
+Un succes fără comparație publică rândul structural
+`Audited assertion coverage / TEST BODY`: expected `at least 1 evaluated assertion`,
+actual `0`, verdict FAIL. Acesta diagnostichează lipsa dovezii, nu inventează
+o verificare business. Preview-ul rămâne 240; evaluarea folosește valorile complete.
+
+Probele permanente [TestBodyAssertionRequirementTest](src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementTest.java) și
+[TestBodyAssertionRequirementComponentTest](src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementComponentTest.java) verifică politica, lifecycle-ul
+JUnit real și izolarea invocărilor template. Adoptarea strictă se decide în
+adaptorul fiecărui consumer; unit-urile obișnuite nu primesc această cerință.
+
+### Pachetele regresiilor de audit
+
+Regresiile politicii TEST_BODY aparțin subpachetului assertions.requirements.
+Ele folosesc API-ul public Kit; migrarea păstrează corpurile testelor,
+fixture-urile JUnit și toate cazurile, fără schimbarea implementării main.
+
+```mermaid
+%%{init: {"themeVariables":{"fontSize":"15px"},"themeCSS":".nodeLabel, .nodeLabel p { font-size: 15px !important; line-height: 1.35 !important; } .edgeLabel, .edgeLabel p { font-size: 12px !important; font-weight: 400 !important; line-height: 1.2 !important; } .edgeLabel .labelBkg, .edgeLabel p { background: transparent !important; } .edgeLabel foreignObject { transform: translateY(-18px); overflow: visible; } .node rect { rx: 6px; ry: 6px; }","flowchart":{"curve":"linear","nodeSpacing":24,"rankSpacing":40,"padding":10,"diagramPadding":16}}}%%
+flowchart LR
+    Tests["Teste audit Kit"] -->|audit general| General["assertions<br/>8 clase"]
+    Tests -->|politica TEST_BODY| Requirement["assertions.requirements<br/>2 clase"]
+    General -->|verifică| API["API public Kit"]
+    Requirement -->|verifică| API
+```
+
+<details>
+<summary><strong>Legendă — coeziune fără excepție de prag</strong></summary>
+
+- Nodurile reprezintă pachete de teste și suprafața verificată, nu dependențe Maven ori module suplimentare.
+- Limita de opt clase se aplică fiecărui pachet; regresiile politicii au un owner semantic separat.
+- Numele simple ale celor două clase rămân aceleași pentru selecțiile Surefire; numele calificate folosesc noul subpachet.
+- Manifestul platformei păstrează previousPath, previousSha256 și amprenta nouă în reconciliere. Istoricul controlului KIT-BODY-J2 rămâne la căile sale originale.
+
+</details>

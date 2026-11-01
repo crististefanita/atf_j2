@@ -5,6 +5,8 @@ import atf.core.http.request.HttpHeader;
 import atf.core.http.request.MediaTypes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.cfg.JsonNodeFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import java.io.IOException;
@@ -23,7 +25,9 @@ public final class AtfMockConfigurationLoader {
     public static final String CONFIG_ENVIRONMENT_VARIABLE = "ATF_MOCK_CONFIG";
     public static final List<String> DEFAULT_CONFIG_NAMES = List.of("atf-mock.yaml", "atf-mock.yml");
 
-    private static final ObjectMapper YAML = new ObjectMapper(new YAMLFactory());
+    private static final ObjectMapper YAML = new ObjectMapper(new YAMLFactory())
+            .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
+            .configure(JsonNodeFeature.STRIP_TRAILING_BIGDECIMAL_ZEROES, false);
 
     private AtfMockConfigurationLoader() {
     }

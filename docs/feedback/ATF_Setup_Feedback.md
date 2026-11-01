@@ -16,6 +16,7 @@ AccessDeniedException și pierde diagnosticul original Advertised listener diffe
 - Păstrați cauza inițială și atașați eșecul publicării ca secundar; stderr trebuie să rămână util chiar când fișierul nu poate fi creat.
 - Separați execuția probei de serializarea/salvarea rezultatului, fără transformarea eșecului inițial în succes sau retry de mutații.
 - Probați failure simplu, output indisponibil și ambele simultan; verificați și propagarea prin wrapperul PowerShell.
+- Includeți cleanup-ul Admin/Producer/Consumer în protocolul cauzei primare. Cele trei close în finally sunt o cale statică de risc; refuzul simultan execuție/close cere probă pură separată, fără a fi prezentat drept eșec Kafka observat.
 
 Închidere: exit code rămâne FAIL, iar ambele cauze sunt observabile în ordinea
 corectă, inclusiv când niciun receipt nou nu poate fi scris.

@@ -2,10 +2,10 @@
 
 ## Pe scurt
 
-Cele trei teste Eventuate folosesc fixture-uri MOCK. Clientul/observerul framework-ului și saga reală sunt WIP; proba Java Setup pe Kafka real are [acceptanță de infrastructură separată](../atf-setup/README.md#kafka-remote--provisioning-și-client-extern).
+Cele trei teste MOCK și trei componente SQL embedded au suite distincte și folosesc aceeași extensie de audit. Clientul/observerul framework-ului și saga reală sunt WIP; proba Java Setup pe Kafka real are [acceptanță de infrastructură separată](../atf-setup/README.md#kafka-remote--provisioning-și-client-extern).
 
 Componenta este aleasă explicit prin `@EventuateComponentTest`, compusă cu
-adnotarea Kit și extensia de audit. Cele trei cazuri normale au fiecare un
+adnotarea Kit și extensia de audit. Cele trei cazuri MOCK normale au fiecare un
 test executabil; controalele negative rămân în aceleași oracole.
 
 | Caz | Ce verifică |
@@ -71,7 +71,7 @@ Oracolul consumerului cere exact trei tabele de assertions per scenariu,
 patru coloane și comparațiile nominale; eliminarea unui tabel sau inversarea
 unui verdict sunt refuzate. Scripturile și CSS-ul nu satisfac acest oracol.
 
-J6 are un gap de aplicabilitate în `ReportArtifactInspector`: cere markeri
+Pe J8 persistă gap-ul de aplicabilitate din `ReportArtifactInspector`: cere markeri
 HTTP și pentru scenarii exclusiv de mesagerie; fallback-ul este verificat
 față de criterii Extent. Rezultatele originale rămân în receipt, fără a declara
 inspectorul universal verde. Ownerul și închiderea sunt în
@@ -136,3 +136,88 @@ restaurează la ieșire. Timeout-ul scurt al fixture-ului nu schimbă bugetele
 binding-ului implicit și nu certifică un SLA de rețea real.
 
 ExpectedTerminalProbe este fixture tehnic separat, selectat explicit de CLI; nu înlocuiește expected-ul business din EventuateApiContractComponentTest. Cele patru probe PASS rulează fixture-ul individual sau împreună cu ceilalți doi consumatori, într-un scope comun.
+
+## Convergență — acceptanța istoricului terminal
+
+[ConvergenceEvidenceReportAcceptance](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/ConvergenceEvidenceReportAcceptance.java)
+lansează JUnit pe aceleași clase și pe JAR-ul fizic consumat. Produce 24 de
+rapoarte: două renderere, individual/suită și șase variante per combinație.
+
+| Variantă | Oracol independent |
+|---|---|
+| read, pause, empty, sink | exact un FAIL neconsumat, aceeași excepție la JUnit; în suită ceilalți doi consumatori rămân PASS |
+| expected-read | fixture tehnic separat, cinci comparații auditabile; test PASS cu observație READ_FAILURE neutră |
+| expected-expired | deadline înaintea primei citiri, zero observații și istoric gol; fără un ultim ordin inventat |
+| fără replay | o creare; zero, una sau două citiri și exact numărul de dispatch-uri fixat de caz |
+| artifact | un HTML per lansare, fază corectă, expected 42/APPROVED, buget 25 ms, interval 10 ms, timp și istoric capturate |
+| redacție și mutanți | secretul sintetic absent; snapshot omis, expected pierdut, fază/istoric corupte și coloană ACTUAL eliminată sunt refuzate |
+
+După build, folosește classpath-ul de acceptanță și un director absent:
+
+```powershell
+$convergenceOutput = Join-Path ([IO.Path]::GetTempPath()) ("j2-convergence-" + [guid]::NewGuid().ToString("N"))
+java -Xmx768m -cp $eventuateCp atf.eventuate.tests.support.acceptance.ConvergenceEvidenceReportAcceptance $convergenceOutput
+```
+
+Proprietatea atf.eventuate.convergence este exclusiv test-scoped, implicit none;
+CLI-ul o restaurează la ieșire. Probele folosesc transportul finit, clientul
+real ATF și un clock virtual; nu pornesc infrastructură sau mutații LIVE.
+
+[EventuateConvergenceEvidenceTest](../atf-test-eventuate/src/test/java/atf/eventuate/tests/unit/EventuateConvergenceEvidenceTest.java)
+verifică separat timpul necunoscut, observația finalizată înaintea defectării
+clock-ului, întreruperea, Error, suppression dezactivat și invocările repetate.
+Aceste cazuri unitare nu sunt revendicate drept randări distincte ale matricei.
+
+Auditul TAB MCP verifică:
+
+- snapshot-ul și body-ul JSON până la ultimul rând, inclusiv Enter/Space;
+- cele patru coloane la assertions și ultima comparație;
+- Fails și întoarcerea exactă la cauza originală în Tests.
+
+[Contractul stabil](../atf-test-eventuate/README.md#istoricul-convergenței--snapshot-terminal)
+păstrează observations separate de comparații și de verdict.
+
+## SQL embedded — acceptanță consumer
+
+[EventuateSqlComponentSuite](../atf-test-eventuate/src/test/java/atf/eventuate/tests/suites/EventuateSqlComponentSuite.java)
+selectează exact trei componente. H2 2.5.252 este test-scoped; main depinde
+numai de JDBC, iar schema atf_order_reservations este fixture ATF.
+
+| Componentă | Dovadă |
+|---|---|
+| EventuateSqlTransactionComponentTest | conexiuni distincte, necomis invizibil, commit, rollback, cinci SELECT-uri/conexiuni închise și baza absentă după cleanup |
+| EventuateSqlIdentityComponentTest | zero rânduri, ID străin, efect unic, duplicat permis de schemă și refuzat de oracol, sumă/stare greșită, zecimale mari și baze izolate |
+| EventuateSqlFailureComponentTest | SQL invalid real, aceeași SQLException/cauză, cleanup suppressed, rând parțial FAILED, un callback și sink fără replay |
+
+Din staging TMP, după bootstrap:
+
+```powershell
+mvn -B -pl atf-test-eventuate -am "-Dtest=SqlEffectsContractTest,EventuateSqlComponentSuite" "-Dsurefire.failIfNoSpecifiedTests=false" test
+$sqlOutput = Join-Path ([IO.Path]::GetTempPath()) ("j2-sql-" + [guid]::NewGuid().ToString("N"))
+java -Xmx768m -cp $eventuateCp atf.eventuate.tests.support.acceptance.sql.SqlEvidenceReportAcceptance $sqlOutput
+```
+
+Regenerează classpath-ul de acceptanță după schimbarea POM-ului: include acum
+H2 test-scoped. CLI-ul cere director absent și restaurează proprietățile la
+ieșire; atf.eventuate.sql.probe este implicit none și exclusiv test-scoped.
+
+<details>
+<summary><strong>Matricea SQL și oraclele negative</strong></summary>
+
+- 18 HTML-uri: fiecare dintre cele trei clase individual, suita SQL, combinația cu cele trei MOCK și probele duplicate/sql-error individual/prin suită, în Extent și fallback.
+- 40 invocări JUnit, opt FAIL-uri controlate, zero SKIP ori failure de container. Pentru sql-error, instanța originală ajunge la JUnit; pentru duplicate, cauza este exact comparația 1 versus 2.
+- Oracolul verifică rândurile și ordinea lor față de constante independente, SQL_EMBEDDED, ID cerut, outcome, timp, fază și patru coloane de assertions. Secretul sintetic din cauză este absent din HTML.
+- Fiecare snapshot este delimitat înaintea parsării. Câmp absent, fază greșită, outcome corupt, valoare zecimală schimbată, coloană eliminată și verdict mutat pe altă comparație sunt refuzate.
+- Tabelele păstrează comparațiile PASS când eșecul este al execuției. SQL FAILED este observație neutră; un failure așteptat și verificat nu produce verdict fals FAIL.
+
+Reauditarea acelorași artifacte, fără relansarea testelor:
+
+```powershell
+java -Xmx384m -cp $eventuateCp atf.eventuate.tests.support.acceptance.sql.SqlArtifactAudit $sqlOutput
+```
+
+În TAB MCP verifică metadatele, JSON până la ultimul rând, Enter/Space,
+scroll-ul interior al assertions și întoarcerea Fails în Tests. [Contractul SQL](../atf-test-eventuate/src/main/java/atf/eventuate/sql/README.md)
+separă limitele adaptorului de acceptanța aplicației.
+
+</details>

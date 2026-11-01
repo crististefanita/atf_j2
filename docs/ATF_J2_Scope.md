@@ -4,14 +4,14 @@
 
 J2 este WIP pentru un framework de mesagerie și un singur modul de test Kafka,
 cu Setup PowerShell în Podman. Reactorul are șapte module, fără UI/Debug;
-cele trei componente actuale sunt MOCK, iar integrarea Kafka Java în framework rămâne de implementat.
+trei componente sunt MOCK și trei verifică SQL embedded H2, iar integrarea Kafka Java în framework rămâne de implementat.
 
 | Stare live | Contract |
 |---|---|
 | catalog | Kit, Mock, Validation, Console, Setup, Eventuate, Tests, în ordinea declarată |
 | profil | eventuate; foundation are alt catalog și nu substituie acest deployment |
 | browser | fără surse UI/Debug și fără dependență Playwright |
-| Reporting | JAR/POM J6, fără sursă ori harness în J2 |
+| Reporting | JAR/POM J8, fără sursă ori harness în J2 |
 
 ## Limita executabilă
 
@@ -52,6 +52,7 @@ numai criterii deschise, fără a redeschide retragerea deja demonstrată.
 flowchart LR
     Setup["Setup<br/>PowerShell + JSON"] -->|provisioning| Podman["Podman<br/>Kafka"]
     Mock["Fixture MOCK"] -->|astăzi| Tests["Modul de test"]
+    SQL["H2 embedded"] -->|JDBC independent| Tests
     Podman -.->|integrare Java WIP| Tests
     Tests -->|fapte și verdict| Report["Reporting JAR<br/>Extent / fallback"]
 ```
@@ -59,7 +60,7 @@ flowchart LR
 <details>
 <summary><strong>Legendă — infrastructură și integrare încă deschisă</strong></summary>
 
-Setup configurează Kafka și verifică clientul Java de infrastructură numai la lansare explicită; Maven nu pornește servicii. Muchia punctată arată clientul/observerul de implementat în framework, iar muchia MOCK arată intrarea actuală a testelor Eventuate.
+Setup configurează Kafka și verifică clientul Java de infrastructură numai la lansare explicită; Maven nu pornește servicii. Muchia punctată arată clientul/observerul de implementat în framework, iar muchiile MOCK și H2 arată intrările locale ale componentelor Eventuate.
 
 Modulul de test deține expected-ul și verdictul. Reporting JAR publică faptele și HTML-ul; muchiile reprezintă operații și flux de date, nu dependențe Maven.
 

@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-Cele trei componente verifică oracolele și integrarea ATF pe fixture-uri.
+Cele trei componente MOCK și trei SQL embedded verifică oracolele și integrarea ATF pe fixture-uri.
 Acceptanța aplicației reale rămâne deschisă; raportul MOCK nu este dovadă
 pentru procesarea brokerului sau pentru tranzacțiile bazei de date.
 
@@ -30,6 +30,13 @@ detector fără deduplicare; replay-ul vechi este un risc static de reprodus.
 Închidere: demonstrează procesarea duplicatului, efectul SQL unic și starea
 CQRS coerentă; verifică și creditul concurent și recuperarea CDC. Un defect
 upstream se raportează cu dovadă, fără relaxarea oraclelor ATF.
+
+- Incrementul [SQL embedded](../../atf-test-eventuate/src/main/java/atf/eventuate/sql/README.md) este livrat: witness JDBC, trei componente și matrice individual/suită/combinate pe H2. Schema fixture și tranzacțiile locale nu închid criteriul real de mai sus.
+
+- Înaintea adoptării LIVE, delimitați bugetele de conectare/SELECT și anularea lor, contul read-only și consistența citirii; H2 local nu demonstrează aceste limite de rețea.
+- Următorul pas este adaptorul read-only pentru schema aplicației și corelarea cu observerul Kafka, cu provenance și identitate independentă.
+- Demonstrați două livrări ale aceluiași mesaj, efectul SQL unic și proiecția CQRS, inclusiv credit concurent și recuperare CDC.
+- Păstrați H2 ca regresie locală a adaptorului/oraclelor; nici modul de compatibilitate, nici un UNIQUE care împiedică fixture-ul duplicat nu certifică deduplicarea upstream.
 
 ## EVT-CONVERGENCE-CONTRACT-86 — deadline al citirii LIVE
 

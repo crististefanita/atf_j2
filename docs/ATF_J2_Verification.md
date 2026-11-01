@@ -1,5 +1,133 @@
 # J2 — perimetru verificat
 
+## Coeziune Kit — relocare verificată în J2
+
+Snapshot-ul are 373 de intrări la baza Git
+b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c. Cele două regresii TEST_BODY sunt
+mutate în assertions.requirements, cu numai package/import schimbate;
+implementarea main, regula opt, allow-list-urile și selecțiile SQL sunt păstrate.
+
+| Probă în staging propriu | Rezultat și limită |
+|---|---|
+| integritatea migrării | corpurile testelor și fixture-urilor sunt identice; pachetul inițial trece de la zece la opt clase, requirements are două |
+| modulul Kit complet | 133 invocări, zero eșecuri, erori sau skip; cele două clase mutate execută aceleași șapte plus trei cazuri |
+| guvernanță completă | 167 controale trec, inclusiv coeziunea și controlul Git; failure-ul Kit din incrementul SQL este închis fără excepție de prag |
+| consumer Eventuate | 11 invocări: cinci oracole SQL și câte trei componente MOCK/SQL prin suitele explicite; toate trec |
+| matrice SQL | 18 HTML-uri, 40 invocări și opt FAIL-uri controlate; individual/suită/combinate în Extent/fallback, cu oraclele și mutanții existente |
+| audit TAB MCP | trei rapoarte: combinat PASS, SQL failure prin suită și duplicat fallback; Enter/Space, JSON integral, patru coloane, ultimul rând și Fails către cauza originală |
+| documente finale | 14 controale Git/documentare verzi și șase documente validate; criteriul Kit închis este retras, cu istoria păstrată |
+| proveniență | 170 de intrări curente; noua reconciliere păstrează previousPath și amprentele anterioare, inclusiv importul original J1 |
+| perimetru | șapte module, aceleași Core C1 și Reporting J8 și preview 240; fără modificări Reporting ori infrastructură LIVE |
+
+- [Contractul Kit](../atf-test-kit/README.md#pachetele-regresiilor-de-audit) și
+  [atlasul J2](ATF_Context_Atlas.md) dețin organizarea curentă. Feedback-ul 114
+  este retras, iar controlul KIT-COHESION-115 rămâne în baseline împreună cu istoricul KIT-BODY-J2.
+- Dovezi TMP: incrementul atf-j2-kit-cohesion-db49fee4ea, migration-audit.json,
+  kit-full-tests.log, cohesion-reactor.log, sql-matrix/acceptance.json și
+  browser-audit.json; cohesion-document-gates.log păstrează cele 14 controale finale. Rapoartele verifică integrarea consumerului pe J8, fără teste native Reporting copiate.
+- Relocarea este locală J2; nu certifică sau suprascrie checkout-urile vecine.
+  H2 rămâne schema fixture ATF, cu acceptanța aplicației reale separată.
+
+## SQL embedded H2 — primul increment J2
+
+Snapshot-ul inițial are 352 de intrări și HEAD
+b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c. H2 2.5.252 este test-scoped,
+iar witness-ul main folosește numai JDBC din JDK; Core C1, Reporting J8,
+cele șapte module și preview-ul 240 sunt păstrate.
+
+| Probă TMP | Rezultat și limită |
+|---|---|
+| contract SQL | cinci teste pure și trei componente: tranzacții, identitate/duplicate și failure JDBC; schema aparține fixture-ului ATF |
+| native după refresh live | 56 invocări Eventuate și zece Kit, fără eșecuri, erori sau skip; include cele două suite și regresiile terminale existente |
+| conexiune independentă | necomis invizibil, commit vizibil, rollback păstrat; cinci SELECT-uri, cinci conexiuni noi închise și baza absentă după owner close |
+| oracol SQL | zero rânduri, ID străin, duplicate, sumă/stare greșită și zecimale mari refuzate față de expected fix; baze izolate per invocare |
+| failure | aceeași SQLException/cauză, cleanup suppressed, rând parțial păstrat cu FAILED; collector o dată și nicio reluare SQL |
+| matrice SQL finală | 18 HTML-uri, 40 invocări, opt FAIL-uri controlate; individual, suită și combinație cu trei componente MOCK, în Extent/fallback |
+| regresii artifact adiacente | 24 de convergență și 36 terminale HTTP pe Kit-ul reconciliat; 78 de artifacte finale în total, cu mutanți refuzați |
+| audit TAB MCP | patru rapoarte variate și două reverificate după refresh Kit; JSON integral, Enter/Space, patru coloane, scroll interior până la ultimul rând și Fails către cauza originală |
+| gate focalizat final | 11 invocări SQL/MOCK și 17 controale Git/documentare/selecții verzi; controlul SQL este verificat separat de restanța Kit |
+| guvernanță completă după refresh | 166 din 167 trec; un failure Kit paralel are zece clase de teste în același pachet, peste pragul opt; nicio regulă nu este relaxată |
+| proveniență Kit | două surse și două native identice cu J1, deja livrate concurent în J2; manifestul păstrează istoricul și include acum 170 de intrări |
+
+- [Contractul SQL și diagrama](../atf-test-eventuate/src/main/java/atf/eventuate/sql/README.md)
+  separă writer, witness, snapshot și oracol. [Comenzile de acceptanță](ATF_Eventuate_Testing.md#sql-embedded--acceptanță-consumer)
+  folosesc H2 și JAR-ul Reporting fizic din classpath-ul consumerului.
+- La închiderea incrementului SQL, [criteriul Kit](../atf-test-kit/README.md#pachetele-regresiilor-de-audit) păstra failure-ul real
+  și reorganizarea necesară; mutarea ulterioară este verificată în incrementul de coeziune, separat de implementarea SQL.
+- Dovezi TMP: incrementul atf-j2-sql-8309190481, sql-components-first.log,
+  sql-live-reconciled-reactor-reviewed.log, sql-matrix-live/acceptance.json,
+  adjacent-convergence-live/acceptance.json, adjacent-terminal-live/acceptance.json
+  și browser-audit.json. sql-final-gates.log delimitează gate-ul focalizat SQL/documente.
+- Refuzurile sunt păstrate: sql-oracle-thread-dump.log arată backtracking-ul
+  oracolului inițial, corectat prin delimitarea snapshot-ului; sql-live-reconciled-reactor.log
+  arată clasele Kit incrementale vechi, recompilate după refresh fără schimbarea codului.
+
+H2 probează adaptorul și oraclele pe schema fixture ATF. Nu certifică schema,
+dialectul, tranzacțiile aplicației, CDC, Kafka sau deduplicarea business;
+criteriile de acceptanță LIVE rămân deschise în feedback.
+
+## Istoricul terminal al convergenței — verificare J2 pe J8
+
+Snapshot-ul inițial are 344 de intrări live și baza Git
+b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c. Incrementul deține numai
+convergența Eventuate, probele consumer și documentația; Core C1 și Reporting
+J8 rămân identice, cu șapte module și preview implicit 240.
+
+| Probă în staging propriu | Rezultat și limită |
+|---|---|
+| reproducere inițială | PENDING, două citiri, eșec după 10 ms; aceeași excepție, fără Result sau metadata terminală |
+| regresii native Eventuate | 48 invocări: 15 convergență, 19 identitate/overflow, 11 terminal HTTP și trei componente prin suita canonică; fără eșecuri, erori sau skip |
+| guvernanță | 166 controale verzi; nicio regulă, selecție canonică sau assertion existent nu este relaxat |
+| documentație finală | 14 controale Git/documentare verzi și opt documente aprobate validate; densitatea prozei este corectată după refuzul inițial, fără schimbarea regulii |
+| matrice nouă | 24 HTML-uri, 48 invocări și 16 failure-uri controlate; individual/suită, Extent/fallback, cu excepție identică și o singură creare |
+| fapte publicate | PENDING păstrat, expected independent 42/APPROVED, buget 25 ms, interval 10 ms, elapsed și zero observații explicite |
+| oracole negative | snapshot, fază, expected, istoric și coloana ACTUAL corupte sunt refuzate; parola sintetică din cauză lipsește din HTML |
+| regresii adiacente | matricea existentă de 14 rapoarte și cele 36 de terminal HTTP trec pe aceleași clase și binare; 74 de rapoarte în total în acest increment |
+| audit TAB MCP | patru rapoarte: read failure Extent/fallback în suită, expected-read PASS și expected-expired cu istoric gol; snapshot și JSON expandabile, Enter/Space, assertions cu patru coloane |
+| navigare FAIL | Fails duce exact la cauza originală din Tests; celelalte două componente rămân PASS, iar setup/teardown și comparațiile trecute nu preiau verdictul erorii |
+
+- Dovezi TMP: incrementul atf-j2-convergence-8d493b3ab6, baseline-failure.json,
+  convergence-reactor.log, convergence-matrix-reviewed/acceptance.json,
+  adjacent-report-acceptance/acceptance.json, adjacent-terminal-acceptance/acceptance.json
+  și browser-audit.json. Primul refuz al oracolului, pentru etichetele FIELD uppercase,
+  rămâne în convergence-acceptance.log; oracolul corectat păstrează valorile exacte.
+- convergence-final-document-gates.log păstrează refuzul inițial de densitate;
+  convergence-final-document-gates-reviewed.log păstrează cele 14 controale verzi.
+- [Contractul și diagrama](../atf-test-eventuate/README.md#istoricul-convergenței--snapshot-terminal)
+  delimitează execuția, collectorul și proiecția; [acceptanța reproductibilă](ATF_Eventuate_Testing.md#convergență--acceptanța-istoricului-terminal)
+  folosește API-ul J8, fără surse Reporting copiate.
+- Clock defect, Error, suppression dezactivat și reutilizarea awaiter-ului au probe
+  unitare; nu sunt revendicate drept cazuri vizuale suplimentare. Citirea LIVE
+  bounded și acceptanța saga rămân deschise; nu a rulat infrastructură în acest increment.
+- La data incrementului de convergență, SQL embedded și primitiva Mock comună erau
+  planuri. SQL embedded este livrat ulterior în secțiunea de la începutul paginii;
+  extracția Mock rămâne deschisă în feedback.
+## Revizie anterioară pe Reporting J8 — contracte și convergență
+
+Snapshot-ul este HEAD b5ea7e22d4fbad7deac5d7b8a651de1a2f7dd16c, cu 344 de
+intrări live capturate. Revizia schimbă numai documente; sursele Java,
+testele, POM-urile și perechile Core C1/Reporting J8 rămân neschimbate.
+
+| Probă în staging propriu | Rezultat și limită |
+|---|---|
+| reactor focalizat | 80 Mock, trei componente Eventuate prin suită și 166 controale de guvernanță; zero eșecuri, erori sau skip |
+| matrice Mock pe J8 | 14 artifacte noi, individuale/combinate, Extent/fallback; oracol per rând și mutanți verzi |
+| inspector generic | șapte Extent și șapte fallback neconforme; pe Extent lipsește legitim request response evidence split în profilul assertion-only |
+| browser | patru artifacte: expected/response refuzate și două combinate; patru coloane, ultima comparație, Enter/Space și backlink exact cu vecini PASS colapsați |
+| raport JUnit al suitei | trei clase PASS în același HTML; componenta API are tabele colapsabile în SETUP, TEST BODY și TEARDOWN; textul lung și ultimul rând sunt accesibile |
+| timing observat pe J8 | TEST BODY 141 ms și copil GET 215 ms; dovadă suplimentară pentru criteriul 83, fără latență controlată sau închidere a semanticii timpului |
+| guvernanță după editarea documentelor | 16 controale focalizate trec; README-ul din src/test are control documentar explicit, fără schimbarea regulilor sau a surselor Java |
+| convergență la read failure | PENDING, pauză virtuală 10 ms, a doua citire aruncă; aceeași excepție, două citiri, niciun Result și zero evidence suppressed |
+| convergență fără observații | deadline expirat înaintea primei citiri, zero citiri și observații; last aruncă NoSuchElementException |
+| consolidare Validation | un singur contract JSON normativ; vechile ancore rămân navigabile, iar BigDecimal, Unicode, strict/warning și subsetul refuzat sunt păstrate |
+
+- Dovezi TMP: incrementul atf-j2-review-0639018884, live-review-baseline.log,
+  j8-mock-matrix/acceptance.json, convergence-failure.json și browser-audit.json.
+- ConvergenceFailureProbe compilează cele trei surse publice relevante din
+  snapshot; este o probă locală de investigație, fără broker și fără publicare JUnit.
+- Snapshot-ul terminal HTTP este livrat; [istoricul terminal al convergenței](../atf-test-eventuate/README.md#istoricul-convergenței--snapshot-terminal)
+  era un criteriu nou și distinct, remediat ulterior prin incrementul descris la începutul paginii.
+
 ## Reporting J8 — livrarea curentă
 
 Perechea curentă este J8, direct în `lib`, cu Core C1 păstrat.
@@ -193,7 +321,7 @@ Ownerii și criteriile reproductibile sunt în [Validation](feedback/ATF_Validat
 ## Perimetru curent — Core C1 binar
 
 J2 declară șapte module sursă: Test Kit, Mock, Validation, Console, Setup,
-Eventuate și ATF Tests. Core C1 și Reporting J7 sunt cele două biblioteci
+Eventuate și ATF Tests. Core C1 și Reporting J8 sunt cele două biblioteci
 externe, fiecare cu JAR/POM direct în lib.
 
 Probele C1 de mai jos sunt istorice și au folosit Reporting J6, înaintea adoptării J7.

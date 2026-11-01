@@ -63,11 +63,11 @@ externe acestui deployment; probele lor rămân în J0/J1.
 | module și ownership | ArchitectureModuleBoundaryTest, ArchitectureOwnershipBoundaryTest | POM, package roots, interdicții și clasa exactă din JAR |
 | coeziune și constante | AtfPackageCohesionGovernanceTest, ConstantsOwnershipGovernanceTest | maximum opt clase/pachet guvernat și vocabular la owner |
 | lizibilitate și niveluri | AtfSourceReadabilityGovernanceTest, layers.* | inventar main/test, nivelul clasei executabile și suite disjuncte |
-| consumer | consumers.* și atf.j2.governance.* | suport main versus teste, audit și trei componente MOCK selectate explicit |
+| consumer | consumers.* și atf.j2.governance.* | suport main versus teste, audit și selecțiile explicite ale celor trei componente MOCK și trei SQL embedded |
 | documentație | documentation.* | aceleași validatoare pentru întregul scope și țintele adnotate |
 | schimbarea testelor | changes.* | diff Git real și control eligibil per path |
 
-J2 are o singură suită de componente Eventuate. Convenția celor trei suite
+J2 are două suite disjuncte Eventuate: MOCK și SQL embedded. Catalogul SQL verifică și driverul test-scoped și absența API H2 din main. Convenția celor trei suite
 web din J1 nu se prezintă drept selecție locală J2; integrarea și E2E reale
 rămân criterii deschise în [feedback](../docs/feedback/ATF_Eventuate_Feedback.md).
 
@@ -118,6 +118,7 @@ amprenta anterioară și cea nouă pentru incrementul revizuit.
 | Moment | Control |
 |---|---|
 | import nou sau corecție comună | importul compară ownerul J1; implementarea locală J2 păstrează previousSha256, noul hash și scope propriu, fără a certifica implicit J0/J1; fără rehash global |
+| relocare de probe J2 | files conține calea curentă; reconcilierea păstrează previousPath și cele două hash-uri; dovada compară corpurile testelor și execută aceleași cazuri, fără excepție de coeziune |
 | acceptanță J2 | `J2DeploymentGovernanceTest` cere toate amprentele efective și profilul fără module browser; un import neconsemnat produce FAIL |
 | Reporting JAR | `library-provenance.json` rămâne dovada binarului original; ledgerul surselor platformei nu o rescrie |
 
