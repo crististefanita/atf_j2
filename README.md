@@ -1,7 +1,7 @@
 # ATF J2 — Eventuate, Kafka și framework de mesagerie · WIP
 
 J2 compune teste Eventuate cu transport MOCK și infrastructură Kafka configurată
-prin scripturi. Reporting este biblioteca J15 distribuită ca JAR/POM; sursa și
+prin scripturi. Reporting este biblioteca J16 distribuită ca JAR/POM; sursa și
 regresiile generice au owner în J0.
 
 ## ATF Java — prezentare executivă
@@ -130,7 +130,7 @@ o sesiune elevată pregătită în prealabil permite rularea silent.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C3 și Reporting J15 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C3 și Reporting J16 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C3](docs/ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
@@ -156,3 +156,7 @@ Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 | audit | preview 240 și verdict original, fără reevaluare |
 
 J15 păstrează și CR/LF literal, inclusiv prima linie din corpurile TEXT inline.
+
+## Current screenshot viewer — J16
+
+[Reporting J16](docs/ATF_Reporting_J16_Verification.md) fits complete PNG evidence to the browser viewport and preserves the clicked checkpoint, local caption, disclosures and focus when closing the viewer. Core C3, the 240-character preview and the existing UI/API/SQL evidence contracts remain unchanged. Producer-side setup, inputs, independent expected values and capture completeness retain their own acceptance.

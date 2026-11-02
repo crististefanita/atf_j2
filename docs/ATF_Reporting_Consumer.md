@@ -82,3 +82,5 @@ impactul local și revalidarea cerută; backlog-ul generic este numai în J0.
 
 Adopția curentă este J15. [Verificarea livrării](ATF_Reporting_J15_Verification.md)
 separă proba acestui increment de acceptanțele istorice J6/J7/J8/J9.
+
+Current viewer behavior and separate consumer acceptance: [J16 verification](ATF_Reporting_J16_Verification.md).

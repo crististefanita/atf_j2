@@ -4802,7 +4802,7 @@ testChanges:
 </details>
 
 <details>
-<summary><strong>Control verificat — adopție Reporting J15</strong></summary>
+<summary><strong>Control verificat — adopție Reporting J16</strong></summary>
 
 ```yaml
 testChanges:
@@ -4810,12 +4810,12 @@ testChanges:
     status: VERIFIED
     base: 62492ae637f3f0fb87bc2e641a32c171412a83ef
     expires: 2026-11-30
-    reason: Actualizează numai versiunea dependenței Reporting la candidatul J15 verificat pe JAR fizic; păstrează modulele, selecțiile, assertions și preview 240, cu sanity distinct al consumerului.
+    reason: Actualizează numai versiunea dependenței Reporting la candidatul J16 verificat pe JAR fizic; păstrează modulele, selecțiile, assertions și preview 240, cu sanity distinct al consumerului.
     proof: mvn -B -pl atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
     paths:
       - pom.xml
 ```
 
-[Acceptanța candidatului](ATF_Reporting_J15_Verification.md) păstrează scope-ul propriu și limitele live.
+[Acceptanța candidatului](ATF_Reporting_J16_Verification.md) păstrează scope-ul propriu și limitele live.
 
 </details>
