@@ -62,3 +62,56 @@ Primitivele Console au probe proprii verzi; bypass-ul este în adaptorul J2.
 
 Închidere: nu se emite cale când politica autoritară este disabled; enabled
 emite o singură cale absolută numai după publicarea reușită.
+
+## EVT-KAFKA-CAPTURE-121 — bound every retained record field
+
+**Priority: 84/100** = impact 34 + gap 24 + actionable 18 + documentation 8.
+**Owner:** Eventuate Kafka capture in J2; renderer implementation stays in J0.
+
+- A controlled call to the current EventuateKafkaDecoder accepts an envelope of 106 characters together with a 1,048,576-character key and retains that key in KafkaEvidence.Event.
+- No broker was contacted.
+- The 65,536-character check covers record.value only; max.poll.records and fetch settings do not bound all retained fields.
+- The observer also lacks an aggregate evidence budget.
+
+- [ ] Define effective limits for keys, envelope fields and aggregate retained
+  evidence, with explicit units. Reject before retaining the over-budget event;
+  retain the accepted prefix, broker coordinates and the omission/failure reason.
+- [ ] Prove boundary values, oversized keys, many individually valid events,
+  multibyte text and failure publication. Keep the original exception primary.
+- [ ] Do not call a truncated prefix COMPLETE, silently drop foreign records or
+  replay a mutation. Kafka client buffering and ATF retained evidence are
+  separate resource contracts; document both limits precisely.
+
+**Closure:** bounded retained evidence and truthful failure artifacts pass
+pure contracts and the adopted consumer matrix. This does not certify CDC/saga.
+
+### Current audit — console and LIVE scope
+
+EVT-CONSOLE-PATH-79 remains reproduced: an explicit YAML with
+reporting.console.enabled=false is loaded as false, yet one passing API
+component emits ATF_REPORT_PATH directly from the extension owner. Route the
+path through the existing configured Console policy; do not add a second
+console switch. The initial property-only diagnostic did not configure this
+YAML key and is not the proof used here.
+
+LIVE remains NOT RUN. Prioritize actual readiness/schema before treating the
+three compiled E2E classes as application acceptance. SQL, MOCK and real
+infrastructure evidence retain their separate provenance.
+
+## Core/Kit producer handoff — 2026-11-01
+
+- CORE-TRANSPORT-CANCEL-125 reproduces mapped-future cancellation without an
+  upstream cancel call in HttpClientTransport. Fix and characterize that at
+  [Core](../../../atf_j0/docs/feedback/ATF_Core_Feedback.md), then retain J2's
+  real HTTP deadline/cleanup acceptance in EVT-CONVERGENCE-CONTRACT-86.
+- A cancelled future is not server rollback. Keep one mutation dispatch and
+  preserve uncertain outcomes; no automatic POST replay or deadline increase.
+- CORE-CONSOLE-REDACTION-124 concerns a configured console sink. The default
+  Eventuate LIVE composition has a no-op sink, so this audit does not demonstrate
+  a credential leak from that composition. EVT-CONSOLE-PATH-79 stays separate.
+- KIT-UNICODE-PREVIEW-127 affects the neutral preview before rendering. Its
+  [Kit owner](../../../atf_j0/docs/feedback/ATF_Common_Test_Support_Feedback.md)
+  needs a native fix and regression before J2 adoption; keep the 240 default.
+
+No C2/J10 JAR is replaced by this feedback handoff. Generic fixes and tests
+stay in J0; Kafka/SQL capture and actual application acceptance remain in J2.

@@ -25,3 +25,24 @@ probele existente de module/scope, limitele editoriale și linkurile reale.
 
 [Guvernanța documentară](../../atf-tests/README.md#alege-gate-ul-după-schimbare)
 și [stilul proiectului](../README_Atf_DocumentationBestPractices.md) rămân ownerii regulilor.
+
+### Current semantic drift — surgical examples
+
+- Mock README still states that high-precision decimal matching has an open
+  criterion, while its final exact-numeric section and the feedback index say
+  it is delivered. Its earlier Core C1/parser description also needs an
+  explicit historical boundary rather than a current limitation.
+- Workspace synchronization labels a J10 delivery through the J8 verification
+  link. Preserve the historical document; correct the current navigation.
+- Root atf.yaml still advertises api/reporting/ui and a GoRest API default.
+  This is not the Maven reactor and does not restore UI at runtime. Clarify
+  which compatibility settings are consumed and which Eventuate LIVE settings
+  are authoritative; do not describe the stale list as the current deployment.
+- J0's synchronization table still gives J2 seven modules and an unimplemented
+  observer. J2 currently has eight modules and implemented observer contracts;
+  full Eventuate application acceptance remains NOT RUN.
+
+Fix current claims at their owner; retain dated evidence unchanged. Add small
+fact contracts for current declarations, not a regex for every paragraph.
+New feedback is English; a future language cleanup should preserve the approved
+README diagrams/navigation and remove contradictions before expanding prose.

@@ -32,7 +32,7 @@ J2 are opt module și exclude UI/Debug; auditul HTML rămâne extern.
 | selecție și artifact | [ghid Eventuate](ATF_Eventuate_Testing.md) | trei componente MOCK și trei SQL; suite finite distincte și matrice SQL de 18 artifacte, inclusiv combinația cu MOCK; acceptanțele terminale rămân separate |
 | guvernanță | [ATF Tests](../atf-tests/README.md), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | inventar explicit și probe negative pentru modul lipsă, UI shadow și dependențe browser |
 
-Reporting J10 este binarul consumat; proveniența J6 (demo2) și J7 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
+Reporting J12 este binarul consumat; proveniența J6 (demo2) și J7 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
 
 ## Boundary-uri de fidelitate
 
@@ -111,7 +111,7 @@ aduce înapoi aceste domenii în atlasul și backlog-ul J2.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C2 și Reporting J10 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C2 și Reporting J12 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C2](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
@@ -134,7 +134,7 @@ cere efectele aplicației și corelare SQL/Kafka; proba H2 nu îl închide.
 [Cererea canonică J0](../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-sql-steps-116--query-uri-și-rezultate-auditabile)
 propune pași SQL neutri și bugete distincte pentru query și rezultate.
 [Adoptarea J2](feedback/ATF_Reporting_Consumer_Feedback.md#sql--handoff-către-j0-și-adoptare-ulterioară)
-cere integrarea snapshot-ului generic cu un candidat JAR verificat; J10 și preview-ul
+cere integrarea snapshot-ului generic cu un candidat JAR verificat; J12 și preview-ul
 assertion-urilor 240 rămân contractul curent, fără proprietăți SQL inventate.
 
 ## Intrare progresivă — SQL și LIVE

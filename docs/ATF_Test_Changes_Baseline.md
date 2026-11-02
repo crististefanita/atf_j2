@@ -4739,3 +4739,23 @@ testChanges:
 ```
 
 </details>
+
+
+
+<details>
+<summary><strong>Reporting J12 — adoption control</strong></summary>
+
+```yaml
+testChanges:
+  - id: REPORT-J12-ATF-J2
+    status: VERIFIED
+    base: da51ceb6da6e214e2b5100af45de8133853fcef7
+    expires: 2026-11-30
+    reason: Adoptă aceeași pereche J12 verificată în J0, fără schimbări ale oracolelor business ori ale Core C2.
+    proof: mvn -B -pl atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java
+      - pom.xml
+```
+
+</details>

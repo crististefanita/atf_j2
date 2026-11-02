@@ -170,7 +170,7 @@
     "atf-validation/src/main/java/atf/validation/contract/schema/JsonValueEquality.java": "d58ae5778351636218b758628adca8e6e2966a910eba7b971ffcb5ca487e123d",
     "atf-validation/src/test/java/atf/validation/JsonPresenceContractTest.java": "df590e2000d2fcef89245e60f463f338da38407d0f10685d392465cc4c88aaad",
     "atf-validation/src/test/java/atf/validation/JsonSchemaContractTest.java": "38bceff47576e693c86b0e691d5224e59293f856998b844f085e94a321c8f909",
-    "atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java": "1D8E2579852BD53C1E2D12E3A3B7B49D8BC8F5FD34D1D88C2AFE71B2BD99EA83",
+    "atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java": "7D46C8CC317D372E4AB7A5B0BC453BC330DA43A9BF5C8C7B745F521DB576588D",
     "atf-test-kit/src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementTest.java": "53b54e49b7fcd5b7c5f3dd3d4897b1d73a4df6e34038361b0208166c4d1225bf",
     "atf-test-kit/src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementComponentTest.java": "3131dc0d4613ebb1c113d5c9410461c55339a43aa818890312d513fab69180cb"
   },
@@ -498,6 +498,19 @@
           "path": "atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java",
           "beforeSha256": "8D0E3412F61DB95CC0023AE3E587B446F5217CED4B0F38E4DD3DFDFE90383E49",
           "afterSha256": "1D8E2579852BD53C1E2D12E3A3B7B49D8BC8F5FD34D1D88C2AFE71B2BD99EA83"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-02",
+      "owner": "J0",
+      "scope": "Reporting J12: explicit finite native catalog adds three reviewed classes; growth/substitution guards remain",
+      "evidenceRoot": "C:/Users/Cristi/AppData/Local/Temp/ATF_REPORTING_J12_ACTIVE_DO_NOT_CLEAN_ofy19s",
+      "files": [
+        {
+          "path": "atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java",
+          "beforeSha256": "1D8E2579852BD53C1E2D12E3A3B7B49D8BC8F5FD34D1D88C2AFE71B2BD99EA83",
+          "afterSha256": "7D46C8CC317D372E4AB7A5B0BC453BC330DA43A9BF5C8C7B745F521DB576588D"
         }
       ]
     }

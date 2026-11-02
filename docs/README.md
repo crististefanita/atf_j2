@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-[Reporting J10 — livrarea curentă](ATF_Reporting_J10_Verification.md) păstrează dovada livrării și limitele ei.
+[Reporting J12 — livrarea curentă](ATF_Reporting_J12_Verification.md) păstrează dovada livrării și limitele ei.
 
 Ținta este un framework Kafka cu un singur modul de test și Setup PowerShell în Podman. Kafka și clientul Java de infrastructură sunt validate din VM; observerul framework-ului este probat real, iar aplicația Eventuate completă rămâne NOT RUN.
 
@@ -63,7 +63,7 @@ guvernanței; ele trimit către J0 și nu dublează backlog-ul producătorului.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C2 și Reporting J10 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C2 și Reporting J12 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.

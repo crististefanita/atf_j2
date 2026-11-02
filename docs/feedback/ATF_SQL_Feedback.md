@@ -67,3 +67,34 @@ un diagnostic foarte mare poate amplifica memoria înaintea limitei HTML.
 
 Închidere: diagnosticul capturat respectă politica, originalul rămâne identic,
 iar limitele JDBC, cele HTML și preview-ul assertions 240 rămân distincte.
+
+### SQL-DIAGNOSTIC-CAPTURE-120 — current execution counterexample
+
+On the current compiled SQL source, a capture budget of 256 units still
+publishes a 1,048,576-character primary message plus 64 secondary descriptions
+containing 525,760 characters. The original SQLException identity and one
+connection attempt are preserved. This reconfirms the existing criterion;
+it is not a new duplicate TODO or a claim of bounded driver allocation.
+
+Bound the diagnostic projection independently, including secondary count and
+omitted-length metadata. Never shorten or replace the original Throwable.
+Proof: sql-diagnostic-probe.log in j2-quality-64e05d574c24 under TMP.
+
+## SQL-HARNESS-DIAGNOSTICS-122 — preserve the failing JUnit cause
+
+**Priority: 79/100** = impact 30 + gap 22 + actionable 19 + documentation 8.
+**Owner:** SQL acceptance support in test scope; neutral support reuse has
+[Kit handoff](../../../atf_j0/docs/feedback/ATF_Common_Test_Support_Feedback.md).
+
+- The first native SQL matrix stops with Native SQL JUnit verdict differs and an opaque MutableTestExecutionSummary$DefaultFailure object identity.
+- Its HTML correctly retains SQLTimeoutException; the launcher error alone loses the useful cause.
+- A separate isolated matrix passes all 12 reports / 36 invocations with four intended failures.
+- The first failure remains evidence; this does not establish stable performance or justify increasing the budget.
+
+- [ ] Print and persist the selected case, original Throwable/cause/suppressed,
+  expected versus observed JUnit/container counts and the exact artifact path
+  before terminating the matrix. Persist a partial receipt even on early exit.
+- [ ] Prove setup/container failure, timeout, wrong exception type and artifact
+  publication failure. Keep the original failed invocation visible.
+- [ ] Reuse neutral scope/diagnostic mechanics only after the concrete cases
+  are covered; SQL expectations and artifact oracles stay with SQL tests.

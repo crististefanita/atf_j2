@@ -68,3 +68,17 @@ orchestrare, cu regresii offline și aceeași acceptanță reală, fără timeou
 
 - Noul helper Write-AtfEventuateReceipt păstrează cauza și eroarea secundară, cu probă offline simultană; rețeta și proba mică sunt [documentate](../../atf-setup/README_Eventuate.md). Aceasta nu repară încă utilitarul vechi KafkaExternalProbe și nu închide SETUP-PRIMARY-FAILURE-87.
 - Reutilizați protocolul demonstrat la acel owner și probați și close-urile Java. Gate-ul de memorie și comparația broker ID/StartedAt sunt implementate; nu le mai listați drept provisioning lipsă.
+
+### SETUP-PRIMARY-FAILURE-87 — offline reconfirmation
+
+- The compiled current KafkaExternalProbe receives an invalid bootstrap address and a controlled receipt destination that is an existing directory.
+- With a valid fresh destination the receipt records KafkaException / FAIL and topicCreated=false.
+- With the directory destination the process exposes only AccessDeniedException from Files.writeString.
+- No broker/topic/producer was executed.
+- This confirms primary-cause loss without changing infrastructure.
+
+Keep the Kafka/configuration failure primary and attach receipt/close errors
+as secondary diagnostics. Extend the already owned failure-preserving receipt
+pattern instead of introducing a second setup framework. Preserve nonzero exit
+and prove both failure orders; the passing Eventuate receipt helper does not
+close this older Java probe criterion.
