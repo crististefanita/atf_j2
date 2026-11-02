@@ -194,3 +194,9 @@ Fixture-ul terminal after-success serializează răspunsul înaintea execuției 
 
 - [Atlasul LIVE](src/main/java/atf/eventuate/live/README.md) delimitează portul bounded, observerul și schema candidat. [atf-sql](../atf-sql/README.md) deține execuția JDBC generică; mapperul aplicației rămâne în Eventuate.
 - [Dovada](../docs/ATF_SQL_Live_Verification.md) confirmă Kafka/MySQL reale pe memorie limitată, nu aplicația cu saga. Cele trei E2E sunt opt-in și încă NOT RUN pe aplicația completă.
+
+## Profilul artifactului și oracole independente
+
+Acceptoarele Eventuate și Mock declară intenția înaintea publicării/inspecției: renderer, scenarii, faze, inventar și verdicturi. Profilul verifică forma și ownership-ul; oracolele existente verifică separat identitatea, efectele business și valorile complete.
+
+[Probe individual/suită](../docs/ATF_Eventuate_Testing.md) păstrează nominalele și FAIL-urile controlate în Extent/fallback. Rezultatul legacy rămâne în receipt, iar un mutant asupra tabelului original trebuie refuzat fără a folosi HTTP fictiv.

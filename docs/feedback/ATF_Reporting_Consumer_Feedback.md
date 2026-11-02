@@ -2,22 +2,22 @@
 
 ## Pe scurt
 
-J2 consumă Core C2 și Reporting J12 prin perechi JAR/POM plate. Implementarea, nativele și regresiile generice rămân în J0;
+J2 consumă Core C3 și Reporting J12 prin perechi JAR/POM plate. Implementarea, nativele și regresiile generice rămân în J0;
 [acceptanța J12](../ATF_Reporting_J12_Verification.md) separă probele consumerului de cele ale producătorului.
 
 <a id="report-j2-adoption-62--prioritate-89"></a>
 
-## REPORT-J2-ADOPTION-62 — folosirea profilului explicit
+## Profil explicit — contract consolidat
 
-J12 livrează [profilul explicit](../../../atf_j0/atf-reporting/README.md#inspecția-artifactului-cu-intenție-explicită).
-Acceptanțele `EventuateReportAcceptance`, `MockFixtureReportAcceptance` și `SqlReportAcceptance` păstrează încă apelul legacy Extent/HTTP.
-Refuzul acelui apel pentru no-HTTP ori fallback este compatibilitatea declarată, fără HTTP fictiv.
+Cele trei acceptoare Eventuate, Mock și SQL declară scenarii, faze, evidence și verdicturi înaintea inspecției.
+[Contractul consumerului](../ATF_Eventuate_Testing.md) păstrează oracolele business și mutanții lor separat de profil.
 
-- [ ] Declarați inventarul așteptat la consumer și apelați overload-ul cu profil în cele trei acceptoare; nu derivați intenția din HTML-ul inspectat.
-- [ ] Păstrați separat rezultatul legacy în receipt și oracolele business independente, cu mutanții existenți.
-- [ ] Verificați individual/suită, nominal și FAIL controlat, Extent/fallback; închiderea cere identitatea JAR/POM și profil conform pentru artifactul legitim.
+- Rezultatul legacy Extent/HTTP rămâne în receipt, ca diagnostic distinct.
+- Matricea de 40 rapoarte verifică individual/agregat, Extent/fallback, nominal și FAIL controlat.
+- Mutația coloanei ACTUAL din tabelul original este refuzată pentru fiecare raport; nu este satisfăcută de template sau sibling.
 
-Biblioteca și regresia neutră nu mai sunt restanțe ale criteriului 62. Adoptarea explicită a acceptoarelor J2 rămâne un task local.
+Criteriul REPORT-J2-ADOPTION-62 este retras din backlog după proba pe J12.
+SQL-STEPS-116 și geometria RESULT rămân criterii de bibliotecă distincte.
 
 <a id="report-j2-timing-83--prioritate-88"></a>
 
@@ -44,3 +44,5 @@ rezultate 16.384 și payload 1.048.576 nu sunt încă proprietăți HTML disponi
 
 [REPORT-FALLBACK-RESULT-WIDTH-101](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-fallback-result-width-101--badge-ul-statusului-depășește-coloana)
 rămâne distinct: badge-ul Warning trebuie măsurat în celulă și wrapper, la viewport normal și panou îngust, cu mutant geometric refuzat.
+
+

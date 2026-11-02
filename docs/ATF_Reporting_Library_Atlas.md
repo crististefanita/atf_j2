@@ -1,12 +1,12 @@
 # Reporting J6 — atlasul integrării J2
 
-Adopția curentă este J12; inventarul J6 de mai jos și delta J7 rămân istorice.
+Adopția curentă este J14; inventarul J6 de mai jos și delta J7 rămân istorice.
 [Proba istorică J10](ATF_Reporting_J10_Verification.md) fixează independența expandărilor și ABI-ul tagurilor; [proba istorică J8](ATF_Reporting_J8_Verification.md) fixează colapsarea API; [delta J7](ATF_Reporting_J7_Verification.md) păstrează observațiile typed și limitele compatibilității.
 
 ## Pe scurt
 
-J2 consumă atf.api:atf-reporting:1.0.0-j6. API-ul folosit mai jos este confirmat
-pe JAR-ul fizic; sursa curentă J0 poate evolua fără a redefini contractul J6.
+Inventarul de mai jos descrie consumul istoric atf.api:atf-reporting:1.0.0-j6.
+API-ul a fost confirmat atunci pe JAR-ul fizic; sursa curentă J0 poate evolua fără a redefini contractul J6.
 
 | Boundary | Owner |
 |---|---|
@@ -120,4 +120,4 @@ JAR/POM și acceptanță proprie a J2, fără înlocuirea binarului sub aceeași
 ## Profil explicit și surse temporale
 
 [Contractul J0](../../atf_j0/atf-reporting/README.md#inspecția-artifactului-cu-intenție-explicită) separă intenția callerului de inspecția artifactului; apelul legacy rămâne Extent/HTTP.
-[Acceptanța J12](ATF_Reporting_J12_Verification.md) fixează binarul și probele consumerului, fără surse ori harness Reporting în acest reactor.
+[Acceptanța J14](ATF_Reporting_J14_Verification.md) fixează binarul și probele consumerului, fără surse ori harness Reporting în acest reactor.

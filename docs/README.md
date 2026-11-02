@@ -63,7 +63,7 @@ guvernanței; ele trimit către J0 și nu dublează backlog-ul producătorului.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C2 și Reporting J12 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C3 și Reporting J12 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.

@@ -1,8 +1,10 @@
 package atf.eventuate.tests.support.acceptance;
 
 import atf.eventuate.tests.component.*;
+import atf.eventuate.tests.support.acceptance.profile.EventuateExpectedProfiles;
 import atf.eventuate.tests.suites.EventuateComponentSuite;
 import atf.reporting.artifact.ReportArtifactInspector;
+import atf.reporting.artifact.ReportArtifactProfile;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
@@ -62,7 +64,7 @@ public final class EventuateReportAcceptance {
         try (var files = Files.list(directory)) { reports = files.filter(path -> path.toString().endsWith(".html")).toList(); }
         if (reports.size() != 1) throw new AssertionError("Expected one fresh report, found " + reports.size());
         Path report = reports.getFirst();
-        var inspection = ReportArtifactInspector.inspect(report);
+        var inspection = requireProfile(report, EventuateExpectedProfiles.expected(renderer, selected, probe));
         String html = Files.readString(report);
         int rows = probe.equals("wrong-identity") ? 4 : expectedFailures > 0 ? 6 : expectedTests == 3 ? 37
                 : selected == EventuateApiContractComponentTest.class ? 9 : selected == EventuateConvergenceComponentTest.class ? 16 : 12;
@@ -82,8 +84,29 @@ public final class EventuateReportAcceptance {
         row.put("tests", expectedTests); row.put("failures", expectedFailures); row.put("publishedAssertionRows", rows);
         row.put("failureTypes", result.getFailures().stream().map(failure -> failure.getException().getClass().getName()).toList());
         row.put("consumerArtifactContract", "PASS; including removed-table and inverted-result counterexamples");
-        row.put("genericInspectorCompliant", inspection.isCompliant()); row.put("genericInspectorChecks", inspection.checks());
+        row.put("explicitProfileCompliant", inspection.isCompliant()); row.put("explicitProfileChecks", inspection.artifact().checks());
+        row.put("profileMutationRejected", true);
+        row.put("legacyInspector", ReportArtifactInspector.inspect(report));
         row.put("sha256", java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(report))));
         receipts.add(row);
+    }
+    private static ReportArtifactInspector.ProfileInspection requireProfile(Path report, ReportArtifactProfile profile) throws Exception {
+        var inspection = ReportArtifactInspector.inspect(report, profile);
+        if (!inspection.isCompliant()) throw new AssertionError("Declared artifact profile failed: " + inspection.artifact().checks());
+        String html = Files.readString(report);
+        var document = org.jsoup.Jsoup.parse(html);
+        String selector = profile.renderer() == ReportArtifactProfile.Renderer.EXTENT
+                ? "#test-view .test-list-item .test-contents table.helm-validation-table th"
+                : "#tests article.scenario table.assertions th";
+        var target = document.select(selector).stream().filter(cell -> cell.text().equals("ACTUAL")).findFirst().orElseThrow();
+        target.text("REMOVED");
+        String mutant = document.outerHtml();
+        Path negative = Files.createTempFile(report.getParent(), "profile-mutant-", ".html");
+        try {
+            Files.writeString(negative, mutant);
+            if (ReportArtifactInspector.inspect(negative, profile).isCompliant())
+                throw new AssertionError("Degraded evidence escaped the declared profile");
+        } finally { Files.delete(negative); }
+        return inspection;
     }
 }

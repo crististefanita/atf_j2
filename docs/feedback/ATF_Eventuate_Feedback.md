@@ -115,3 +115,18 @@ infrastructure evidence retain their separate provenance.
 
 No C2/J10 JAR is replaced by this feedback handoff. Generic fixes and tests
 stay in J0; Kafka/SQL capture and actual application acceptance remain in J2.
+
+### Reconfirmare J14 — bootstrap LIVE indisponibil
+
+| Probă explicită | Rezultat verificat |
+|---|---|
+| EventuateApprovedOrderE2eTest | un ERROR, fără skip; KafkaException cu ConfigException: No resolvable bootstrap urls |
+| efect business | comanda nu a fost executată |
+| Extent | FAIL și faza TEST BODY; Fails → Tests ajunge la cauza originală |
+| diagnostic | în HTML apare wrapper-ul; cauza imbricată este completă în JUnit |
+| componente | acceptanță Extent/fallback distinctă, fără eticheta LIVE |
+
+- Criteriul existent de readiness LIVE rămâne deschis până la conexiunea laboratorului și probele aplicației.
+- Îmbunătățiți la caller diagnosticul cauzei imbricate cu redacția existentă; fără replay POST ori timeout mărit.
+
+Dovadă: [audit J14](../ATF_Reporting_J14_Verification.md), journeys-j2-live.log și consumer-journeys/j2-live din staging-ul datat.

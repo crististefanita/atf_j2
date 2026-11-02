@@ -66,16 +66,18 @@ java -Xmx384m -cp $eventuateCp atf.eventuate.tests.support.acceptance.EventuateR
 ```
 
 Directorul rezultatului trebuie să nu existe. `acceptance.json` leagă fiecare
-artifact de hash, populație, failure-urile așteptate și inspectorul generic.
+artifact de hash, populație, failure-urile așteptate, profilul declarat și diagnosticul legacy separat.
 Oracolul consumerului cere exact trei tabele de assertions per scenariu,
 patru coloane și comparațiile nominale; eliminarea unui tabel sau inversarea
 unui verdict sunt refuzate. Scripturile și CSS-ul nu satisfac acest oracol.
 
-Pe J8 persistă gap-ul de aplicabilitate din `ReportArtifactInspector`: cere markeri
-HTTP și pentru scenarii exclusiv de mesagerie; fallback-ul este verificat
-față de criterii Extent. Rezultatele originale rămân în receipt, fără a declara
-inspectorul universal verde. Ownerul și închiderea sunt în
-[feedback-ul Reporting](feedback/ATF_Reporting_Consumer_Feedback.md).
+J12 permite declararea inventarului înaintea inspecției. Cele trei acceptoare Eventuate, Mock și SQL folosesc overload-ul explicit, cu oracole business separate; lipsa HTTP nu schimbă profilul după citirea HTML-ului.
+
+- Eventuate declară cele trei faze, request-urile necesare, observațiile de convergență și comparațiile oprite la failure-ul controlat.
+- Mock declară assertions-only din probele autorului; SQL declară observațiile și rândurile fiecărei metode, fără request-uri artificiale.
+- Receipt-ul păstrează rezultatul legacy Extent/HTTP ca diagnostic distinct. Conformitatea acceptanței este verdictul profilului explicit.
+- Un mutant modifică numai coloana ACTUAL a primului tabel original; template-urile, scripturile și copiile runtime nu pot satisface ownerul pierdut.
+
 
 </details>
 

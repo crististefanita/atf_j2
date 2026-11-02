@@ -9,6 +9,7 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import atf.reporting.artifact.ReportArtifactInspector;
+import atf.reporting.artifact.ReportArtifactProfile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.*;
 import java.util.*;
@@ -50,9 +51,30 @@ public final class SqlReportAcceptance {
         List<Path> reports;try(var files=Files.list(directory)){reports=files.filter(path->path.toString().endsWith(".html")).toList();}
         if(reports.size()!=1)throw new AssertionError("One class/suite HTML required");
         String html=Files.readString(reports.getFirst());SqlReportOracle.require(html,selected,negative);SqlReportOracle.rejectMutants(html,selected,negative);
-        var inspector=ReportArtifactInspector.inspect(reports.getFirst());
+        var inspector=requireProfile(reports.getFirst(),SqlExpectedProfiles.expected(renderer,selected,negative));
         var receipt=new LinkedHashMap<String,Object>();receipt.put("renderer",renderer);receipt.put("selection",selected);receipt.put("controlledFailure",negative);
         receipt.put("tests",tests);receipt.put("failures",negative?1:0);receipt.put("report",output.relativize(reports.getFirst()).toString().replace('\\','/'));
-        receipt.put("sqlFactsAndMutants","PASS");receipt.put("genericInspector",inspector);return receipt;
+        receipt.put("sqlFactsAndMutants","PASS");receipt.put("explicitProfileCompliant",inspector.isCompliant());
+        receipt.put("explicitProfileChecks",inspector.artifact().checks());receipt.put("profileMutationRejected",true);
+        receipt.put("legacyInspector",ReportArtifactInspector.inspect(reports.getFirst()));return receipt;
+    }
+    private static ReportArtifactInspector.ProfileInspection requireProfile(Path report, ReportArtifactProfile profile) throws Exception {
+        var inspection = ReportArtifactInspector.inspect(report, profile);
+        if (!inspection.isCompliant()) throw new AssertionError("Declared artifact profile failed: " + inspection.artifact().checks());
+        String html = Files.readString(report);
+        var document = org.jsoup.Jsoup.parse(html);
+        String selector = profile.renderer() == ReportArtifactProfile.Renderer.EXTENT
+                ? "#test-view .test-list-item .test-contents table.helm-validation-table th"
+                : "#tests article.scenario table.assertions th";
+        var target = document.select(selector).stream().filter(cell -> cell.text().equals("ACTUAL")).findFirst().orElseThrow();
+        target.text("REMOVED");
+        String mutant = document.outerHtml();
+        Path negative = Files.createTempFile(report.getParent(), "profile-mutant-", ".html");
+        try {
+            Files.writeString(negative, mutant);
+            if (ReportArtifactInspector.inspect(negative, profile).isCompliant())
+                throw new AssertionError("Degraded evidence escaped the declared profile");
+        } finally { Files.delete(negative); }
+        return inspection;
     }
 }

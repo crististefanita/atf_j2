@@ -4759,3 +4759,44 @@ testChanges:
 ```
 
 </details>
+
+<details>
+<summary><strong>Control verificat — REPORT-J2-EXPLICIT-PROFILE-130</strong></summary>
+
+```yaml
+testChanges:
+  - id: REPORT-J2-EXPLICIT-PROFILE-130
+    status: VERIFIED
+    base: aaa7c850eeb08bf7ede653e3f05f3a0b5e08660d
+    expires: 2026-11-30
+    reason: Adoptă profilul explicit și corecțiile Core cerute, păstrând oracolele independente, nominalele și controalele negative; fără praguri relaxate sau surse shadow.
+    proof: mvn -B -pl atf-test-eventuate,atf-sql,atf-tests -am "-Dtest=EventuateExpectedProfilesTest,SqlExpectedProfilesTest,EventuateComponentSuite,SqlComponentSuite,WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - pom.xml
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/EventuateReportAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/MockFixtureReportAcceptance.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/profile/EventuateExpectedProfiles.java
+      - atf-test-eventuate/src/test/java/atf/eventuate/tests/support/acceptance/profile/EventuateExpectedProfilesTest.java
+      - atf-sql/src/test/java/atf/sql/tests/support/acceptance/SqlReportAcceptance.java
+      - atf-sql/src/test/java/atf/sql/tests/support/acceptance/SqlExpectedProfiles.java
+      - atf-sql/src/test/java/atf/sql/tests/support/acceptance/SqlExpectedProfilesTest.java
+```
+
+</details>
+
+<details>
+<summary><strong>Control verificat — Reporting J13</strong></summary>
+
+```yaml
+testChanges:
+  - id: REPORT-J13-CATALOG-ATF-J2
+    status: VERIFIED
+    base: aaa7c850eeb08bf7ede653e3f05f3a0b5e08660d
+    expires: 2026-11-30
+    reason: Adaugă exclusiv noua probă nativă de integritate PNG în catalogul finit al bibliotecii; păstrează clasificarea separată, pragul opt și oracolele consumerului.
+    proof: mvn -B -pl atf-tests -am "-Dtest=WholeAtfGovernanceSuiteTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - atf-tests/src/test/java/atf/api/tests/governance/layers/AtfTestLayerArchitectureTest.java
+```
+
+</details>

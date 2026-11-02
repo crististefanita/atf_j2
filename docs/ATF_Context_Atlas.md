@@ -22,9 +22,9 @@ J2 are opt module și exclude UI/Debug; auditul HTML rămâne extern.
 | witness SQL | [atlas de pachet](../atf-test-eventuate/src/main/java/atf/eventuate/sql/README.md), [reader](../atf-test-eventuate/src/main/java/atf/eventuate/sql/JdbcOrderEffectsReader.java) | un SELECT pe conexiune independentă, expected separat, rânduri parțiale marcate FAILED; H2 și writerul sunt test-scoped |
 | mesagerie | [MessageEvidenceContract](../atf-test-eventuate/src/main/java/atf/eventuate/validation/MessageEvidenceContract.java) | livrări MOCK_EVENT_FEED și witness de efecte; ordinalul fixture-ului nu este offset Kafka |
 | validare JSON | [Validation](../atf-validation/README.md#json--prezență-document-și-capabilități) | document complet, stări typed și schema fail-closed; egalitatea textuală cere scalar prezent, iar containerele rămân JSON în ACTUAL |
-| boundary JSON Core C2 | [contract binar](ATF_Core_Consumer.md#document-json-complet-și-evidence-fidel) | C2 refuză trailing content și duplicate; Mock/Validation folosesc primitiva strictă comună, cu politicile proprii pentru null |
+| boundary JSON strict | [contract binar](ATF_Core_Consumer.md#document-json-complet-și-evidence-fidel) | Core refuză trailing content și duplicate; Mock/Validation folosesc primitiva strictă comună, cu politicile proprii pentru null |
 | comparație scalară | [contract](../atf-validation/README.md#egalitate-scalară--fără-coerciția-containerelor), [regresie](../atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java) | aceeași regulă pentru path și fiecare proprietate din array; string gol real acceptat, containere refuzate; null textual compatibil, tipul cerut separat |
-| media type JSON | [contract](../atf-validation/README.md#content-type--clasificare-semantică-json), [regresie](../atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java) | cinci contracte canonice delegă tipul/subtipul către Core C2; parametrii nu imită JSON; contains literal și validarea body-ului sunt independente |
+| media type JSON | [contract](../atf-validation/README.md#content-type--clasificare-semantică-json), [regresie](../atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java) | cinci contracte canonice delegă tipul/subtipul către Core C3; parametrii nu imită JSON; contains literal și validarea body-ului sunt independente |
 | politica auditului Kit | [contract și pachete](../atf-test-kit/README.md#pachetele-regresiilor-de-audit), [regresia TEST_BODY](../atf-test-kit/src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementComponentTest.java) | audit general în assertions, politica în requirements; prag opt per pachet, main și cazurile păstrate |
 | audit JUnit | [EventuateComponentExtension](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java) | Kit decide o singură dată; adaptorul transferă comparațiile fără reevaluare |
 | raport | [ComponentReportRun](../atf-test-eventuate/src/main/java/atf/eventuate/reporting/ComponentReportRun.java) | owner serial class/suite; trei faze, close înaintea notificării căii absolute |
@@ -32,7 +32,7 @@ J2 are opt module și exclude UI/Debug; auditul HTML rămâne extern.
 | selecție și artifact | [ghid Eventuate](ATF_Eventuate_Testing.md) | trei componente MOCK și trei SQL; suite finite distincte și matrice SQL de 18 artifacte, inclusiv combinația cu MOCK; acceptanțele terminale rămân separate |
 | guvernanță | [ATF Tests](../atf-tests/README.md), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | inventar explicit și probe negative pentru modul lipsă, UI shadow și dependențe browser |
 
-Reporting J12 este binarul consumat; proveniența J6 (demo2) și J7 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
+Reporting J14 este binarul consumat; proveniența J6 (demo2) și J7 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
 
 ## Boundary-uri de fidelitate
 
@@ -111,9 +111,9 @@ aduce înapoi aceste domenii în atlasul și backlog-ul J2.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C2 și Reporting J12 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C3 și Reporting J14 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
-[Contractul Core C2](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
+[Contractul Core C3](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
 ## SQL embedded — context livrat
@@ -134,7 +134,7 @@ cere efectele aplicației și corelare SQL/Kafka; proba H2 nu îl închide.
 [Cererea canonică J0](../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-sql-steps-116--query-uri-și-rezultate-auditabile)
 propune pași SQL neutri și bugete distincte pentru query și rezultate.
 [Adoptarea J2](feedback/ATF_Reporting_Consumer_Feedback.md#sql--handoff-către-j0-și-adoptare-ulterioară)
-cere integrarea snapshot-ului generic cu un candidat JAR verificat; J12 și preview-ul
+cere integrarea snapshot-ului generic cu un candidat JAR verificat; J13 și preview-ul
 assertion-urilor 240 rămân contractul curent, fără proprietăți SQL inventate.
 
 ## Intrare progresivă — SQL și LIVE

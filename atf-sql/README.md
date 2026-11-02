@@ -7,7 +7,7 @@ Runtime-ul folosește numai JDK 21: nu depinde de driver, Eventuate, Kit,
 JUnit sau Reporting. Driverul și fabrica de conexiuni aparțin consumerului;
 expected-ul și verdictul aparțin testului.
 
-J2 adaugă explicit acest al optulea modul. Core C2 și Reporting J10 rămân
+J2 adaugă explicit acest al optulea modul. Core C3 și Reporting J12 rămân
 biblioteci externe; sursele și regresiile generice Reporting rămân în J0.
 
 | Boundary | Contract |
@@ -109,3 +109,9 @@ reale și aplicația Eventuate încă nevalidată. [Atlasul J2](../docs/ATF_Cont
 ## Limita diagnosticului
 
 Mesajele Throwable și lista suppressed sunt separate de bugetul input/schema/celule. [SQL-DIAGNOSTIC-CAPTURE-120](../docs/feedback/ATF_SQL_Feedback.md#sql-diagnostic-capture-120--prioritate-82) delimitează proiecția bounded rămasă, păstrând cauza originală intactă.
+
+## Inspecția explicită a rapoartelor SQL
+
+[SqlExpectedProfiles](src/test/java/atf/sql/tests/support/acceptance/SqlExpectedProfiles.java) declară cinci metode, nouă capturi SQL și grupurile de assertions, individual sau prin suită. Eroarea JDBC neconsumată cere FAIL pe scenariu/fază; comparațiile care au trecut rămân PASS.
+
+[Oracolul independent](src/test/java/atf/sql/tests/support/acceptance/SqlReportOracle.java) continuă să verifice query, binds, precizia DECIMAL, duplicatele, valorile typed și execution ID. Profilul explicit și mutantul de coloană sunt verificări suplimentare, fără dependență Reporting în runtime-ul SQL.

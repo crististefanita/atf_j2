@@ -8,6 +8,7 @@ import atf.mock.AtfMockConfigurationLoader;
 import atf.mock.AtfMockTransport;
 import atf.mock.MockRoute;
 import atf.reporting.artifact.ReportArtifactInspector;
+import atf.reporting.artifact.ReportArtifactProfile;
 import atf.reporting.audit.AssertionAuditReport;
 import atf.reporting.configuration.ReportingSettings;
 import atf.reporting.contract.AtfAssertion;
@@ -51,7 +52,7 @@ public final class MockFixtureReportAcceptance {
         var mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter().writeValue(output.resolve("acceptance.json").toFile(), receipts);
         mapper.writerWithDefaultPrettyPrinter().writeValue(output.resolve("core-policy-observation.json").toFile(),
-                Map.of("binary", "Core C1", "completeDocumentExpected", false,
+                Map.of("binaryLocation", JsonBodyPolicy.class.getProtectionDomain().getCodeSource().getLocation().toString(), "trailingExpected", false, "secondDocumentExpected", false, "duplicateKeysExpected", false,
                         "trailingActual", JsonBodyPolicy.validDocument("{} trailing"),
                         "secondDocumentActual", JsonBodyPolicy.validDocument("{} {}"),
                         "duplicateKeysActual", JsonBodyPolicy.validDocument("{\"x\":1,\"x\":2}"),
@@ -121,10 +122,15 @@ public final class MockFixtureReportAcceptance {
         audit(html, observations);
         reject(html.replaceFirst("<th>ACTUAL</th>", "<th>LOST</th>"), observations);
         reject(html.replaceFirst("<td>(?:✅|❌|<span class=\"status [^\"]+\">[^<]+</span>)</td>", "<td>UNKNOWN</td>"), observations);
-        var inspection = ReportArtifactInspector.inspect(path);
+        var profile = new ReportArtifactProfile(
+                ReportArtifactProfile.Renderer.valueOf(renderer.toUpperCase(java.util.Locale.ROOT)),
+                observations.stream().map(observation -> expectedProfile(observation.probe())).toList());
+        var inspection = requireProfile(path, profile);
         receipts.add(Map.of("report", path.getFileName().toString(), "renderer", renderer, "scenarios", observations.size(),
                 "rows", observations.size() * 3, "controlledFailures", observations.stream().filter(o -> o.probe().controlledFailure()).count(),
-                "consumerOracle", "PASS", "genericInspectorCompliant", inspection.isCompliant(), "genericInspectorChecks", inspection.checks()));
+                "consumerOracle", "PASS", "explicitProfileCompliant", inspection.isCompliant(),
+                "explicitProfileChecks", inspection.artifact().checks(), "profileMutationRejected", true,
+                "legacyInspector", ReportArtifactInspector.inspect(path)));
     }
     private static void audit(String html, List<Outcome> observations) {
         var tables = TABLE.matcher(html).results().toList();
@@ -154,5 +160,35 @@ public final class MockFixtureReportAcceptance {
     private static void reject(String html, List<Outcome> observations) {
         try { audit(html, observations); } catch (AssertionError expected) { return; }
         throw new AssertionError("Degraded evidence escaped the oracle");
+    }
+    private static ReportArtifactProfile.Scenario expectedProfile(Probe probe) {
+        var names = probe.rejection().equals("none") ? List.of("Fixture rejection", "HTTP outcome", "Dispatch count")
+                : List.of("Fixture rejection", "Dispatch count", "Response available");
+        var rows = names.stream().map(name -> new ReportArtifactProfile.Comparison(
+                probe.name() + " · " + name, !probe.controlledFailure() || !name.equals("HTTP outcome"))).toList();
+        var status = probe.controlledFailure() ? AtfReportStatus.FAIL : AtfReportStatus.PASS;
+        return new ReportArtifactProfile.Scenario("MockJsonFixtures", probe.name(), status,
+                List.of(new ReportArtifactProfile.Phase("TEST BODY", status,
+                        List.of(new ReportArtifactProfile.Assertions("Component assertions", rows)))));
+    }
+
+    private static ReportArtifactInspector.ProfileInspection requireProfile(Path report, ReportArtifactProfile profile) throws Exception {
+        var inspection = ReportArtifactInspector.inspect(report, profile);
+        if (!inspection.isCompliant()) throw new AssertionError("Declared artifact profile failed: " + inspection.artifact().checks());
+        String html = Files.readString(report);
+        var document = org.jsoup.Jsoup.parse(html);
+        String selector = profile.renderer() == ReportArtifactProfile.Renderer.EXTENT
+                ? "#test-view .test-list-item .test-contents table.helm-validation-table th"
+                : "#tests article.scenario table.assertions th";
+        var target = document.select(selector).stream().filter(cell -> cell.text().equals("ACTUAL")).findFirst().orElseThrow();
+        target.text("REMOVED");
+        String mutant = document.outerHtml();
+        Path negative = Files.createTempFile(report.getParent(), "profile-mutant-", ".html");
+        try {
+            Files.writeString(negative, mutant);
+            if (ReportArtifactInspector.inspect(negative, profile).isCompliant())
+                throw new AssertionError("Degraded evidence escaped the declared profile");
+        } finally { Files.delete(negative); }
+        return inspection;
     }
 }

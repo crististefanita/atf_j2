@@ -11,7 +11,7 @@ consumată. Reporting se întreține în J0; Shop/AutoEx, UI și Debug UI au own
 | Ordine | Owner J2 / impact local | Prioritate | Dovada care lipsește |
 |---:|---|---:|---|
 | 1 | [Eventuate](ATF_Eventuate_Feedback.md) | 90 | readiness HTTP/CDC, schema și trei cazuri reale individual/prin suită |
-| 2 | [Adoptare Reporting](ATF_Reporting_Consumer_Feedback.md) | 89 | profil artifact și timing demonstrate pe binarul consumat |
+| 2 | [Adoptare Reporting](ATF_Reporting_Consumer_Feedback.md) | 89 | SQL semantic și geometria RESULT rămase la ownerul J0 |
 | 3 | [SQL](ATF_SQL_Feedback.md) | 85 | mapper aplicație corelat cu snapshot-urile generice și schema reală |
 | 4 | [Setup](ATF_Setup_Feedback.md) | 84 | cauza primară la eșecul receipt-ului, ownership fizic și reluare după restart |
 | 5 | [Documentație](ATF_Documentation_Feedback.md) | 81 | prevenirea contradicțiilor dintre deployment și afirmațiile curente din pagini |
@@ -41,7 +41,6 @@ permanente; criteriile rezolvate sunt retrase din registrul activ. Snapshot-ul t
 | Criteriu | Prioritate | Owner și dovadă de închidere |
 |---|---:|---|
 | EVT-LOCAL-01 | 90 | readiness și aplicație LIVE individual/suită; observerul are deja probă reală |
-| REPORT-J2-ADOPTION-62 | 76 | trei acceptoare folosesc încă apelul legacy; adopție explicită a profilului J12 cu oracole independente |
 | EVT-IDEMPOTENCY-02 | 88 | duplicat de transport, business și POST separate, cu efecte independente |
 | EVT-CONVERGENCE-CONTRACT-86 | 84 | probă lentă/blocată HTTP real; portul bounded este implementat |
 | SQL-APPLICATION-WITNESS-118 | 85 | schema și mapping real, fapte JDBC generic păstrate în proiecție |
