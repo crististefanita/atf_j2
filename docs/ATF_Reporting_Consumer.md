@@ -2,9 +2,9 @@
 
 ## Pe scurt
 
-J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente MOCK și trei SQL embedded folosesc fixture-uri, iar Reporting J15 nu certifică un broker ori un client Kafka Java.
+J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente MOCK și trei SQL embedded folosesc fixture-uri, iar Reporting J18 nu certifică un broker ori un client Kafka Java.
 
-J2 integrează JAR/POM J15 și propriul adaptor Eventuate. Implementarea,
+J2 integrează JAR/POM J18 și propriul adaptor Eventuate. Implementarea,
 documentația bibliotecii și regresiile generice au owner J0; J1 deține
 scenariile web și platforma comună, reconciliate selectiv.
 
@@ -80,7 +80,19 @@ impactul local și revalidarea cerută; backlog-ul generic este numai în J0.
 
 [Gate-ul la producător](#gate-ul-extern-reporting) păstrează regresiile, fără harness local.
 
-Adopția curentă este J15. [Verificarea livrării](ATF_Reporting_J15_Verification.md)
+Adopția J15 este istorică. [Verificarea livrării](ATF_Reporting_J15_Verification.md)
 separă proba acestui increment de acceptanțele istorice J6/J7/J8/J9.
 
-Current viewer behavior and separate consumer acceptance: [J16 verification](ATF_Reporting_J16_Verification.md).
+J16 introduced the current full-image viewer: [J16 verification](ATF_Reporting_J16_Verification.md).
+
+## Current binary — J18
+
+The latest flat JAR/POM pair and separate consumer rendering acceptance are
+recorded in [J18 verification](ATF_Reporting_J18_Verification.md). Core C3 is
+unchanged; no producer source or Reporting test harness is copied here.
+
+## Cold readiness acceptance
+
+[Current J18 proof](ATF_Reporting_J18_Verification.md) separates physical-JAR
+bootstrap/rendering from business execution. Core C3 and default preview 240
+are unchanged; the prior [J17 record](ATF_Reporting_J17_Verification.md) remains historical.

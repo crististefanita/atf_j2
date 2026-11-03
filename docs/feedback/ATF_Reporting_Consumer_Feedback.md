@@ -2,8 +2,9 @@
 
 ## Pe scurt
 
-J2 consumă Core C3 și Reporting J12 prin perechi JAR/POM plate. Implementarea, nativele și regresiile generice rămân în J0;
-[acceptanța J12](../ATF_Reporting_J12_Verification.md) separă probele consumerului de cele ale producătorului.
+J2 consumă Core C3 și Reporting J18 prin perechi JAR/POM plate. Implementarea, nativele și regresiile generice rămân în J0;
+[acceptanța curentă J18](../ATF_Reporting_J18_Verification.md) separă probele consumerului de cele ale producătorului.
+Profilul și matricea consolidate în [J12](../ATF_Reporting_J12_Verification.md) rămân dovezi istorice, fără a pretinde o nouă execuție LIVE.
 
 <a id="report-j2-adoption-62--prioritate-89"></a>
 
