@@ -29,7 +29,7 @@ preced certificarea saga sau idempotency business.
   cu limite independente configurabile; nu este o funcționalitate J9 livrată.
 - Precizia numerică Mock este închisă pe Core C2: aceeași probă publică
   selectează 201 pentru nominal și 409 pentru valoarea distinctă și control.
-  [Contractul livrat](../../atf-mock/README.md#document-json-complet--expected-request-și-response)
+  [Contractul livrat](../../../atf_j0/atf-mock/README.md#json-strict-și-potrivire-numerică-exactă)
   păstrează regula; rândul rezidual 86 este retras, fără ștergerea regresiilor.
 
 Parsarea JSON, fixture-urile complete, schemele, contractul JSON documentat o singură dată, egalitatea scalară, media type și identitatea integrală au contracte și regresii
@@ -154,7 +154,7 @@ keeps the reusable boundary explicit; it is a proposal, not delivered code.
 
 ## Producer correlation — Core and Kit
 
-[The J0 producer audit](../../../atf_j0/docs/feedback/README.md#producer-audit--2026-11-01)
+[The J0 producer audit](../../../atf_j0/docs/feedback/README.md)
 adds Core console-channel/cancellation and Kit Unicode-preview findings.
 These are external source-owner criteria, not duplicate J2 TODO definitions.
 
@@ -167,3 +167,8 @@ These are external source-owner criteria, not duplicate J2 TODO definitions.
 The Test Kit code score is reconciled to **92** after the producer Unicode
 counterexample; this supersedes its earlier consumer-only 94. Deployment
 totals retain their stated scope, with no new saga/ASR/device acceptance.
+
+
+## Console and Mock library ownership
+
+[J0 owns common library criteria](../../../atf_j0/docs/feedback/ATF_Console_Mock_Feedback.md); [the current adoption contract](../ATF_Platform_Libraries.md) defines the flat binary distribution. Consumer adapters, catalogs and domain acceptance remain local. Closed extraction requirements are retained as contracts, not duplicated TODOs.

@@ -1,6 +1,6 @@
 # ATF workspace rules
 
-- Use the sibling workspace `../atf_j0` as the current Core/Reporting source and test reference.
+- Use the sibling workspace `../atf_j0` as the current Core/Reporting/Console/Mock/Console/Mock source and test reference.
   `demo2` is historical; do not edit or synchronize it for new work.
 - Read `docs/ATF_Workspace_Synchronization.md` and
   `docs/ATF_Build_And_Execution_Safety.md` before changing or delivering code.
@@ -11,7 +11,7 @@
   and messaging scope; do not infer its acceptance from J1's results.
 - J2 keeps its existing Git and messaging scope. Its explicit Eventuate profile includes Setup and excludes Shop, AutoEx, UI and Debug UI; do not restore those modules or Playwright in J2.
 - Keep Core implementation and native tests only in J0. Binary consumers
-  retain the latest Core and Reporting JAR/POM pairs directly in `lib`,
+  retain the latest Core, Reporting, Console and Mock JAR/POM pairs directly in `lib`,
   with one root provenance file. Do not copy Reporting source or its harness
   into the live binary consumers.
 - Reconcile common code and consumer adapters selectively in both directions.
@@ -25,3 +25,5 @@
   not require a new Reporting version or imply a fresh test execution.
 
 - Keep project README files and docs focused on current contracts. Retain only the current Reporting verification note beside its producer package in owned TMP; record its location in current consumer provenance. Do not accumulate per-release verification Markdown in docs or consumer lib. Preserve historical build/test provenance.
+
+- Console and Mock are J0-owned source/native-test libraries alongside Core/Reporting. J1–J4 keep four flat JAR/POM pairs; retain local adapters/configuration and validate each consumer independently. Read `docs/ATF_Platform_Libraries.md` before publication.

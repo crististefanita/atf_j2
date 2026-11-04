@@ -4837,3 +4837,54 @@ testChanges:
 Reporting J20 acceptance (historical execution record).
 
 </details>
+
+
+<details>
+<summary><strong>CONSOLE-MOCK-LIBRARIES-J2 — source ownership and binary acceptance</strong></summary>
+
+```yaml
+testChanges:
+  - id: CONSOLE-MOCK-LIBRARIES-J2
+    status: VERIFIED
+    base: 72c67bbcb74f568b92a4052fb56066682cf11298
+    expires: 2026-11-30
+    reason: Centralize identical Console and Mock implementation/native tests in J0; retain independent source/JAR oracles, physical CodeSource, negative integrity checks and consumer-specific governance. Native consumer deletions retain the complete matching J0 catalog and TMP recovery copies.
+    proof: 'mvn -B -ntp -pl atf-tests -am -Dtest=PlatformLibraryContractTest,PlatformLibraryIntegrityTest -Dsurefire.failIfNoSpecifiedTests=false test'
+    allowDelete: true
+    paths:
+      - atf-console/pom.xml
+      - atf-console/src/test/java/atf/console/AtfConsoleConfigurationLoaderTest.java
+      - atf-console/src/test/java/atf/console/AtfConsoleReporterTest.java
+      - atf-console/src/test/java/atf/console/ConsoleLifecycleStateTest.java
+      - atf-console/src/test/java/atf/console/capture/AtfConsoleOutputCaptureTest.java
+      - atf-console/src/test/java/atf/console/junit/AtfConsoleMessagePolicyTest.java
+      - atf-console/src/test/java/atf/console/junit/AtfConsoleTestExtensionIntegrationTest.java
+      - atf-console/src/test/java/atf/console/junit/AtfConsoleTestLifecycleTest.java
+      - atf-console/src/test/java/atf/console/junit/AtfReportPathLifecycleIntegrationTest.java
+      - atf-console/src/test/java/atf/console/junit/AtfReportPathOptInTest.java
+      - atf-console/src/test/java/atf/console/junit/NestedConsoleContextIntegrationTest.java
+      - atf-mock/pom.xml
+      - atf-mock/src/test/java/atf/mock/AtfMockTransportTest.java
+      - atf-mock/src/test/java/atf/mock/MockMediaTypeContractTest.java
+      - atf-mock/src/test/java/atf/mock/MockRequestBodyModeTest.java
+      - atf-mock/src/test/java/atf/mock/MockRouteIdentityTest.java
+      - atf-mock/src/test/java/atf/mock/fixtures/MockTransportTestFixtures.java
+      - atf-mock/src/test/java/atf/mock/json/MockJsonCatalogComponentTest.java
+      - atf-mock/src/test/java/atf/mock/json/MockJsonFixtureComponentTest.java
+      - atf-mock/src/test/java/atf/mock/json/MockNumericContractComponentTest.java
+      - atf-test-eventuate/pom.xml
+      - atf-tests/pom.xml
+      - atf-tests/src/test/java/atf/api/tests/governance/ArchitectureModuleBoundaryTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/AtfGovernanceTestSupport.java
+      - atf-tests/src/test/java/atf/api/tests/governance/ConstantsOwnershipGovernanceTest.java
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/GovernanceDeployment.java
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/core/CoreGovernanceSurface.java
+      - atf-tests/src/test/java/atf/libraries/PlatformLibraryContractTest.java
+      - atf-tests/src/test/java/atf/libraries/PlatformLibraryIntegrityTest.java
+      - atf-tests/src/test/java/atf/libraries/PlatformLibrarySurface.java
+      - pom.xml
+```
+
+Package verification retains the complete native source/JAR gates and independent consumer results, including unresolved J1 UI/layer findings. Historical controls keep their original bases.
+
+</details>

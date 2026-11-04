@@ -121,7 +121,7 @@ o sesiune elevată pregătită în prealabil permite rularea silent.
 ## Aprofundare pe module și contracte
 
 [Arhitectură](docs/ATF_Architecture.md) · [testare](docs/ATF_Testing_Guide.md) ·
-[atlas Reporting J6](docs/ATF_Reporting_Library_Atlas.md) · [verificări executate](docs/ATF_J2_Verification.md).
+[atlas Reporting](docs/ATF_Reporting_Library_Atlas.md) · [verificări executate](docs/ATF_J2_Verification.md).
 
 ## Referințe normative
 
@@ -130,20 +130,20 @@ o sesiune elevată pregătită în prealabil permite rularea silent.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C3 și Reporting J20 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+This consumer has 6 source modules. Core, Reporting, Console and Mock are external libraries, one JAR/POM pair each directly in lib.
 
-[Contractul Core C3](docs/ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
+[Contractul Core](docs/ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
 [Acceptanța JSON C2/J9](docs/ATF_JSON_Binary_Verification.md) separă sursa, JAR-ul, rendererele și limitele rămase.
 
-## Core C3 — contract consolidat
+## Core — contract consolidat
 
-[Verificarea Core C3](docs/ATF_Core_C3_Verification.md) leagă noua pereche JAR/POM de nativele sursă/JAR și de acceptanța fiecărui consumer. Acceptanța C3 a folosit Reporting J12; livrarea curentă Reporting este consemnată separat mai jos, cu preview 240 și oracole independente.
+[Verificarea Core](docs/ATF_Core_C3_Verification.md) leagă noua pereche JAR/POM de nativele sursă/JAR și de acceptanța fiecărui consumer. Acceptanța C3 a folosit Reporting; livrarea curentă Reporting este consemnată separat mai jos, cu preview 240 și oracole independente.
 
 ## Reporting library and audit contracts
 
-[Library provenance](library-provenance.json) records the delivered Core C3 / Reporting J20 pair and each consumer's independent acceptance. J0 owns Reporting source and permanent mock, contract and browser regressions.
+[Library provenance](library-provenance.json) records the delivered Core / Reporting pair and each consumer's independent acceptance. J0 owns Reporting source and permanent mock, contract and browser regressions.
 
 | Topic | Current owner contract |
 |---|---|
@@ -153,3 +153,8 @@ Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 | latest verification note beside the producer package | [Evidence retention](docs/ATF_Workspace_Synchronization.md#release-evidence-retention) |
 
 Library publication/rendering acceptance is separate from new business, device, broker or acoustic ASR execution. Release notes are not stored in project documentation or consumer `lib`.
+
+
+## Shared platform libraries
+
+The current reactor has 6 source modules. [Platform library consumption](docs/ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.

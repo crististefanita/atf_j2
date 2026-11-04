@@ -4,7 +4,7 @@
 
 J2 deține modelul și adaptorul aplicației; J0 deține Reporting.
 Contractele complete ale bibliotecii sunt [la producător](../../atf_j0/docs/ATF_Reporting_Contract.md).
-Această pagină fixează cerințele aplicabile consumerului J2 pe Reporting J8.
+Această pagină fixează cerințele aplicabile consumerului J2 pe Reporting.
 
 ## Arborele unui test
 

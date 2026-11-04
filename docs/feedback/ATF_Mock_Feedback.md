@@ -1,23 +1,11 @@
-# Mock — reutilizarea probelor de eșec
+# J2 — Mock library acceptance handoff
 
 ## Pe scurt
 
-[Contractul fixture-urilor](../../atf-mock/README.md#document-json-complet--expected-request-și-response)
-refuză documente incomplete, duplicate și constrângeri YAML coerced la gol.
-Regresia și acceptanța pe JAR rămân permanente; criteriul închis este retras.
+The shared implementation and native tests belong to J0. [The current consumption contract](../ATF_Platform_Libraries.md) defines the binary boundary; [strict JSON and exact numeric matching](../../../atf_j0/atf-mock/README.md#json-strict-și-potrivire-numerică-exactă) remain permanent native contracts.
 
-## MOCK-FAULT-SCRIPT-111 — prioritate 78
+## MOCK-FAULT-SCRIPT-111 — ownership
 
-TerminalFailureFixtures și ConvergenceFailureFixtures repetă compoziția
-transportului finit, a erorilor și a numărării dispatch-urilor. Există acum
-două utilizări concrete de comparat înaintea unei extracții.
+The original finite-transport fixture extraction criterion, priority 78, is retained at [the J0 Mock owner](../../../atf_j0/docs/feedback/ATF_Console_Mock_Feedback.md#mock-fault-script-111--compare-the-two-existing-failure-fixtures-before-extracting). J2 owns TerminalFailureFixtures, ConvergenceFailureFixtures and their domain acceptance. Moving ownership does not mark the proposal implemented.
 
-- Evaluați în atf-mock/main un plan imuabil de rezultate complete/fail/cancel/pending, cu stare locală invocării; păstrați adaptoarele JUnit și selecțiile probelor în test.
-- Construiți o excepție nouă per execuție; reutilizarea instanței poate transporta suppressed metadata din altă invocare. Distingeți tentativele expediate de rutele potrivite și de răspunsurile încheiate.
-- Păstrați matching-ul JSON, metoda, MIME, autentificarea, query-ul, wildcard-ul și ordinea strictă; epuizarea nu produce răspuns implicit verde.
-- Nu extrageți politica OrderContract, saga sau witness-ul SQL în Mock/Kit. H2 probează deja adaptorul JDBC și oracolele SQL în Eventuate; un transport scriptat nu certifică efecte persistente.
-
-Închidere: regresie componentă publică în Mock și aceleași două matrice
-consumer pe noua primitivă, inclusiv eșecul sink-ului și cauza originală.
-Extracția trebuie să reducă duplicarea fără alt modul ori modificări Reporting;
-în incrementul curent nu este implementată.
+Any generic primitive must pass both existing consumer matrices on the physical JAR without moving saga, OrderContract or SQL expectations into the library. Broker/device acceptance remains separate from offline contracts.

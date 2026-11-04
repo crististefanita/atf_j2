@@ -223,7 +223,7 @@ request-ul invalid ajunge la fallback, fără schimbarea priorității rutelor.
 | Core C1 | validDocument acceptă trailing content și documentul al doilea; validateWriteExchange întoarce zero încălcări în proba publică |
 | limită numerică | două valori decimale distincte se potrivesc după conversia Double; criteriul nou rămâne deschis, separat de sintaxa JSON |
 
-Contractul stabil și probele sunt în [README Mock](../atf-mock/README.md#document-json-complet--expected-request-și-response).
+Contractul stabil și probele sunt în [README Mock](../../atf_j0/atf-mock/README.md#json-strict-și-potrivire-numerică-exactă).
 
 - Dovezi TMP: incrementul atf-j2-mock-json-615a89c6ad, mock-before.log,
   mock-gates.log, mock-matrix/acceptance.json și promovările controlate.

@@ -59,7 +59,7 @@ garanție că toate combinațiile JVM/CDC pornesc în RAM-ul respectiv.
 La 2026-11-01, MySQL a fost pornit cu limită 384 MiB și cont SELECT-only.
 Proba Java cu limită 384 MiB/heap 160 MiB a trecut pe Kafka și MySQL reale:
 14 comparații, un snapshot Kafka și două SQL, inclusiv timeout negativ.
-Aceleași fapte au fost publicate în Extent și fallback pe Core C2/Reporting J10.
+Aceleași fapte au fost publicate în Extent și fallback pe Core/Reporting.
 Kafka a păstrat identitatea și `StartedAt`; Android-ul altui proces a rămas activ.
 
 Build-ul fixat upstream a produs JAR-urile customer/order într-un builder Linux.

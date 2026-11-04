@@ -14,7 +14,7 @@ J2 are opt module și exclude UI/Debug; auditul HTML rămâne extern.
 | request/response | [EventuateApiClient](../atf-test-eventuate/src/main/java/atf/eventuate/api/EventuateApiClient.java) | binding MOCK implicit: POST o tentativă, GET 503 cel mult două; seam separat pentru executori/politici/provenance explicite |
 | snapshot terminal | [EventuateExchange](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateExchange.java), [collector](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateEvidence.java) | Completed sau Terminal în ordinea și faza capturării; aceeași excepție, fără răspuns inventat și fără dublarea callback-ului |
 | script finit | [ScriptedApiTransport](../atf-test-eventuate/src/main/java/atf/eventuate/mock/ScriptedApiTransport.java) | ordonat, strict, fără răspuns verde când se epuizează ruta |
-| fixture JSON Mock | [contract](../atf-mock/README.md#document-json-complet--expected-request-și-response), [parser](../atf-mock/src/main/java/atf/mock/MockJsonDocument.java) | expected furnizat, request și response write consumă documentul complet; duplicate și coerciția YAML sunt refuzate; raw read și wildcard rămân fixture-uri explicite |
+| fixture JSON Mock | [contract](../../atf_j0/atf-mock/README.md#json-strict-și-potrivire-numerică-exactă), [parser](../../atf_j0/atf-mock/src/main/java/atf/mock/MockJsonDocument.java) | expected furnizat, request și response write consumă documentul complet; duplicate și coerciția YAML sunt refuzate; raw read și wildcard rămân fixture-uri explicite |
 | convergență | [OrderAwaiter](../atf-test-eventuate/src/main/java/atf/eventuate/await/OrderAwaiter.java) | clock/pause injectate; aplică OrderContract integral la fiecare observație; un răspuns corect sosit după deadline nu converge |
 | eșec de convergență | [contract și diagramă](../atf-test-eventuate/README.md#istoricul-convergenței--snapshot-terminal), [snapshot](../atf-test-eventuate/src/main/java/atf/eventuate/await/OrderConvergenceSnapshot.java) | un snapshot per invocare, aceeași excepție și cauză, fără replay; clock defect înseamnă timp necunoscut, iar zero observații nu inventează un ordin |
 | identitate business | [OrderContract](../atf-test-eventuate/src/main/java/atf/eventuate/validation/OrderContract.java) | expected independent: ID, stare și rejectionReason; decodorul refuză overflow înainte de long și păstrează limitele signed long |
@@ -24,7 +24,7 @@ J2 are opt module și exclude UI/Debug; auditul HTML rămâne extern.
 | validare JSON | [Validation](../atf-validation/README.md#json--prezență-document-și-capabilități) | document complet, stări typed și schema fail-closed; egalitatea textuală cere scalar prezent, iar containerele rămân JSON în ACTUAL |
 | boundary JSON strict | [contract binar](ATF_Core_Consumer.md#document-json-complet-și-evidence-fidel) | Core refuză trailing content și duplicate; Mock/Validation folosesc primitiva strictă comună, cu politicile proprii pentru null |
 | comparație scalară | [contract](../atf-validation/README.md#egalitate-scalară--fără-coerciția-containerelor), [regresie](../atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java) | aceeași regulă pentru path și fiecare proprietate din array; string gol real acceptat, containere refuzate; null textual compatibil, tipul cerut separat |
-| media type JSON | [contract](../atf-validation/README.md#content-type--clasificare-semantică-json), [regresie](../atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java) | cinci contracte canonice delegă tipul/subtipul către Core C3; parametrii nu imită JSON; contains literal și validarea body-ului sunt independente |
+| media type JSON | [contract](../atf-validation/README.md#content-type--clasificare-semantică-json), [regresie](../atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java) | cinci contracte canonice delegă tipul/subtipul către Core; parametrii nu imită JSON; contains literal și validarea body-ului sunt independente |
 | politica auditului Kit | [contract și pachete](../atf-test-kit/README.md#pachetele-regresiilor-de-audit), [regresia TEST_BODY](../atf-test-kit/src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementComponentTest.java) | audit general în assertions, politica în requirements; prag opt per pachet, main și cazurile păstrate |
 | audit JUnit | [EventuateComponentExtension](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java) | Kit decide o singură dată; adaptorul transferă comparațiile fără reevaluare |
 | raport | [ComponentReportRun](../atf-test-eventuate/src/main/java/atf/eventuate/reporting/ComponentReportRun.java) | owner serial class/suite; trei faze, close înaintea notificării căii absolute |
@@ -32,7 +32,7 @@ J2 are opt module și exclude UI/Debug; auditul HTML rămâne extern.
 | selecție și artifact | [ghid Eventuate](ATF_Eventuate_Testing.md) | trei componente MOCK și trei SQL; suite finite distincte și matrice SQL de 18 artifacte, inclusiv combinația cu MOCK; acceptanțele terminale rămân separate |
 | guvernanță | [ATF Tests](../atf-tests/README.md), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | inventar explicit și probe negative pentru modul lipsă, UI shadow și dependențe browser |
 
-Reporting J14 este binarul consumat; proveniența J6 (demo2) și J7 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
+Reporting este binarul consumat; proveniența J6 (demo2) și J7 rămâne istorică, iar mentenanța bibliotecii este în atf_j0.
 
 ## Boundary-uri de fidelitate
 
@@ -111,9 +111,9 @@ aduce înapoi aceste domenii în atlasul și backlog-ul J2.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C3 și Reporting J14 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+This consumer has 6 source modules. Core, Reporting, Console and Mock are external libraries, one JAR/POM pair each directly in lib.
 
-[Contractul Core C3](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
+[Contractul Core](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
 ## SQL embedded — context livrat
@@ -145,3 +145,8 @@ assertion-urilor 240 rămân contractul curent, fără proprietăți SQL inventa
 4. [Dovada](ATF_SQL_Live_Verification.md): nominale, negative, randări și delimitarea NOT RUN.
 
 Nu transformați un SELECT sintetic sau un eveniment fabricat într-un verdict asupra aplicației Eventuate. Politica de query/result HTML rămâne la J0; bugetele JDBC și preview-ul assertions 240 sunt contracte diferite.
+
+
+## Shared platform libraries
+
+The current reactor has 6 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.

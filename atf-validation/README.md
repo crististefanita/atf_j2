@@ -333,7 +333,7 @@ protejează nominalele și contraexemplele. Acceptanța rendererului rămâne la
 ### Content-Type — clasificare semantică JSON
 
 `contentTypeJson()` delegă tipul/subtipul concret către MediaTypes.isJson din
-Core C1. Parametrii nu pot transforma un tip text/plain în JSON; ACTUAL
+Core. Parametrii nu pot transforma un tip text/plain în JSON; ACTUAL
 păstrează headerul observat, redactat și limitat după evaluare.
 
 | Header observat | Verdictul regulii |
@@ -480,6 +480,6 @@ evaluate, fără clasificare MIME în renderer.
 
 ### Parser comun și proprietatea datelor
 
-Documentele complete folosesc JsonDocuments din Core C2: fără duplicate ori
+Documentele complete folosesc JsonDocuments din Core: fără duplicate ori
 trailing content, cu decimale exacte. Validation păstrează diagnosticele și
 politica proprie pentru null; nu deține un mapper strict paralel.

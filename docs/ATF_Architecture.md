@@ -4,7 +4,7 @@
 
 Ținta este un framework Kafka/mesagerie cu un singur modul de test și Setup PowerShell în Podman. Observerul framework-ului este probat pe Kafka real, iar SQL generic pe H2/MySQL; acceptanța aplicației Eventuate complete rămâne NOT RUN.
 
-Reactorul păstrează exact cele 8 module existente.
+Reactorul păstrează exact cele 6 module existente.
 Profilul Eventuate compune platforma, Setup, consumerul și guvernanța.
 Reporting este JAR extern; UI, Debug UI și Playwright nu fac parte din J2.
 
@@ -115,12 +115,17 @@ infrastructurii reale rămâne o axă separată. [Ghidul](ATF_Testing_Guide.md)
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C2 și Reporting J10 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+This consumer has 6 source modules. Core, Reporting, Console and Mock are external libraries, one JAR/POM pair each directly in lib.
 
-[Contractul Core C2](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
+[Contractul Core](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
 ## SQL generic și laborator cu memorie limitată
 
 - [Contractul SQL](../atf-sql/README.md) deține bugetul de captură, snapshot-ul și cauza originală. [Atlasul LIVE](../atf-test-eventuate/src/main/java/atf/eventuate/live/README.md) deține corelarea aplicației.
 - [Setup](../atf-setup/README_Eventuate.md) operează separat resursele owned, fără oprirea engine-ului sau a containerelor împrumutate. [Dovada](ATF_SQL_Live_Verification.md) separă infrastructura reală de aplicația NOT RUN.
+
+
+## Shared platform libraries
+
+The current reactor has 6 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.

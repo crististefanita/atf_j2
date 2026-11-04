@@ -2,7 +2,7 @@
 
 ## Pe scurt
 
-J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente MOCK și trei SQL embedded folosesc fixture-uri, iar Reporting J18 nu certifică un broker ori un client Kafka Java.
+J2 este WIP pentru framework și teste Kafka/mesagerie cu Setup Podman. Cele trei componente MOCK și trei SQL embedded folosesc fixture-uri, iar Reporting nu certifică un broker ori un client Kafka Java.
 
 J2 integrează JAR/POM J18 și propriul adaptor Eventuate. Implementarea,
 documentația bibliotecii și regresiile generice au owner J0; J1 deține
@@ -82,8 +82,13 @@ impactul local și revalidarea cerută; backlog-ul generic este numai în J0.
 
 ## Current library and verification
 
-[Library provenance](../library-provenance.json) identifies the current Core C3 / Reporting J20 pair, source snapshot and independent consumer acceptance. Only the latest JAR/POM pairs are kept directly in `lib`; source and the permanent Reporting harness stay in J0.
+[Library provenance](../library-provenance.json) identifies the current Core / Reporting pair, source snapshot and independent consumer acceptance. Only the latest JAR/POM pairs are kept directly in `lib`; source and the permanent Reporting harness stay in J0.
 
 - The [inline audit contract](../../atf_j0/docs/ATF_Inline_Audit_Contract.md) owns complete PNG and assertion evidence. The [navigation contract](ATF_Large_Report_Navigation.md) owns cold readiness and unchanged deadlines.
 
 - The latest release verification is retained beside the producer package, following [evidence retention](ATF_Workspace_Synchronization.md#release-evidence-retention). It is distinct from fresh application, device, broker and ASR execution.
+
+
+## Shared platform libraries
+
+The current reactor has 6 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.

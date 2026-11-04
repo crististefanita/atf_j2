@@ -7,7 +7,7 @@ Runtime-ul folosește numai JDK 21: nu depinde de driver, Eventuate, Kit,
 JUnit sau Reporting. Driverul și fabrica de conexiuni aparțin consumerului;
 expected-ul și verdictul aparțin testului.
 
-J2 adaugă explicit acest al optulea modul. Core C3 și Reporting J12 rămân
+J2 adaugă explicit acest al optulea modul. Core și Reporting rămân
 biblioteci externe; sursele și regresiile generice Reporting rămân în J0.
 
 | Boundary | Contract |

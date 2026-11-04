@@ -1,4 +1,4 @@
-# Reporting J6 — atlasul integrării J2
+# Reporting — atlasul integrării J2
 
 Current coordinates, hashes and independent acceptance are recorded in [library provenance](../library-provenance.json). The API and ownership below describe the current integration; the explicitly dated J6/J7 inventories remain historical.
 
