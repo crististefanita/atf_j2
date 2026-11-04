@@ -58,6 +58,11 @@ permanente; criteriile rezolvate sunt retrase din registrul activ. Snapshot-ul t
 
 </details>
 
+## Feedback pentru biblioteci
+
+Orice constatare despre Core, Reporting, Console sau Mock se înregistrează direct la ownerul J0, conform [ghidului bibliotecilor](../../lib/README.md). Aici rămân problemele domeniului și dovezile acceptanței locale, cu o trimitere la criteriul comun.
+
+
 ## Ce este livrat și unde se citește
 
 - Coeziunea Kit este verificată în [contractul ownerului](../../atf-test-kit/README.md#pachetele-regresiilor-de-audit); criteriul închis nu rămâne în registrul activ.
@@ -167,8 +172,3 @@ These are external source-owner criteria, not duplicate J2 TODO definitions.
 The Test Kit code score is reconciled to **92** after the producer Unicode
 counterexample; this supersedes its earlier consumer-only 94. Deployment
 totals retain their stated scope, with no new saga/ASR/device acceptance.
-
-
-## Console and Mock library ownership
-
-[J0 owns common library criteria](../../../atf_j0/docs/feedback/ATF_Console_Mock_Feedback.md); [the current adoption contract](../ATF_Platform_Libraries.md) defines the flat binary distribution. Consumer adapters, catalogs and domain acceptance remain local. Closed extraction requirements are retained as contracts, not duplicated TODOs.

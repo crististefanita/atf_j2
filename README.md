@@ -1,5 +1,7 @@
 # ATF J2 — Eventuate, Kafka și framework de mesagerie · WIP
 
+[Bibliotecile comune](lib/README.md) au codul și feedback-ul în J0; aici păstrăm adaptoarele și acceptanța domeniului.
+
 J2 compune teste Eventuate cu transport MOCK și infrastructură Kafka configurată
 prin scripturi. Reporting este biblioteca J20 distribuită ca JAR/POM; sursa și
 regresiile generice au owner în J0.
@@ -153,8 +155,3 @@ Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 | latest verification note beside the producer package | [Evidence retention](docs/ATF_Workspace_Synchronization.md#release-evidence-retention) |
 
 Library publication/rendering acceptance is separate from new business, device, broker or acoustic ASR execution. Release notes are not stored in project documentation or consumer `lib`.
-
-
-## Shared platform libraries
-
-The current reactor has 6 source modules. [Platform library consumption](docs/ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.

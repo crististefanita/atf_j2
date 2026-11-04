@@ -4888,3 +4888,26 @@ testChanges:
 Package verification retains the complete native source/JAR gates and independent consumer results, including unresolved J1 UI/layer findings. Historical controls keep their original bases.
 
 </details>
+
+
+<details>
+<summary><strong>LIBRARY-OWNERSHIP-README-J2 — documentație dedicată și owner comun</strong></summary>
+
+```yaml
+testChanges:
+  - id: LIBRARY-OWNERSHIP-README-J2
+    status: VERIFIED
+    base: 4bbafd335b10f2be15062e0587f7436f9901bd9d
+    expires: 2026-11-30
+    reason: Require exactly four flat JAR/POM pairs plus the dedicated README and J0 ownership of library source and feedback; preserve physical binary identity, independent negative oracles and consumer acceptance.
+    proof: 'mvn -B -ntp -pl atf-tests -am -Dtest=PlatformLibraryContractTest,PlatformLibraryIntegrityTest -Dsurefire.failIfNoSpecifiedTests=false test'
+    paths:
+      - atf-tests/src/test/java/atf/api/tests/governance/distribution/core/BinaryCoreFixture.java
+      - atf-tests/src/test/java/atf/libraries/PlatformLibraryContractTest.java
+      - atf-tests/src/test/java/atf/libraries/PlatformLibraryIntegrityTest.java
+      - atf-tests/src/test/java/atf/libraries/PlatformLibrarySurface.java
+```
+
+Controalele negative resping README-ul absent, documentele suplimentare, un director în locul README-ului și atribuirea codului ori feedback-ului unui consumer. Bibliotecile distribuite își păstrează coordonatele și hash-urile.
+
+</details>

@@ -1,5 +1,7 @@
 # ATF — referința J0 și sincronizarea consumerilor
 
+[Owner, feedback și sincronizare](../lib/README.md) descrie contractul celor patru biblioteci; această pagină păstrează protocolul workspace-urilor.
+
 ## Pe scurt
 
 `atf_j0` înlocuiește `demo2` ca referință de mentenanță Core și Reporting.
@@ -138,12 +140,7 @@ Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
 - Project README files, atlases and `docs` describe current contracts and ownership; they do not accumulate per-release Reporting verification notes.
 - Keep only `ATF_Reporting_Verification.md` for the current Reporting JAR in its producer packaging stage, beside the effective publication POM. Builds, logs and HTML evidence stay in owned TMP.
-- Consumer `library-provenance.json` records the current coordinate, hashes, original `buildStage` and `currentAcceptance.evidence` location. Consumer `lib` retains only the latest Core and Reporting JAR/POM pairs.
+- Consumer `library-provenance.json` records the current coordinate, hashes, original `buildStage` and `currentAcceptance.evidence` location. Consumer `lib` retains the latest Core, Reporting, Console and Mock JAR/POM pairs plus its dedicated README; no release notes are stored there.
 - Superseded notes are retired after their durable contracts have been reconciled. Historical build/test facts and original evidence paths remain provenance, explicitly marked as retired; they are not current document targets or fresh acceptance.
 
 The current note is retained with the J20 package; its coordinate and JAR/POM hashes must match the distributed pair. Documentation maintenance alone neither rebuilds a library nor repeats its recorded tests.
-
-
-## Shared platform libraries
-
-The current reactor has 6 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.
