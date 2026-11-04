@@ -23,3 +23,5 @@
 - Keep owner documentation and feedback current with the actual code and
   tests. Preserve historical build provenance; a directory rename alone does
   not require a new Reporting version or imply a fresh test execution.
+
+- Keep project README files and docs focused on current contracts. Retain only the current Reporting verification note beside its producer package in owned TMP; record its location in current consumer provenance. Do not accumulate per-release verification Markdown in docs or consumer lib. Preserve historical build/test provenance.

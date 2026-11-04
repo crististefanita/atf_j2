@@ -1,7 +1,6 @@
 # Reporting J6 — atlasul integrării J2
 
-Adopția curentă este [J18](ATF_Reporting_J18_Verification.md); inventarul J6 de mai jos și delta J7 rămân istorice.
-[Proba istorică J10](ATF_Reporting_J10_Verification.md) fixează independența expandărilor și ABI-ul tagurilor; [proba istorică J8](ATF_Reporting_J8_Verification.md) fixează colapsarea API; [delta J7](ATF_Reporting_J7_Verification.md) păstrează observațiile typed și limitele compatibilității.
+Current coordinates, hashes and independent acceptance are recorded in [library provenance](../library-provenance.json). The API and ownership below describe the current integration; the explicitly dated J6/J7 inventories remain historical.
 
 ## Pe scurt
 
@@ -120,4 +119,4 @@ JAR/POM și acceptanță proprie a J2, fără înlocuirea binarului sub aceeași
 ## Profil explicit și surse temporale
 
 [Contractul J0](../../atf_j0/atf-reporting/README.md#inspecția-artifactului-cu-intenție-explicită) separă intenția callerului de inspecția artifactului; apelul legacy rămâne Extent/HTTP.
-[Acceptanța J15](ATF_Reporting_J15_Verification.md) fixează binarul și probele consumerului, fără surse ori harness Reporting în acest reactor.
+The [current library provenance](../library-provenance.json) identifies the delivered binary and consumer acceptance; source and the Reporting harness remain in J0.

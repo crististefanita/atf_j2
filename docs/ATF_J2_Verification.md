@@ -6,9 +6,7 @@
 
 ### Livrarea anterioară J10 — înaintea modulului SQL
 
-[J10](ATF_Reporting_J10_Verification.md) fixează candidatul curent: guvernanța
-completă J2, componentele API individual/prin suită în Extent/fallback și
-suita SQL H2 au acceptanță proprie. Core C2 și scope-ul de șapte module rămân.
+The historical J10 candidate has its own J2 governance, individual/suite API components in Extent/fallback and SQL H2 acceptance. Those results retain their original Core C2 and seven-module scope; they do not describe the current binary pair.
 
 Matricele SQL/browser J9 de mai jos păstrează execuțiile și hash-urile lor
 istorice. Selecția J10 nu declară repetate toate cele 18 artifacte SQL,
@@ -173,13 +171,13 @@ testele, POM-urile și perechile Core C1/Reporting J8 rămân neschimbate.
 - Snapshot-ul terminal HTTP este livrat; [istoricul terminal al convergenței](../atf-test-eventuate/README.md#istoricul-convergenței--snapshot-terminal)
   era un criteriu nou și distinct, remediat ulterior prin incrementul descris la începutul paginii.
 
-## Reporting J8 — livrarea curentă
+## Historical Reporting J8 acceptance
 
 Perechea curentă este J8, direct în `lib`, cu Core C1 păstrat.
 
 | Boundary | Dovadă și limită |
 |---|---|
-| acceptanță curentă | [J8](ATF_Reporting_J8_Verification.md): 40 artifacte Validation, componente MOCK individual/prin suită și gate binar neutru |
+| historical J8 acceptance | 40 artifacte Validation, componente MOCK individual/prin suită și gate binar neutru |
 | disclosure API fallback | corectat și verificat prin mouse/Enter/Space; verdicturile sunt păstrate per rând |
 | restanțe | profilul inspectorului, timing-ul și geometria Warning rămân în feedback-ul Reporting |
 | istoric J7 | acceptanțele de mai jos păstrează versiunea executată; nu certifică automat candidatul J8 |
@@ -291,7 +289,7 @@ scalar-matrix/acceptance.json, browser-audit.json și promovarea
 selectivă. Valoarea null textuală rămâne compatibilă; un contract care cere
 distincția de tip adaugă jsonPathType.
 
-Auditul browser al incrementului scalar J7 a păstrat valorile/verdicturile; colapsarea API fallback lipsea pe acel binar. [Livrarea J8](ATF_Reporting_J8_Verification.md) repetă cazul și închide disclosure-ul, cu mouse/Enter/Space și backlink/reload în TAB.
+Auditul browser al incrementului scalar J7 a păstrat valorile/verdicturile; colapsarea API fallback lipsea pe acel binar. The historical J8 execution repeated the case and closed the disclosure gap, cu mouse/Enter/Space și backlink/reload în TAB.
 
 ## Snapshot terminal Eventuate — captură și ownership
 

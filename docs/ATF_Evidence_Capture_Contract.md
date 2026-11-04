@@ -35,5 +35,5 @@ Același obiect de excepție și evidence-ul fără răspuns inventat sunt proba
 ## Unde se aprofundează
 
 [Atlas J2](ATF_Context_Atlas.md), [Testing](ATF_Testing_Guide.md) și
-[Reporting J8](ATF_Reporting_J8_Verification.md) descriu compoziția curentă.
+[display contract](../../atf_j0/docs/ATF_Reporting_Display_Contract.md) descriu compoziția curentă.
 Contractele browser și screenshot-urile aplicațiilor web sunt la [J1](../../atf_j1/docs/ATF_Evidence_Capture_Contract.md).

@@ -2,8 +2,8 @@
 
 ## Pe scurt
 
-Dovadă istorică C2/J9. Contractul curent de disclosure și guvernanță este
-consolidat în [J10](ATF_Reporting_J10_Verification.md).
+Historical C2/J9 evidence. The current disclosure and governance contract is
+described by the [current Reporting contract](../../atf_j0/atf-reporting/README.md). These C2/J9 results remain historical.
 
 J0 păstrează sursele și nativele; J1/J2/J3 consumă aceiași bytes C2/J9.
 Perechile JAR/POM sunt direct în lib, câte o versiune per bibliotecă; J3 are

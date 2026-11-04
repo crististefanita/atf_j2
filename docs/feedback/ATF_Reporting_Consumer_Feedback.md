@@ -2,9 +2,9 @@
 
 ## Pe scurt
 
-J2 consumă Core C3 și Reporting J18 prin perechi JAR/POM plate. Implementarea, nativele și regresiile generice rămân în J0;
-[acceptanța curentă J18](../ATF_Reporting_J18_Verification.md) separă probele consumerului de cele ale producătorului.
-Profilul și matricea consolidate în [J12](../ATF_Reporting_J12_Verification.md) rămân dovezi istorice, fără a pretinde o nouă execuție LIVE.
+J2 consumă Core C3 și Reporting J20 prin perechi JAR/POM plate. Implementarea, nativele și regresiile generice rămân în J0;
+[current library provenance](../../library-provenance.json) separă probele consumerului de cele ale producătorului.
+- The [Reporting owner contract](../../../atf_j0/atf-reporting/README.md) defines artifact profiles and inspection boundaries. Earlier execution matrices remain historical; they do not claim fresh LIVE acceptance.
 
 <a id="report-j2-adoption-62--prioritate-89"></a>
 
@@ -45,5 +45,3 @@ rezultate 16.384 și payload 1.048.576 nu sunt încă proprietăți HTML disponi
 
 [REPORT-FALLBACK-RESULT-WIDTH-101](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-fallback-result-width-101--badge-ul-statusului-depășește-coloana)
 rămâne distinct: badge-ul Warning trebuie măsurat în celulă și wrapper, la viewport normal și panou îngust, cu mutant geometric refuzat.
-
-

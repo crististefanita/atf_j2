@@ -43,8 +43,7 @@ for assertion rows.
 - Very large required evidence still consumes parser, layout and image memory; a content budget is not a total HTML or browser-heap guarantee.
 - Performance observations never turn a captured FAIL into PASS.
 
-[Current release acceptance](ATF_Reporting_J18_Verification.md) records source and physical-JAR
-checks, the large archived Android artifact and separate J1–J4 consumer sanity.
+The producer owns permanent source/JAR regressions. Consumer provenance records the current binary and independent acceptance; archived Android rendering does not certify a fresh device run.
 
 ## Cold startup and readiness
 
@@ -58,7 +57,7 @@ checks, the large archived Android artifact and separate J1–J4 consumer sanity
 | deadlines | readiness/action 10,000 ms; navigation 45,000 ms; existing API matrices retain 5,000 ms |
 
 J0 maintains ColdStartReadinessComponentTest, documented in
-[the local producer evidence](ATF_Reporting_J18_Verification.md).
+[The producer contract](../../atf_j0/docs/ATF_Large_Report_Navigation.md) defines the same source/JAR boundaries; dated execution evidence remains with the packaged release.
 The permanent test checks five initial destinations, startup scenario deep links, native link
 repair, repeated load and failure/recovery. An external atf.cold.input runs
 three fresh Chromium processes against the same complete artifact.
@@ -72,6 +71,4 @@ three fresh Chromium processes against the same complete artifact.
 | vendor upgrade | fail explicitly when the pinned native key expression changes, instead of silently publishing invalid script |
 | permanent proof | TimelineTitleEncodingComponentTest executes the real embedded script and rejects browser errors; timestamp regressions stay separate |
 
-[The release record](ATF_Reporting_J18_Verification.md) includes the current J4
-Learning witness and neutral source/JAR contracts. The producer owns the
-implementation and permanent tests; consumers retain their own oracles.
+The producer owns implementation and permanent source/JAR tests. Consumers retain their independent application oracles; dated external witnesses do not become fresh acceptance.

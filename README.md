@@ -1,7 +1,7 @@
 # ATF J2 — Eventuate, Kafka și framework de mesagerie · WIP
 
 J2 compune teste Eventuate cu transport MOCK și infrastructură Kafka configurată
-prin scripturi. Reporting este biblioteca J18 distribuită ca JAR/POM; sursa și
+prin scripturi. Reporting este biblioteca J20 distribuită ca JAR/POM; sursa și
 regresiile generice au owner în J0.
 
 ## ATF Java — prezentare executivă
@@ -130,49 +130,26 @@ o sesiune elevată pregătită în prealabil permite rularea silent.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C3 și Reporting J18 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C3 și Reporting J20 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C3](docs/ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
-[Acceptanța istorică Reporting J8](docs/ATF_Reporting_J8_Verification.md) păstrează catalogul existent și istoricul J6/J7.
-
 [Acceptanța JSON C2/J9](docs/ATF_JSON_Binary_Verification.md) separă sursa, JAR-ul, rendererele și limitele rămase.
-
-[Reporting J10](docs/ATF_Reporting_J10_Verification.md) documentează disclosure-ul local, puntea binară și regresiile sursă/JAR.
-
-[Reporting J12](docs/ATF_Reporting_J12_Verification.md) fixează profilul explicit al inspectorului, sursele de timing și indicatorul assertions; acceptanțele J11 rămân istorice.
 
 ## Core C3 — contract consolidat
 
 [Verificarea Core C3](docs/ATF_Core_C3_Verification.md) leagă noua pereche JAR/POM de nativele sursă/JAR și de acceptanța fiecărui consumer. Acceptanța C3 a folosit Reporting J12; livrarea curentă Reporting este consemnată separat mai jos, cu preview 240 și oracole independente.
 
-[Reporting J15](docs/ATF_Reporting_J15_Verification.md) păstrează PNG-urile integrale la publicare și expected/observed ACTION/OBSERVE colapsabile, cu preview 240. Core C3 rămâne identic; acceptanțele sursă/JAR și ale fiecărui consumer sunt consemnate separat.
+## Reporting library and audit contracts
 
-| Contract J15 | Comportament păstrat |
+[Library provenance](library-provenance.json) records the delivered Core C3 / Reporting J20 pair and each consumer's independent acceptance. J0 owns Reporting source and permanent mock, contract and browser regressions.
+
+| Topic | Current owner contract |
 |---|---|
-| rând UI comun | ACTION/OBSERVE folosesc aceeași redacție, inclusiv titlul capturii |
-| dovadă integrală | expected/observed conservă whitespace-ul capturat |
-| audit | preview 240 și verdict original, fără reevaluare |
+| neutral ACTION/OBSERVE, failures and assertion ownership | [Reporting API](../atf_j0/atf-reporting/README.md#neutral-ui-attribution-and-failure-ownership) |
+| complete PNG, redacted inline evidence and preview 240 | [Inline audit](../atf_j0/docs/ATF_Inline_Audit_Contract.md) |
+| incremental navigation, cold readiness and original deadlines | [Navigation](docs/ATF_Large_Report_Navigation.md) |
+| latest verification note beside the producer package | [Evidence retention](docs/ATF_Workspace_Synchronization.md#release-evidence-retention) |
 
-J15 păstrează și CR/LF literal, inclusiv prima linie din corpurile TEXT inline.
-
-## Screenshot viewer — introduced in J16
-
-[Reporting J16](docs/ATF_Reporting_J16_Verification.md) fits complete PNG evidence to the browser viewport and preserves the clicked checkpoint, local caption, disclosures and focus when closing the viewer. Core C3, the 240-character preview and the existing UI/API/SQL evidence contracts remain unchanged. Producer-side setup, inputs, independent expected values and capture completeness retain their own acceptance.
-
-## Large-report navigation — J17
-
-[J17 acceptance](docs/ATF_Reporting_J17_Verification.md) records the retained-evidence
-navigation fix, permanent source/JAR regressions and this workspace's own sanity.
-The full Android artifact retains its supplied comparison rows and original PNGs;
-closed tables are measured when opened, and timing/view indexes are reused only
-within their aggregation pass. Preview 240, independent verdicts and the shared
-UI/API/SQL table formatting remain part of the contract.
-
-## Cold-start report readiness
-
-[Reporting J18 verification](docs/ATF_Reporting_J18_Verification.md) records
-single initialization for the requested view, truthful readiness and native
-navigation-link repair. PNGs, audit comparisons and preview 240 are retained;
-readiness/action and navigation deadlines remain 10 s and 45 s.
+Library publication/rendering acceptance is separate from new business, device, broker or acoustic ASR execution. Release notes are not stored in project documentation or consumer `lib`.

@@ -4741,7 +4741,6 @@ testChanges:
 </details>
 
 
-
 <details>
 <summary><strong>Reporting J12 — adoption control</strong></summary>
 
@@ -4816,6 +4815,25 @@ testChanges:
       - pom.xml
 ```
 
-[Acceptanța candidatului](ATF_Reporting_J16_Verification.md) păstrează scope-ul propriu și limitele live.
+Reporting J16 acceptance (historical execution record) păstrează scope-ul propriu și limitele live.
+
+</details>
+
+<details>
+<summary><strong>Verified control — REPORT-J20-ADOPTION-J2-20261104</strong></summary>
+
+```yaml
+testChanges:
+  - id: REPORT-J20-ADOPTION-J2-20261104
+    status: VERIFIED
+    base: b2cac766f5c10dbf3926586d6a7085653046a5f0
+    expires: 2026-11-30
+    reason: Adopt the verified J20 pair without Reporting source or harness; retain local scope and Core C3.
+    proof: mvn -B -pl atf-tests -am "-Dtest=ReportingHarnessOwnershipTest,ReportingGovernanceSurfaceTest,CoreGovernanceSurfaceTest" "-Dsurefire.failIfNoSpecifiedTests=false" test
+    paths:
+      - pom.xml
+```
+
+Reporting J20 acceptance (historical execution record).
 
 </details>

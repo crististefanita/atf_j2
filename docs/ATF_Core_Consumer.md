@@ -77,7 +77,7 @@ flowchart LR
 ## Limita acceptanței Reporting
 
 Reporting J12 deține profilul explicit, timing-ul capturat/publicare și disclosure-ul standard.
-Aceste probe sunt distincte de Core C3 și de acceptanțele aplicațiilor; [verificarea J12](ATF_Reporting_J12_Verification.md) păstrează inventarul și limitele.
+Aceste probe sunt distincte de Core C3 și de acceptanțele aplicațiilor; the [Reporting owner contract](../../atf_j0/atf-reporting/README.md) defines the independent publication boundaries.
 
 ## Document JSON complet și evidence fidel
 

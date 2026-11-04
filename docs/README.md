@@ -2,8 +2,6 @@
 
 ## Pe scurt
 
-[Reporting J12 — livrarea curentă](ATF_Reporting_J12_Verification.md) păstrează dovada livrării și limitele ei.
-
 Ținta este un framework Kafka cu un singur modul de test și Setup PowerShell în Podman. Kafka și clientul Java de infrastructură sunt validate din VM; observerul framework-ului este probat real, iar aplicația Eventuate completă rămâne NOT RUN.
 
 Documentația locală explică Eventuate, mesageria, Setup și platforma consumată.
@@ -65,5 +63,9 @@ guvernanței; ele trimit către J0 și nu dublează backlog-ul producătorului.
 
 Acest consumer are 8 module sursă. Core C3 și Reporting J12 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
-[Contractul Core C1](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
+[Contractul Core C3](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
+
+## Library identity and release evidence
+
+The [current library provenance](../library-provenance.json) records the delivered pair and its dated acceptance. The latest Reporting verification stays beside the producer package under [evidence retention](ATF_Workspace_Synchronization.md#release-evidence-retention); project documentation retains stable contracts.

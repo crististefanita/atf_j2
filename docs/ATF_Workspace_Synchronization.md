@@ -9,10 +9,10 @@ primește și verifică livrarea potrivită propriului deployment.
 | Workspace | Rol | Suprafață existentă |
 |---|---|---|
 | `atf_j0` | sursă Core/Reporting, teste native și `atf-reporting-tests`; referință pentru contractele comune | 12 module sursă; Core și guvernanța comune reconciliate |
-| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 9 module journeys; C3/J18 în lib și acceptanță proprie |
+| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 9 module journeys; C3/J20 în lib și acceptanță proprie |
 | `atf_j2` | WIP: framework și teste Kafka/mesagerie, fără module browser ori Shop/AutoEx | 8 module sursă; Core și Reporting JAR; SQL generic JDK-only, componente MOCK/H2 și observer Kafka probat pe infrastructură reală; aplicația Eventuate completă NOT RUN |
-| `atf_j3` | consumer speech, șapte module sursă; Core și Reporting prin JAR | C3/J18 în lib și acceptanță proprie, fără module web ori mesagerie |
-| `atf_j4` | Android consumer, seven source modules; Core C3 / Reporting J18 flat pairs | separate component, archived rendering and device acceptance |
+| `atf_j3` | consumer speech, șapte module sursă; Core și Reporting prin JAR | C3/J20 în lib și acceptanță proprie, fără module web ori mesagerie |
+| `atf_j4` | Android consumer, seven source modules; Core C3 / Reporting J20 flat pairs | separate component, archived rendering and device acceptance |
 | `demo2` | origine istorică a livrării J6 existente | nu mai este destinație activă de mentenanță sau sync |
 
 J1 poate avea schimbări comune în lucru. Referința J0 nu autorizează
@@ -27,6 +27,7 @@ flowchart LR
     Candidate -->|livrează| J1["J1<br/>consumer existent"]
     Candidate -->|livrează| J2["J2<br/>consumer inițializat"]
     Candidate -->|livrează| J3["J3<br/>consumer speech"]
+    Candidate -->|livrează| J4["J4<br/>consumer Android"]
 ```
 
 <details>
@@ -127,17 +128,17 @@ selectiv, iar backlog-ul Reporting și cel web rămân la ownerii J0/J1.
 
 ## Core ca bibliotecă — owner și deployment
 
-Acest consumer are 8 module sursă. Core C3 și Reporting J14 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
+Acest consumer are 8 module sursă. Core C3 și Reporting J20 sunt biblioteci externe, câte o pereche JAR/POM direct în lib.
 
 [Contractul Core C3](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
-[Livrarea observations J7](ATF_Reporting_J7_Verification.md) păstrează acceptanțele și istoricul versiunilor separat.
 
-[Livrarea Reporting J10](ATF_Reporting_J8_Verification.md) închide disclosure-ul API fallback, cu acceptanță proprie a fiecărui consumer.
+## Release evidence retention
 
-## Current large-report delivery
+- Project README files, atlases and `docs` describe current contracts and ownership; they do not accumulate per-release Reporting verification notes.
+- Keep only `ATF_Reporting_Verification.md` for the current Reporting JAR in its producer packaging stage, beside the effective publication POM. Builds, logs and HTML evidence stay in owned TMP.
+- Consumer `library-provenance.json` records the current coordinate, hashes, original `buildStage` and `currentAcceptance.evidence` location. Consumer `lib` retains only the latest Core and Reporting JAR/POM pairs.
+- Superseded notes are retired after their durable contracts have been reconciled. Historical build/test facts and original evidence paths remain provenance, explicitly marked as retired; they are not current document targets or fresh acceptance.
 
-[Reporting J18](ATF_Reporting_J18_Verification.md) records the common pair and
-independent consumer checks. Core C3 is unchanged; device, ASR and Eventuate
-application acceptance remain separate from publication/rendering.
+The current note is retained with the J20 package; its coordinate and JAR/POM hashes must match the distributed pair. Documentation maintenance alone neither rebuilds a library nor repeats its recorded tests.

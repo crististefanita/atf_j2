@@ -129,4 +129,4 @@ stay in J0; Kafka/SQL capture and actual application acceptance remain in J2.
 - Criteriul existent de readiness LIVE rămâne deschis până la conexiunea laboratorului și probele aplicației.
 - Îmbunătățiți la caller diagnosticul cauzei imbricate cu redacția existentă; fără replay POST ori timeout mărit.
 
-Dovadă: [audit J14](../ATF_Reporting_J14_Verification.md), journeys-j2-live.log și consumer-journeys/j2-live din staging-ul datat.
+Historical evidence: the J14 increment's journeys-j2-live.log and consumer-journeys/j2-live in its dated staging. The [inline audit contract](../../../atf_j0/docs/ATF_Inline_Audit_Contract.md) defines publication boundaries; it does not rerun the journey.
