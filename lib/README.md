@@ -1,66 +1,45 @@
-# Biblioteci ATF — consum în J2
+# Biblioteci ATF
 
 ## Pe scurt
 
-J2 reutilizează Core, Reporting, Console și Mock prin JAR-uri; J0 deține codul și feedback-ul tuturor celor patru biblioteci. Proiectul păstrează SQL, Setup și mesagerie Eventuate · WIP, adaptoarele, configurația și oracolele independente.
+Patru biblioteci Java 21, consumate prin Maven. Ghidurile de mai jos arată rolul, API-ul de pornire și un exemplu pentru fiecare JAR; proiectul păstrează SQL, Setup și mesagerie WIP.
 
-## Cod și feedback
-
-| Bibliotecă | Codul întreținut în J0 | Backlog canonic în J0 |
+| Bibliotecă | Ce oferă | Folosiți-o pentru |
 |---|---|---|
-| Core | `atf_j0/atf-core` | `atf_j0/docs/feedback/ATF_Core_Feedback.md` |
-| Reporting | `atf_j0/atf-reporting` | `atf_j0/docs/feedback/ATF_Reporting_Feedback.md` |
-| Console | `atf_j0/atf-console` | `atf_j0/docs/feedback/ATF_Console_Mock_Feedback.md` |
-| Mock | `atf_j0/atf-mock` | `atf_j0/docs/feedback/ATF_Console_Mock_Feedback.md` |
+| [Core](README.Core.md) | HTTP, configurație, JSON, redactare și lifecycle | Mecanisme comune și adaptoare neutre. |
+| [Reporting](README.Reporting.md) | Extent/fallback, aserțiuni și dovezi UI/API | Rapoarte auditabile din observațiile consumerului. |
+| [Console](README.Console.md) | Evenimente și diagnostic configurabil | Urmărirea execuției în Maven și IntelliJ. |
+| [Mock](README.Mock.md) | Transport HTTP determinist | Componente și contracte offline, cu catalog propriu. |
 
-Căile din tabel sunt raportate la directorul comun al proiectelor. Pentru orice problemă de bibliotecă, se actualizează direct criteriul potrivit în registrul J0; indexul local păstrează doar trimiterea și acceptanța consumerului.
+## Integrare
 
-## Fluxul de lucru
-
-```mermaid
-%%{init: {"themeVariables":{"fontSize":"15px"},"themeCSS":".nodeLabel, .nodeLabel p { font-size: 15px !important; line-height: 1.35 !important; } .edgeLabel, .edgeLabel p { font-size: 12px !important; font-weight: 400 !important; line-height: 1.2 !important; } .edgeLabel .labelBkg, .edgeLabel p { background: transparent !important; } .edgeLabel foreignObject { transform: translateY(-18px); overflow: visible; } .node rect { rx: 6px; ry: 6px; }","flowchart":{"curve":"linear","nodeSpacing":24,"rankSpacing":16,"padding":10,"diagramPadding":16}}}%%
-flowchart LR
-    Owner["J0<br/>cod · teste · feedback"] -->|împachetează| Pair["Candidat verificat<br/>JAR + POM"]
-    Pair -->|sincronizează| Consumer["J1–J4<br/>adaptoare + acceptanță"]
-    Consumer -.->|feedback bibliotecă| Owner
-```
+1. Din rădăcina unei copii TMP, rulați `mvn -B -ntp -N validate`; bootstrap-ul instalează perechile locale în repository-ul Maven selectat.
+2. Declarați dependența în modulul care o folosește; păstrați versiunile din proprietățile POM-ului rădăcină.
+3. În IntelliJ, folosiți aceleași setări și același repository Maven, apoi reîncărcați POM-ul rădăcină.
 
 <details>
-<summary><strong>Legendă — implementare comună, acceptanță separată</strong></summary>
+<summary>Exemplu Maven — Mock</summary>
 
-- Săgețile continue descriu livrarea unui candidat; săgeata punctată întoarce constatările la J0.
-- J0 deține remedierea comună și regresia permanentă. Consumerul furnizează reproducerea și verifică integrarea binarului în propriul domeniu.
-- Diagrama descrie responsabilități și livrări, nu module Maven suplimentare ori copierea surselor în consumeri.
+```xml
+<dependency>
+    <groupId>atf.api</groupId>
+    <artifactId>atf-mock</artifactId>
+    <version>${atf.mock.version}</version>
+</dependency>
+```
+
+Core și dependențele externe vin din POM-ul publicat; adaptorul JUnit Console cere Kit declarat explicit. Reporting este independent de celelalte module ATF.
 
 </details>
 
-## O singură cerință, cu dovezi
+## Identitate și verificare
 
-- Consemnați în J0 proiectul, coordonata/hash-ul efectiv, selecția/profilul, rezultatul așteptat și observat, reproducerea minimă și dovezile păstrate.
-- Dacă originea este neclară, păstrați o singură constatare neconfirmată în J0 până la izolare; nu copiați checklist-ul în fiecare proiect.
-- Regulile de business, capturarea Android, modelele ASR și infrastructura brokerului rămân la ownerul consumerului. Un task demonstrat exclusiv local se mută acolo cu o trimitere scurtă din criteriul inițial.
-- Închideți criteriul numai după controlul negativ, regresia corectată și acceptanța relevantă; păstrați contractul stabil în documentație, fără ToDo-uri rezolvate sau cronologii de release.
+- `lib` păstrează patru perechi JAR/POM și cele cinci ghiduri de aici, direct în director, cu o singură versiune per bibliotecă.
+- [POM-ul rădăcină](../pom.xml) selectează coordonatele; [proveniența](../library-provenance.json) păstrează hash-urile și originea. [Contractul tehnic](../docs/ATF_Platform_Libraries.md) detaliază integrarea.
+- În TMP: `mvn -B -ntp -pl atf-tests -am -Dtest=PlatformLibraryContractTest,PlatformLibraryIntegrityTest -Dsurefire.failIfNoSpecifiedTests=false test`.
 
-## Sincronizare și guvernanță
+## Mentenanță și feedback
 
-1. Comparați codul live și schimbările locale înainte de modificare; păstrați bazele Git și configurația fiecărui proiect.
-2. Corectați în J0 și adăugați regresia permanentă la owner; construiți și verificați sursa/JAR-ul într-un staging TMP propriu.
-3. Distribuiți același candidat către consumerii afectați: o pereche curentă per bibliotecă, cu proveniența actualizată și istoricul original păstrat.
-4. Revalidați independent fiecare consumer și promovați selectiv prin guard-ul Core. Un rezultat din J1 nu devine automat dovadă pentru J2, J3 sau J4.
+Codul, testele native și backlog-ul bibliotecilor aparțin proiectului separat `atf_j0`; destinațiile sunt în `atf_j0/lib/README.md`. Raportați acolo JAR-ul/hash-ul, reproducerea și rezultatul așteptat/observat, fără checklist-uri duplicate.
 
-| Control | Contract |
-|---|---|
-| Inventar consumer | Exact patru perechi JAR/POM și acest README, direct în lib; fără versiuni suplimentare, depozit imbricat sau note de release. |
-| Identitate | Coordonate din POM; hash-uri și proveniență la rădăcină; POM-ul încorporat coincide cu perechea publicată. |
-| Încărcare | CodeSource indică JAR-ul fizic; sursele paralele și harness-urile native nu revin în consumer. |
-| Teste | Native și regresii generice în J0; contractele de adopție și acceptanța domeniului rămân locale, cu oracole independente. |
-| Raportare | Preview implicit 240, assert-uri auditabile și colapsabile, cadre complete; proba mock/componentă nu certifică un device, broker sau ASR real. |
-
-Într-o copie TMP, porniți din rădăcina consumerului și folosiți același repository Maven ca IntelliJ:
-
-```powershell
-mvn -B -ntp -N validate
-mvn -B -ntp -pl atf-tests -am -Dtest=PlatformLibraryContractTest,PlatformLibraryIntegrityTest -Dsurefire.failIfNoSpecifiedTests=false test
-```
-
-[POM](../pom.xml) · [Proveniență](../library-provenance.json) · [Contract tehnic](../docs/ATF_Platform_Libraries.md)
+Remedierea și regresia se fac în J0/TMP; același candidat este apoi sincronizat și acceptat independent în consumerii afectați. Scenariile, configurația și oracolele domeniului rămân locale.
