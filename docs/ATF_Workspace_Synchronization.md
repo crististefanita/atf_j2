@@ -1,19 +1,19 @@
 # ATF — referința J0 și sincronizarea consumerilor
 
-[Owner, feedback și sincronizare](../lib/README.md) descrie contractul celor patru biblioteci; această pagină păstrează protocolul workspace-urilor.
+[Owner, feedback și sincronizare](../lib/README.md) descrie contractul celor cinci biblioteci; această pagină păstrează protocolul workspace-urilor.
 
 ## Pe scurt
 
 `atf_j0` înlocuiește `demo2` ca referință de mentenanță Core și Reporting.
-Implementările Core/Reporting/Console/Mock și toate testele lor native rămân aici; fiecare destinație
+Implementările Core/Reporting/Console/Mock/Test Kit și toate testele lor native rămân aici; fiecare destinație
 primește și verifică livrarea potrivită propriului deployment.
 
 | Workspace | Rol | Suprafață existentă |
 |---|---|---|
-| `atf_j0` | sursă Core/Reporting/Console/Mock, teste native și `atf-reporting-tests`; referință pentru contractele comune | 12 module sursă; Core și guvernanța comune reconciliate |
-| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 7 module journeys; C3/J20 în lib și acceptanță proprie |
+| `atf_j0` | sursă Core/Reporting/Console/Mock/Test Kit, teste native și `atf-reporting-tests`; referință pentru contractele comune | 12 module sursă; Core și guvernanța comune reconciliate |
+| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 6 module journeys; C3/J20 în lib și acceptanță proprie |
 | `atf_j2` | WIP: framework și teste Kafka/mesagerie, fără module browser ori Shop/AutoEx | 6 module sursă; Core și Reporting JAR; SQL generic JDK-only, componente MOCK/H2 și observer Kafka probat pe infrastructură reală; aplicația Eventuate completă NOT RUN |
-| `atf_j3` | consumer speech, cinci module sursă; Core și Reporting prin JAR | C3/J20 în lib și acceptanță proprie, fără module web ori mesagerie |
+| `atf_j3` | consumer speech, patru module sursă; Core și Reporting prin JAR | C3/J20 în lib și acceptanță proprie, fără module web ori mesagerie |
 | `atf_j4` | Android consumer, four source modules; Core / Reporting flat pairs | separate component, archived rendering and device acceptance |
 | `demo2` | origine istorică a livrării J6 existente | nu mai este destinație activă de mentenanță sau sync |
 
@@ -120,7 +120,7 @@ Acceptanța J2 Eventuate și limita hostului sunt în [dovada consumerului](../.
 
 ## J2 fără module browser — perimetru distinct
 
-J2 declară șase module sursă: cinci platformă, Setup, Eventuate și guvernanță; Core este bibliotecă externă.
+J2 declară cinci module sursă: cinci platformă, Setup, Eventuate și guvernanță; Core este bibliotecă externă.
 [Scope-ul J2](../../atf_j2/docs/ATF_J2_Scope.md) delimitează contractul fără
 UI/Debug sau Playwright; retragerea este implementată în checkout-ul J2.
 
@@ -130,7 +130,7 @@ selectiv, iar backlog-ul Reporting și cel web rămân la ownerii J0/J1.
 
 ## Core ca bibliotecă — owner și deployment
 
-This consumer has 6 source modules. Core, Reporting, Console and Mock are external libraries, one JAR/POM pair each directly in lib.
+This consumer has 5 source modules. Core, Reporting, Console, Mock and Test Kit are external libraries, one JAR/POM pair each directly in lib.
 
 [Contractul Core](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
@@ -140,7 +140,7 @@ Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
 - Project README files, atlases and `docs` describe current contracts and ownership; they do not accumulate per-release Reporting verification notes.
 - Keep only `ATF_Reporting_Verification.md` for the current Reporting JAR in its producer packaging stage, beside the effective publication POM. Builds, logs and HTML evidence stay in owned TMP.
-- Consumer `library-provenance.json` records the current coordinate, hashes, original `buildStage` and `currentAcceptance.evidence` location. Consumer `lib` retains the latest Core, Reporting, Console and Mock JAR/POM pairs plus its dedicated README; no release notes are stored there.
+- Consumer `library-provenance.json` records the current coordinate, hashes, original `buildStage` and `currentAcceptance.evidence` location. Consumer `lib` retains the latest Core, Reporting, Console, Mock and Test Kit JAR/POM pairs plus its dedicated README; no release notes are stored there.
 - Superseded notes are retired after their durable contracts have been reconciled. Historical build/test facts and original evidence paths remain provenance, explicitly marked as retired; they are not current document targets or fresh acceptance.
 
 The current note is retained with the J20 package; its coordinate and JAR/POM hashes must match the distributed pair. Documentation maintenance alone neither rebuilds a library nor repeats its recorded tests.

@@ -172,7 +172,7 @@ suită și păstrează rezultatul fiecărui scenariu.
   schimbă verdictul. Mesajul auditabil trebuie să explice diferența în limita
   configurată, inclusiv când diferența este dincolo de preview.
 - Componentele AutoEx și Shop folosesc
-  [fațada JUnit auditabilă din Test Kit](../atf-test-kit/README.md#comparații-junit-cu-dovadă-neutră),
+  [fațada JUnit auditabilă din Test Kit](../lib/README.TestKit.md#scope-și-integrare),
   adaptată de consumer la `AssertionStep` Reporting. Extensia evaluatorului pur
   este descrisă separat ca [design amânat](#evaluator-general-pentru-modele).
 

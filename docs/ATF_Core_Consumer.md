@@ -2,22 +2,22 @@
 
 ## Pe scurt
 
-J0 păstrează implementarea și toate testele native Core. J1, J2, J3 și J4 consumă
-aceeași bibliotecă `atf.api:atf-core:1.0.0-c3`, fără modul sursă ori teste
+J0 păstrează implementarea și toate testele native Core. J1–J5 consumă
+aceeași bibliotecă `atf.api:atf-core`, cu versiunea declarată în POM-ul consumerului, fără modul sursă ori teste
 native copiate în live. Reporting are publicare și acceptanță separate.
 
-| Contract | C3 |
+| Contract | Regulă curentă |
 |---|---|
 | runtime | Java 21; Jackson Databind și YAML 2.17.2 |
 | independență | POM fără parent de reactor; zero dependențe ATF/JUnit/Extent de producție |
-| layout consumer | `lib/atf-core-1.0.0-c3.jar` și `.pom`, lângă perechea Reporting; exact patru fișiere |
-| proveniență | `coreLibrary` în `library-provenance.json`; hash JAR/POM, intrări și catalog native; istoricul J9 rămâne distinct |
+| layout consumer | `lib/atf-core-${atf.core.version}.jar` și `.pom`; [lib](../lib/README.md) păstrează câte o pereche per bibliotecă |
+| proveniență | `coreLibrary` în `library-provenance.json`; hash JAR/POM, intrări și catalog native; istoricul build-urilor rămâne distinct |
 | sursă și teste | ownerul sursei J0; niciun Core shadow în consumer |
 
 ## Maven și IntelliJ
 
 Din rădăcina unui staging TMP al consumerului, `mvn -B validate` instalează
-ambele perechi în repository-ul Maven selectat. Apoi reîncarcă POM-ul rădăcină
+cele cinci perechi în repository-ul Maven selectat. Apoi reîncarcă POM-ul rădăcină
 în IntelliJ, folosind același repository Maven ca la bootstrap. Nu se folosesc
 `systemPath`, repository file cu ierarhie ori un JAR adăugat manual în IDE.
 
@@ -31,14 +31,14 @@ la ambele. Un `-pl` care omite rădăcina necesită bootstrap-ul anterior.
 
 Core este acum dependență externă, astfel `-pl atf-core` se rulează doar în J0.
 Reactorul sursă rămâne la `1.0.0-SNAPSHOT`; numai dependențele Core ale
-consumerilor folosesc `atf.core.version=1.0.0-c3`.
+consumerilor folosesc `atf.core.version` din POM-ul rădăcină.
 
 ## Publicare și verificare
 
 1. Reconciliază schimbarea și probele la ownerul J0; păstrează codul și testele locale.
 2. Construiește în TMP cu POM parentless; transformarea de publicare schimbă numai versiunea proiectului, nu versiunea Test Kit de test.
 3. Rulează nativele și apoi aceleași teste pe JAR în harness TMP fără surse Core. Kit/JUnit rămân dependențe de test.
-4. Verifică separat J1/J2/J3/J4: compile, contracte afectate, guvernanță, CodeSource/hash și rapoarte; J2 MOCK nu certifică un broker Kafka.
+4. Verifică separat J1–J5: compile, contracte afectate, guvernanță, CodeSource/hash și rapoarte; J2 MOCK nu certifică un broker Kafka.
 5. Livrează o singură pereche nouă per bibliotecă și proveniența verificată; retrage perechea anterioară fără versiuni paralele.
 
 Guvernanța verifică coordonata, POM-ul inclus byte cu byte, hash-urile,
@@ -58,10 +58,11 @@ Procedura completă este în [sincronizare](ATF_Workspace_Synchronization.md)
 %%{init: {"themeVariables":{"fontSize":"15px"},"themeCSS":".nodeLabel, .nodeLabel p { font-size: 15px !important; line-height: 1.35 !important; } .edgeLabel, .edgeLabel p { font-size: 12px !important; font-weight: 400 !important; line-height: 1.2 !important; } .edgeLabel .labelBkg, .edgeLabel p { background: transparent !important; } .edgeLabel foreignObject { transform: translateY(-18px); overflow: visible; } .node rect { rx: 6px; ry: 6px; }","flowchart":{"curve":"linear","nodeSpacing":24,"rankSpacing":40,"padding":10,"diagramPadding":16}}}%%
 flowchart LR
     Owner["J0<br/>sursă + native"] -->|verifică| Binary["Core<br/>JAR + POM"]
-    Binary -->|adoptă| J1["J1<br/>7 module sursă"]
-    Binary -->|adoptă| J2["J2 WIP<br/>8 module sursă"]
-    Binary -->|adoptă| J3["J3 speech<br/>5 module sursă"]
-    Binary -->|adoptă| J4["J4 Android<br/>4 module sursă"]
+    Binary -->|adoptă| J1["J1<br/>6 module sursă"]
+    Binary -->|adoptă| J2["J2 WIP<br/>5 module sursă"]
+    Binary -->|adoptă| J3["J3 speech<br/>4 module sursă"]
+    Binary -->|adoptă| J4["J4 Android<br/>3 module sursă"]
+    Binary -->|adoptă| J5["J5 WIP<br/>2 module sursă"]
 ```
 
 <details>
@@ -102,9 +103,11 @@ temporare verifică JAR-urile fizice, fără surse de implementare shadow.
 
 Lifecycle-ul complet și string-urile JSON publice folosesc politica de redactare declarată. Future-ul HTTP păstrează o legătură best effort către operația upstream; cursele au un singur owner terminal, iar eșecul cleanup rămâne suppressed.
 
-Anularea nu confirmă rollback server-side și nu autorizează replay al unei mutații incerte. Nativele controlate, GET-ul local blocat și proba pe JAR rămân verificări distincte de E2E-ul consumerului.
+- URLConnection deține body-ul, workerul virtual și conexiunea; colectarea body-ului, connect și citirea consumă același deadline. Un body livrat după terminare nu poate porni request-ul.
+
+- Anularea nu confirmă rollback server-side și nu autorizează replay al unei mutații incerte. Nativele controlate, GET-ul local blocat și proba pe JAR rămân verificări distincte de E2E-ul consumerului.
 
 
 ## Shared platform libraries
 
-The current reactor has 6 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.
+The current reactor has 5 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the five library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.

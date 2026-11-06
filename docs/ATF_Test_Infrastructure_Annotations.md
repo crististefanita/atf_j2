@@ -18,7 +18,7 @@ EventuateComponentTest și extensia sa; consumerul deține resursele și publica
 
 Eventuate folosește AtfReportPath pentru notificarea căii absolute după close
 reușit. Clasa Jupiter deține declarația; suita nu o transmite implicit prin
-moștenire. Rezolvarea comună și precedența sunt în [Kit](../atf-test-kit/README.md#politica-pentru-calea-raportului-publicat).
+moștenire. Rezolvarea comună și precedența sunt în [Kit](../lib/README.TestKit.md#scope-și-integrare).
 
 ## Scope Maven
 
@@ -38,5 +38,5 @@ Prezența sa nu activează un browser și nu introduce un canal Kafka nativ;
 componenta de mesagerie curentă folosește nivelul component și assertions neutre.
 
 Aplicarea web completă și exemplele sunt în [documentul J1](../../atf_j1/docs/ATF_Test_Infrastructure_Annotations.md).
-Catalogul API rămâne la [Kit](../atf-test-kit/README.md); [atlasul J2](ATF_Context_Atlas.md)
+Catalogul API rămâne la [Kit](../lib/README.TestKit.md#scope-și-integrare); [atlasul J2](ATF_Context_Atlas.md)
 descrie numai callerii activi ai acestui deployment.

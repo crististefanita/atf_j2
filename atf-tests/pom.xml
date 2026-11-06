@@ -26,7 +26,7 @@
         <dependency>
             <groupId>atf.api</groupId>
             <artifactId>atf-test-kit</artifactId>
-            <version>${project.version}</version>
+            <version>${atf.testkit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

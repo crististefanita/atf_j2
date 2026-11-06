@@ -46,7 +46,7 @@ Reporting rămâne bibliotecă externă.
 
 | Zonă | Module | Rol în J2 |
 |---|---|---|
-| platformă activă | atf-test-kit, atf-mock, atf-sql, atf-validation, atf-console | contracte runner, transport, validare și diagnostic |
+| platformă activă | atf-sql și atf-validation; Test Kit, Mock și Console prin JAR | contracte runner, transport, validare și diagnostic |
 | infrastructură | atf-setup | scripturi Kafka; Maven nu instalează sau pornește servicii |
 | aplicație | atf-test-eventuate | suport în main, componente/fixture-uri și adaptor JUnit în test |
 | guvernanță | atf-tests | catalog, boundaries, documentație, selecții și identitatea JAR-ului |

@@ -11,7 +11,7 @@
   and messaging scope; do not infer its acceptance from J1's results.
 - J2 keeps its existing Git and messaging scope. Its explicit Eventuate profile includes Setup and excludes Shop, AutoEx, UI and Debug UI; do not restore those modules or Playwright in J2.
 - Keep Core implementation and native tests only in J0. Binary consumers
-  retain the latest Core, Reporting, Console and Mock JAR/POM pairs directly in `lib`,
+  retain the latest Core, Reporting, Console, Mock and Test Kit JAR/POM pairs directly in `lib`,
   with one root provenance file. Do not copy Reporting source or its harness
   into the live binary consumers.
 - Reconcile common code and consumer adapters selectively in both directions.

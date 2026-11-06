@@ -62,7 +62,7 @@ implementarea main, regula opt, allow-list-urile și selecțiile SQL sunt păstr
 | proveniență | 170 de intrări curente; noua reconciliere păstrează previousPath și amprentele anterioare, inclusiv importul original J1 |
 | perimetru | șapte module, aceleași Core C1 și Reporting J8 și preview 240; fără modificări Reporting ori infrastructură LIVE |
 
-- [Contractul Kit](../atf-test-kit/README.md#pachetele-regresiilor-de-audit) și
+- [Contractul Kit](../lib/README.TestKit.md#scope-și-integrare) și
   [atlasul J2](ATF_Context_Atlas.md) dețin organizarea curentă. Feedback-ul 114
   este retras, iar controlul KIT-COHESION-115 rămâne în baseline împreună cu istoricul KIT-BODY-J2.
 - Dovezi TMP: incrementul atf-j2-kit-cohesion-db49fee4ea, migration-audit.json,
@@ -95,7 +95,7 @@ cele șapte module și preview-ul 240 sunt păstrate.
 - [Contractul SQL și diagrama](../atf-test-eventuate/src/main/java/atf/eventuate/sql/README.md)
   separă writer, witness, snapshot și oracol. [Comenzile de acceptanță](ATF_Eventuate_Testing.md#sql-embedded--acceptanță-consumer)
   folosesc H2 și JAR-ul Reporting fizic din classpath-ul consumerului.
-- La închiderea incrementului SQL, [criteriul Kit](../atf-test-kit/README.md#pachetele-regresiilor-de-audit) păstra failure-ul real
+- La închiderea incrementului SQL, [criteriul Kit](../lib/README.TestKit.md#scope-și-integrare) păstra failure-ul real
   și reorganizarea necesară; mutarea ulterioară este verificată în incrementul de coeziune, separat de implementarea SQL.
 - Dovezi TMP: incrementul atf-j2-sql-8309190481, sql-components-first.log,
   sql-live-reconciled-reactor-reviewed.log, sql-matrix-live/acceptance.json,

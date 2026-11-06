@@ -65,7 +65,7 @@ Orice constatare despre Core, Reporting, Console sau Mock se înregistrează dir
 
 ## Ce este livrat și unde se citește
 
-- Coeziunea Kit este verificată în [contractul ownerului](../../atf-test-kit/README.md#pachetele-regresiilor-de-audit); criteriul închis nu rămâne în registrul activ.
+- Coeziunea Kit este verificată în [contractul ownerului](../../lib/README.TestKit.md#scope-și-integrare); criteriul închis nu rămâne în registrul activ.
 - Cele trei componente MOCK, trei SQL embedded și matricile Extent/fallback au contract în [ghidul Eventuate](../ATF_Eventuate_Testing.md).
 - Hostul și provisioning-ul silent au contract în [Setup](../../atf-setup/README.md) și [atlasul său](../ATF_Setup_Atlas.md).
 - Catalogul explicit cu opt module și retragerea browserului sunt în [scopul J2](../ATF_J2_Scope.md); criteriul închis nu rămâne ToDo.

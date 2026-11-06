@@ -25,7 +25,7 @@ J2 are opt module și exclude UI/Debug; auditul HTML rămâne extern.
 | boundary JSON strict | [contract binar](ATF_Core_Consumer.md#document-json-complet-și-evidence-fidel) | Core refuză trailing content și duplicate; Mock/Validation folosesc primitiva strictă comună, cu politicile proprii pentru null |
 | comparație scalară | [contract](../atf-validation/README.md#egalitate-scalară--fără-coerciția-containerelor), [regresie](../atf-validation/src/test/java/atf/validation/scalar/JsonScalarEqualityContractTest.java) | aceeași regulă pentru path și fiecare proprietate din array; string gol real acceptat, containere refuzate; null textual compatibil, tipul cerut separat |
 | media type JSON | [contract](../atf-validation/README.md#content-type--clasificare-semantică-json), [regresie](../atf-validation/src/test/java/atf/validation/media/JsonMediaTypeContractTest.java) | cinci contracte canonice delegă tipul/subtipul către Core; parametrii nu imită JSON; contains literal și validarea body-ului sunt independente |
-| politica auditului Kit | [contract și pachete](../atf-test-kit/README.md#pachetele-regresiilor-de-audit), [regresia TEST_BODY](../atf-test-kit/src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementComponentTest.java) | audit general în assertions, politica în requirements; prag opt per pachet, main și cazurile păstrate |
+| politica auditului Kit | [contract și pachete](../lib/README.TestKit.md#scope-și-integrare), [regresia TEST_BODY](../../atf_j0/atf-test-kit/src/test/java/atf/testkit/assertions/requirements/TestBodyAssertionRequirementComponentTest.java) | audit general în assertions, politica în requirements; prag opt per pachet, main și cazurile păstrate |
 | audit JUnit | [EventuateComponentExtension](../atf-test-eventuate/src/test/java/atf/eventuate/tests/support/EventuateComponentExtension.java) | Kit decide o singură dată; adaptorul transferă comparațiile fără reevaluare |
 | raport | [ComponentReportRun](../atf-test-eventuate/src/main/java/atf/eventuate/reporting/ComponentReportRun.java) | owner serial class/suite; trei faze, close înaintea notificării căii absolute |
 | infrastructură | [Setup atlas](ATF_Setup_Atlas.md) | Kafka remote și Java Windows demonstrate individual/prin două runde; revalidarea engine-ului și rutei rămâne obligatorie |
@@ -111,7 +111,7 @@ aduce înapoi aceste domenii în atlasul și backlog-ul J2.
 
 ## Core ca bibliotecă — owner și deployment
 
-This consumer has 6 source modules. Core, Reporting, Console and Mock are external libraries, one JAR/POM pair each directly in lib.
+This consumer has 5 source modules. Core, Reporting, Console, Mock and Test Kit are external libraries, one JAR/POM pair each directly in lib.
 
 [Contractul Core](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
@@ -149,4 +149,4 @@ Nu transformați un SELECT sintetic sau un eveniment fabricat într-un verdict a
 
 ## Shared platform libraries
 
-The current reactor has 6 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.
+The current reactor has 5 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the five library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.

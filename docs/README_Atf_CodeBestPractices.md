@@ -129,7 +129,7 @@ primitivelor neutre care se repetă și pot fi testate fără browser sau site.
 - nu crea un modul nou pentru a ascunde un contract încă neclar.
 
 Boundary-ul neutru al infrastructurii comune este documentat în
-[README-ul Test Kit](../atf-test-kit/README.md); source-set-ul și compoziția
+[README-ul Test Kit](../lib/README.TestKit.md#scope-și-integrare); source-set-ul și compoziția
 concretă rămân în README-ul ownerului fiecărui consumer.
 
 ### Testul exprimă intenția, main deține capabilitatea

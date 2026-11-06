@@ -4,15 +4,15 @@
 
 ## Pe scurt
 
-This workspace is a 6-module binary consumer. J0 owns Core, Reporting, Console and Mock implementation and native tests. J1–J4 consume exactly one current JAR/POM pair per library directly in `lib`; their application adapters, configuration and acceptance remain local.
+This workspace is a 6-module binary consumer. J0 owns Core, Reporting, Console, Mock and Test Kit implementation and native tests. J1–J5 consume exactly one current JAR/POM pair per library directly in `lib`; their application adapters, configuration and acceptance remain local.
 
 | Workspace | Source modules | Domain |
 |---|---|---|
 | J0 | 12 | Producer and native library contracts |
-| J1 | 7 | Shop and AutoEx browser/API journeys |
-| J2 | 6 | SQL, Setup and Eventuate messaging WIP; no browser modules |
-| J3 | 5 | Speech framework and acceptance |
-| J4 | 4 | Android framework and acceptance |
+| J1 | 6 | Shop and AutoEx browser/API journeys |
+| J2 | 5 | SQL, Setup and Eventuate messaging WIP; no browser modules |
+| J3 | 4 | Speech framework and acceptance |
+| J4 | 3 | Android framework and acceptance |
 
 ## Console and Mock boundaries
 
@@ -32,7 +32,7 @@ Console and Mock do not depend on Reporting, Validation or application modules. 
 %%{init: {"themeVariables":{"fontSize":"15px"},"themeCSS":".nodeLabel, .nodeLabel p { font-size: 15px !important; line-height: 1.35 !important; } .edgeLabel, .edgeLabel p { font-size: 12px !important; font-weight: 400 !important; line-height: 1.2 !important; } .edgeLabel .labelBkg, .edgeLabel p { background: transparent !important; } .edgeLabel foreignObject { transform: translateY(-18px); overflow: visible; } .node rect { rx: 6px; ry: 6px; }","flowchart":{"curve":"linear","nodeSpacing":24,"rankSpacing":16,"padding":10,"diagramPadding":16}}}%%
 flowchart LR
     Source["J0<br/>source + native tests"] -->|package| Pair["One candidate<br/>JAR + standalone POM"]
-    Pair -->|adopt| Lib["J1–J4<br/>flat lib"]
+    Pair -->|adopt| Lib["J1–J5<br/>flat lib"]
     Lib -->|validate| Acceptance["Per-consumer<br/>contracts + components"]
 ```
 
@@ -55,14 +55,14 @@ mvn -B -ntp -N validate
 mvn -B -ntp -DskipTests test-compile
 ```
 
-The root validate phase installs the four real POM/JAR pairs into the selected Maven local repository. Use the same Maven settings and local repository in IntelliJ, then reload the root POM. Dependencies use `atf.core.version`, `atf.reporting.version`, `atf.console.version` and `atf.mock.version`; source modules must not be restored to satisfy imports.
+The root validate phase installs the five real POM/JAR pairs into the selected Maven local repository. Use the same Maven settings and local repository in IntelliJ, then reload the root POM. Dependencies use `atf.core.version`, `atf.reporting.version`, `atf.console.version`, `atf.mock.version` and `atf.testkit.version`; source modules must not be restored to satisfy imports.
 
 Native library commands run at J0 only. Acceptance against a published JAR compiles the native tests in TMP without copying production classes, verifies the actual CodeSource, and preserves negative oracles. Do not select nested JUnit fixture classes directly: their intentional failures are asserted by their enclosing test.
 
 ## Integrity and maintenance
 
-- `lib` contains eight binary artifacts plus the index and four per-library usage guides: four JAR/POM pairs, no nested repository, old versions, source or verification notes.
-- Root `library-provenance.json` retains original Core/Reporting provenance and adds `platformLibraries.console` and `platformLibraries.mock`: coordinates, binary/POM hashes, producer-input digest, native catalog and current package evidence.
+- `lib` contains ten binary artifacts plus the index and five per-library usage guides: five JAR/POM pairs, no nested repository, old versions, source or verification notes.
+- Root `library-provenance.json` retains original Core/Reporting provenance and adds `platformLibraries.console`, `platformLibraries.mock` and `platformLibraries.test-kit`: coordinates, binary/POM hashes, producer-input digest, native catalog and current package evidence.
 - The embedded Maven POM must equal the adjacent published POM byte for byte. Consumer governance verifies the physical JAR, source-shadow rejection, dependency boundary and flat inventory.
 - Builds, caches, recovery copies and the latest package verification note stay in the owned producer TMP stage. Official docs describe contracts rather than iterative release history.
 - Changes start at J0, preserve the 240-character default preview and auditable collapsible assertions, then receive separate component acceptance in every affected consumer. No device, external broker or ASR acceptance is inferred from offline checks.
