@@ -61,7 +61,7 @@ guvernanței; ele trimit către J0 și nu dublează backlog-ul producătorului.
 
 ## Core ca bibliotecă — owner și deployment
 
-This consumer has 6 source modules. Core, Reporting, Console and Mock are external libraries, one JAR/POM pair each directly in lib.
+This consumer has 5 source modules. Core, Reporting, Console, Mock and Test Kit are external libraries, one JAR/POM pair each directly in lib.
 
 [Contractul Core](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.

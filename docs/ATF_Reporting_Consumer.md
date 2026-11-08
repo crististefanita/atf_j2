@@ -47,7 +47,7 @@ de alt JVM pe Windows.
 ## Compatibilitatea acestui increment
 
 [Atlasul J6](ATF_Reporting_Library_Atlas.md) descrie callerii efectivi.
-Catalogul live are opt module; [scopul J2](ATF_J2_Scope.md) exclude UI/Debug
+Catalogul live are cinci module; [scopul J2](ATF_J2_Scope.md) exclude UI/Debug
 și Playwright. Nu copiați catalogul journeys sau foundation peste Eventuate.
 
 ## Reporting Tests la producător
@@ -91,4 +91,4 @@ impactul local și revalidarea cerută; backlog-ul generic este numai în J0.
 
 ## Shared platform libraries
 
-The current reactor has 6 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.
+The [platform library guide](ATF_Platform_Libraries.md) covers the five binary libraries, Maven/IntelliJ bootstrap and independent consumer acceptance. The [provenance manifest](../library-provenance.json) identifies the consumed JAR/POM pairs.

@@ -2,34 +2,19 @@
 
 ## Pe scurt
 
-J2 consumă Core C3 și Reporting J20 prin perechi JAR/POM plate. Implementarea, nativele și regresiile generice rămân în J0;
-[current library provenance](../../library-provenance.json) separă probele consumerului de cele ale producătorului.
-- The [Reporting owner contract](../../../atf_j0/atf-reporting/README.md) defines artifact profiles and inspection boundaries. Earlier execution matrices remain historical; they do not claim fresh LIVE acceptance.
+J2 verifică adaptoarele și oracolele Eventuate, Mock și SQL. J0 deține biblioteca și regresiile rendererului. [Contractul Reporting](../../../atf_j0/atf-reporting/README.md) · [Proveniența binarelor](../../library-provenance.json)
 
 <a id="report-j2-adoption-62--prioritate-89"></a>
 
 ## Profil explicit — contract consolidat
 
-Cele trei acceptoare Eventuate, Mock și SQL declară scenarii, faze, evidence și verdicturi înaintea inspecției.
-[Contractul consumerului](../ATF_Eventuate_Testing.md) păstrează oracolele business și mutanții lor separat de profil.
-
-- Rezultatul legacy Extent/HTTP rămâne în receipt, ca diagnostic distinct.
-- Matricea de 40 rapoarte verifică individual/agregat, Extent/fallback, nominal și FAIL controlat.
-- Mutația coloanei ACTUAL din tabelul original este refuzată pentru fiecare raport; nu este satisfăcută de template sau sibling.
-
-Criteriul REPORT-J2-ADOPTION-62 este retras din backlog după proba pe J12.
-SQL-STEPS-116 și geometria RESULT rămân criterii de bibliotecă distincte.
+[Contractul profilurilor explicite](../ATF_Eventuate_Testing.md#acceptanța-raportului) păstrează oracolele de business, diagnosticul legacy și referința la matricea verificată.
 
 <a id="report-j2-timing-83--prioritate-88"></a>
 
 ## Contracte consolidate
 
-| Contract | Owner și limită |
-|---|---|
-| disclosure API și stare vecini | probele J8/J10 sunt istorice; J12 păstrează aceleași tabele și controale |
-| execuție, transport și publicare | [contractul temporal J0](../../../atf_j0/atf-reporting/README.md#originea-duratelor-sub-o-fază-capturată); fără clamp, însumare peste faza capturată ori zero inventat |
-| indicator assertions | disclosure comun cu mouse/Enter/Space, colapsat implicit și preview 240 |
-| catalog nativ | 16 fișiere numite explicit, incluzând cele trei clase native J12; fără wildcard sau skip |
+[Contractul temporal](../../../atf_j0/atf-reporting/README.md#originea-duratelor-sub-o-fază-capturată) și [contractul de afișare](../../../atf_j0/docs/ATF_Reporting_Display_Contract.md) rămân la J0.
 
 <a id="sql--handoff-către-j0-și-adoptare-ulterioară"></a>
 
@@ -43,5 +28,5 @@ rezultate 16.384 și payload 1.048.576 nu sunt încă proprietăți HTML disponi
 
 ## Geometria RESULT
 
-[REPORT-FALLBACK-RESULT-WIDTH-101](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-fallback-result-width-101--badge-ul-statusului-depășește-coloana)
+[REPORT-FALLBACK-RESULT-WIDTH-101](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-fallback-result-width-101--regresie-geometrică-pentru-badge)
 rămâne distinct: badge-ul Warning trebuie măsurat în celulă și wrapper, la viewport normal și panou îngust, cu mutant geometric refuzat.

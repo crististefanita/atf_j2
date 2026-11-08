@@ -3,21 +3,21 @@
 ## Pe scurt
 
 J2 este WIP pentru un framework de mesagerie și un singur modul de test Kafka,
-cu Setup PowerShell în Podman. Reactorul are opt module, fără UI/Debug;
+cu Setup PowerShell în Podman. Reactorul are cinci module, fără UI/Debug;
 trei componente sunt MOCK și trei verifică witness-ul Eventuate H2. Biblioteca SQL generică are cinci invocări componente; observerul Kafka este implementat și probat real, iar aplicația completă rămâne NOT RUN.
 
 | Stare live | Contract |
 |---|---|
-| catalog | Kit, Mock, SQL, Validation, Console, Setup, Eventuate, Tests, în ordinea declarată |
+| catalog | `atf-sql`, `atf-validation`, `atf-setup`, `atf-test-eventuate`, `atf-tests`, în ordinea din POM |
 | profil | eventuate; foundation are alt catalog și nu substituie acest deployment |
 | browser | fără surse UI/Debug și fără dependență Playwright |
-| Reporting | JAR/POM J10, fără sursă ori harness în J2 |
+| biblioteci | Core, Reporting, Console, Mock și Test Kit prin JAR/POM; [proveniența curentă](../library-provenance.json) |
 
 ## Limita executabilă
 
 | Suprafață | Sursă / probă | Invariant |
 |---|---|---|
-| reactor | [POM](../pom.xml), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | exact cele opt identități; modul obligatoriu lipsă sau modul străin refuzat |
+| reactor | [POM](../pom.xml), [catalog J2](../atf-tests/src/test/java/atf/j2/governance/J2Project.java) | exact cele cinci identități; modul obligatoriu lipsă sau modul străin refuzat |
 | dependențe | [ATF Tests POM](../atf-tests/pom.xml), [guard J2](../atf-tests/src/test/java/atf/j2/governance/J2DeploymentGovernanceTest.java) | fără atf-ui, atf-debug-ui sau Playwright |
 | catalog comun | [GovernanceDeployment](../atf-tests/src/test/java/atf/api/tests/governance/distribution/GovernanceDeployment.java) | profil explicit; absența directorului nu reduce catalogul |
 | documente | același resolver de deployment | țintele UI externe sunt mapate explicit la documente J2; țintele active lipsă rămân erori |
@@ -30,7 +30,7 @@ local stabilesc modulele J2, nu prezența tuturor constantelor în Core.
 ## Sync selectiv
 
 - J1 deține scenariile Shop/AutoEx și runtime-ul browser; J2 preia selectiv platforma comună aplicabilă.
-- J0 deține Reporting, documentația bibliotecii și regresiile ei generice; J2 consumă binarul și își verifică adaptorul.
+- J0 deține bibliotecile comune și regresiile lor generice; J2 consumă binarele și își verifică adaptoarele. [Ghidul local](../lib/README.md)
 - Setup și Eventuate au owner J2; nu se copiază automat în reactorul J0/J1.
 - README-ul principal, atlasul, POM-ul și feedback-ul fiecărui deployment nu se țin identice prin mirror.
 
@@ -66,4 +66,4 @@ Modulul de test deține expected-ul și verdictul. Reporting JAR publică faptel
 
 </details>
 
-Modulul [atf-sql](../atf-sql/README.md) este adăugat explicit prin incrementul SQL generic, autorizat separat; catalogul anterior de șapte module rămâne istoric. Nu este o redenumire ori o relaxare a guard-ului de module.
+[atf-sql](../atf-sql/README.md) a fost introdus prin incrementul SQL generic. [Verificarea acelui increment](ATF_SQL_Live_Verification.md) păstrează catalogul din momentul rulării.

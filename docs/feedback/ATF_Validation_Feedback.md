@@ -9,7 +9,7 @@ acceptanței; criteriile demonstrate sunt retrase din registrul activ.
 | Responsabilitate | Owner și probă |
 |---|---|
 | reguli și verdict | Validation; API public, strict/warning și comparație înainte de preview |
-| clasificare media type | vocabular Core C1; regula semantică rămâne distinctă de contains literal |
+| clasificare media type | vocabular Core; Validation păstrează regula semantică distinctă de căutarea literală |
 | publicarea rezultatului | port neutru în Validation și adaptorul consumerului; fără reevaluare în renderer |
 | randare și regresii generice | J0 Reporting și Reporting Tests; consumerul păstrează numai acceptanța sa |
 

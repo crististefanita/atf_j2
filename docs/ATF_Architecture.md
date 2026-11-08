@@ -4,7 +4,7 @@
 
 Ținta este un framework Kafka/mesagerie cu un singur modul de test și Setup PowerShell în Podman. Observerul framework-ului este probat pe Kafka real, iar SQL generic pe H2/MySQL; acceptanța aplicației Eventuate complete rămâne NOT RUN.
 
-Reactorul păstrează exact cele 6 module existente.
+Reactorul păstrează exact cele 5 module existente.
 Profilul Eventuate compune platforma, Setup, consumerul și guvernanța.
 Reporting este JAR extern; UI, Debug UI și Playwright nu fac parte din J2.
 
@@ -16,7 +16,7 @@ Reporting este JAR extern; UI, Debug UI și Playwright nu fac parte din J2.
 | evaluare și diagnostic | atf-validation, atf-console | validare neutră și proiecție de consolă |
 | laborator local | atf-setup | configurație și scripturi Kafka; fără lifecycle Maven care instalează servicii |
 | scaffold de test · WIP | atf-test-eventuate | suport main; teste, fixture-uri și adaptor JUnit în test |
-| raport | Reporting JAR J10 | API public și Extent/fallback, cu implementare/regresii în J0 |
+| raport | Reporting JAR | API public și Extent/fallback, cu implementare/regresii în J0 |
 | guvernanță | atf-tests | catalog, boundaries, selecții, documentație și CodeSource/hash |
 
 ### Harta modulelor: platformă și consumatori
@@ -88,7 +88,7 @@ Reporting captează setările la owner. Extensia rezolvă rendererul, output-ul
 
 - [library-provenance.json](../library-provenance.json) păstrează identitatea și build-ul istoric J6 din demo2.
 - [platform-provenance.json](../platform-provenance.json) fixează suprafața importată fără modulele browser.
-- POM-ul și [scopul J2](ATF_J2_Scope.md) descriu catalogul curent de opt module, fără rebazarea istoricului bibliotecii.
+- POM-ul și [scopul J2](ATF_J2_Scope.md) descriu catalogul curent de cinci module.
 
 ## Ciclu de viață și responsabilități
 
@@ -115,7 +115,7 @@ infrastructurii reale rămâne o axă separată. [Ghidul](ATF_Testing_Guide.md)
 
 ## Core ca bibliotecă — owner și deployment
 
-This consumer has 6 source modules. Core, Reporting, Console and Mock are external libraries, one JAR/POM pair each directly in lib.
+This consumer has 5 source modules. Core, Reporting, Console, Mock and Test Kit are external libraries, one JAR/POM pair each directly in lib.
 
 [Contractul Core](ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
@@ -128,4 +128,4 @@ Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 
 ## Shared platform libraries
 
-The current reactor has 6 source modules. [Platform library consumption](ATF_Platform_Libraries.md) defines the four library owners, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance. Console/Mock native tests stay in J0; consumer adapters and catalogs stay local.
+The [platform library guide](ATF_Platform_Libraries.md) describes ownership, flat distribution, Maven/IntelliJ bootstrap and independent consumer acceptance.

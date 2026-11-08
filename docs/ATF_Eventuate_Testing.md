@@ -71,13 +71,14 @@ Oracolul consumerului cere exact trei tabele de assertions per scenariu,
 patru coloane și comparațiile nominale; eliminarea unui tabel sau inversarea
 unui verdict sunt refuzate. Scripturile și CSS-ul nu satisfac acest oracol.
 
-J12 permite declararea inventarului înaintea inspecției. Cele trei acceptoare Eventuate, Mock și SQL folosesc overload-ul explicit, cu oracole business separate; lipsa HTTP nu schimbă profilul după citirea HTML-ului.
+Cele trei acceptoare Eventuate, Mock și SQL declară profilul înaintea inspecției și păstrează oracolele business separate. Lipsa HTTP nu schimbă profilul după citirea HTML-ului.
 
 - Eventuate declară cele trei faze, request-urile necesare, observațiile de convergență și comparațiile oprite la failure-ul controlat.
 - Mock declară assertions-only din probele autorului; SQL declară observațiile și rândurile fiecărei metode, fără request-uri artificiale.
 - Receipt-ul păstrează rezultatul legacy Extent/HTTP ca diagnostic distinct. Conformitatea acceptanței este verdictul profilului explicit.
 - Un mutant modifică numai coloana ACTUAL a primului tabel original; template-urile, scripturile și copiile runtime nu pot satisface ownerul pierdut.
 
+Controlul `REPORT-J2-EXPLICIT-PROFILE-130` păstrează proba adoptării. Matricele mai vechi Extent/fallback rămân dovezi ale snapshoturilor executate. [Baseline](ATF_Test_Changes_Baseline.md) · [Registrul execuțiilor](ATF_J2_Verification.md)
 
 </details>
 

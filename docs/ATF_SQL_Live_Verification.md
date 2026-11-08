@@ -4,8 +4,8 @@
 
 Incrementul din 2026-11-01 adaugă `atf-sql` și porturile LIVE Eventuate, pe
 snapshot-ul Git `3c013eb9b5940381340d46cbf137c046c44f8973`, reconciliat cu
-livrarea paralelă Core C2/Reporting J10. J2 are acum opt module, prin adăugarea
-explicit cerută a bibliotecii SQL; controalele catalogului rămân stricte.
+livrarea paralelă Core C2/Reporting J10. Snapshotul verificat avea opt module,
+inclusiv biblioteca SQL nouă. Catalogul curent este în [scopul J2](ATF_J2_Scope.md).
 
 Toate build-urile, cache-urile, logurile și rapoartele sunt în staging-ul propriu:
 `%TEMP%/atf-j2-eventuate-live-9fcc5a07ac`. Niciun output generat nu intră în live.
@@ -28,7 +28,7 @@ separat în închiderea incrementului; nu sunt deduse din aceste 23.
 - Mutanții ID/query lipsă și număr rotunjit sunt refuzați. FAIL-ul neconsumat păstrează `SQLSyntaxErrorException`; un SQL error așteptat și verificat rămâne observație într-un test PASS.
 
 - Inspectorul generic J10 rămâne neconform pentru acest profil legitim fără HTTP: șase Extent refuză `request response evidence split`, iar cele șase fallback primesc și cerințe ale shell-ului Extent. Rezultatele originale sunt salvate, fără request-uri fictive sau transformarea lor în PASS.
-- Criteriul canonic [REPORT-ARTIFACT-PROFILE-62](../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md#report-artifact-profile-62--aplicabilitate-explicită-a-inspectorului) rămâne deschis în J0.
+- J0 a livrat ulterior [profilul explicit de inspecție](../../atf_j0/atf-reporting/README.md#inspecția-artifactului-cu-intenție-explicită) pentru rapoarte fără HTTP. Rezultatul J10 de mai sus rămâne martorul original al incrementului.
 
 ## Kafka/MySQL reale, în același engine
 

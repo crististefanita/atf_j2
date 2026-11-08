@@ -11,8 +11,8 @@ primește și verifică livrarea potrivită propriului deployment.
 | Workspace | Rol | Suprafață existentă |
 |---|---|---|
 | `atf_j0` | sursă Core/Reporting/Console/Mock/Test Kit, teste native și `atf-reporting-tests`; referință pentru contractele comune | 12 module sursă; Core și guvernanța comune reconciliate |
-| `atf_j1` | testarea AutoEx și Shop; consumer Core și Reporting prin JAR | 6 module journeys; C3/J20 în lib și acceptanță proprie |
-| `atf_j2` | WIP: framework și teste Kafka/mesagerie, fără module browser ori Shop/AutoEx | 6 module sursă; Core și Reporting JAR; SQL generic JDK-only, componente MOCK/H2 și observer Kafka probat pe infrastructură reală; aplicația Eventuate completă NOT RUN |
+| `atf_j1` | testarea AutoEx și Shop | 6 module sursă și acceptanță proprie. [Proveniență J1](../../atf_j1/library-provenance.json) |
+| `atf_j2` | WIP pentru Kafka/mesagerie, fără browser ori Shop/AutoEx | 5 module sursă și 5 biblioteci J0. Observerul Kafka are probă reală, iar aplicația Eventuate completă rămâne `NOT RUN`. [Scopul J2](ATF_J2_Scope.md) |
 | `atf_j3` | consumer speech, patru module sursă; Core și Reporting prin JAR | C3/J20 în lib și acceptanță proprie, fără module web ori mesagerie |
 | `atf_j4` | Android consumer, four source modules; Core / Reporting flat pairs | separate component, archived rendering and device acceptance |
 | `demo2` | origine istorică a livrării J6 existente | nu mai este destinație activă de mentenanță sau sync |
@@ -143,4 +143,4 @@ Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.
 - Consumer `library-provenance.json` records the current coordinate, hashes, original `buildStage` and `currentAcceptance.evidence` location. Consumer `lib` retains the latest Core, Reporting, Console, Mock and Test Kit JAR/POM pairs plus its dedicated README; no release notes are stored there.
 - Superseded notes are retired after their durable contracts have been reconciled. Historical build/test facts and original evidence paths remain provenance, explicitly marked as retired; they are not current document targets or fresh acceptance.
 
-The current note is retained with the J20 package; its coordinate and JAR/POM hashes must match the distributed pair. Documentation maintenance alone neither rebuilds a library nor repeats its recorded tests.
+The verification note in the producer packaging stage identifies the distributed coordinate and matching JAR/POM hashes. [Consumer provenance](../library-provenance.json)

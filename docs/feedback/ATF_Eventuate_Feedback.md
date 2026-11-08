@@ -100,21 +100,9 @@ infrastructure evidence retain their separate provenance.
 
 ## Core/Kit producer handoff — 2026-11-01
 
-- CORE-TRANSPORT-CANCEL-125 reproduces mapped-future cancellation without an
-  upstream cancel call in HttpClientTransport. Fix and characterize that at
-  [Core](../../../atf_j0/docs/feedback/ATF_Core_Feedback.md), then retain J2's
-  real HTTP deadline/cleanup acceptance in EVT-CONVERGENCE-CONTRACT-86.
-- A cancelled future is not server rollback. Keep one mutation dispatch and
-  preserve uncertain outcomes; no automatic POST replay or deadline increase.
-- CORE-CONSOLE-REDACTION-124 concerns a configured console sink. The default
-  Eventuate LIVE composition has a no-op sink, so this audit does not demonstrate
-  a credential leak from that composition. EVT-CONSOLE-PATH-79 stays separate.
-- KIT-UNICODE-PREVIEW-127 affects the neutral preview before rendering. Its
-  [Kit owner](../../../atf_j0/docs/feedback/ATF_Common_Test_Support_Feedback.md)
-  needs a native fix and regression before J2 adoption; keep the 240 default.
+The [Core guide](../../lib/README.Core.md) and [Test Kit guide](../../lib/README.TestKit.md) describe the consumed transport, redaction and Unicode preview contracts. J0 owns their regressions.
 
-No C2/J10 JAR is replaced by this feedback handoff. Generic fixes and tests
-stay in J0; Kafka/SQL capture and actual application acceptance remain in J2.
+J2 still needs real HTTP deadline and cleanup evidence under [EVT-CONVERGENCE-CONTRACT-86](#evt-convergence-contract-86--deadline-al-citirii-live). Keep one mutation dispatch and report an uncertain server outcome after cancellation. The J2 console switch has its own criterion above.
 
 ### Reconfirmare J14 — bootstrap LIVE indisponibil
 

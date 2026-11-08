@@ -15,7 +15,7 @@ regresiile generice au owner în J0.
 | [Eventuate](atf-test-eventuate/README.md) | trei componente MOCK: API, convergență și mesagerie; trei componente SQL embedded: tranzacții, identitate și eșecuri |
 | [Setup](atf-setup/README.md) | rețetă Kafka cu digest, readiness și producer/consumer; prerequisites ale hostului separate |
 | [Atlas](docs/ATF_Context_Atlas.md) | intrări în cod, invarianti și dovezi, pentru context progresiv |
-| [Scop J2](docs/ATF_J2_Scope.md) | catalogul explicit de opt module, fără UI/Debug sau Playwright |
+| [Scop J2](docs/ATF_J2_Scope.md) | catalogul de cinci module, fără UI/Debug sau Playwright |
 | [SQL generic](atf-sql/README.md) | JDBC JDK-only, query/binds typed, captură bounded și rezultate imuabile; driver și verdict la consumer |
 | [LIVE și infrastructură](docs/ATF_SQL_Live_Verification.md) | observer Kafka și MySQL reale, memorie limitată; proba sintetică nu certifică saga |
 | [Feedback](docs/feedback/README.md) | numai restanțele J2 și efectele contractelor comune consumate |
@@ -41,8 +41,8 @@ cu preview implicit 240; renderarea nu decide verdictul business.
 
 ## Harta modulelor
 
-POM-ul live declară opt module. J2 exclude Shop/AutoEx, UI și Debug UI;
-Reporting rămâne bibliotecă externă.
+POM-ul declară cinci module. J2 exclude Shop/AutoEx, UI și Debug UI;
+bibliotecile J0 sunt consumate prin JAR/POM.
 
 | Zonă | Module | Rol în J2 |
 |---|---|---|
@@ -132,7 +132,7 @@ o sesiune elevată pregătită în prealabil permite rularea silent.
 
 ## Core ca bibliotecă — owner și deployment
 
-This consumer has 6 source modules. Core, Reporting, Console and Mock are external libraries, one JAR/POM pair each directly in lib.
+This consumer has 5 source modules. Core, Reporting, Console, Mock and Test Kit are external libraries, one JAR/POM pair each directly in lib.
 
 [Contractul Core](docs/ATF_Core_Consumer.md) separă sursa, publicarea și acceptanțele J1/J2.
 Testele native se păstrează în J0, iar acceptanța pe binar rulează în TMP.

@@ -6,11 +6,11 @@ J2 dezvoltă framework-ul Kafka/mesagerie în jurul unui singur modul de test, c
 
 J2 testează contracte Eventuate și mesagerie. Începe cu sursa și callerul
 indicate mai jos; extinde contextul numai când apare o dependență concretă.
-J2 are opt module și exclude UI/Debug; auditul HTML rămâne extern.
+J2 are cinci module și exclude UI/Debug. Auditul HTML rămâne extern.
 
 | Subiect | Intrare în cod / hartă | Invariant și limită |
 |---|---|---|
-| catalog și ownership | [scop J2](ATF_J2_Scope.md), [POM](../pom.xml) | 8 module fără browser; profilul rămâne Eventuate |
+| catalog și ownership | [scop J2](ATF_J2_Scope.md), [POM](../pom.xml) | 5 module sursă, fără browser, cu profil Eventuate |
 | request/response | [EventuateApiClient](../atf-test-eventuate/src/main/java/atf/eventuate/api/EventuateApiClient.java) | binding MOCK implicit: POST o tentativă, GET 503 cel mult două; seam separat pentru executori/politici/provenance explicite |
 | snapshot terminal | [EventuateExchange](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateExchange.java), [collector](../atf-test-eventuate/src/main/java/atf/eventuate/evidence/EventuateEvidence.java) | Completed sau Terminal în ordinea și faza capturării; aceeași excepție, fără răspuns inventat și fără dublarea callback-ului |
 | script finit | [ScriptedApiTransport](../atf-test-eventuate/src/main/java/atf/eventuate/mock/ScriptedApiTransport.java) | ordonat, strict, fără răspuns verde când se epuizează ruta |

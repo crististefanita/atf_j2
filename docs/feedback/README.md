@@ -11,7 +11,7 @@ consumată. Reporting se întreține în J0; Shop/AutoEx, UI și Debug UI au own
 | Ordine | Owner J2 / impact local | Prioritate | Dovada care lipsește |
 |---:|---|---:|---|
 | 1 | [Eventuate](ATF_Eventuate_Feedback.md) | 90 | readiness HTTP/CDC, schema și trei cazuri reale individual/prin suită |
-| 2 | [Adoptare Reporting](ATF_Reporting_Consumer_Feedback.md) | 89 | SQL semantic și geometria RESULT rămase la ownerul J0 |
+| 2 | [Dependențe Reporting](ATF_Reporting_Consumer_Feedback.md) | J0 | proiecția SQL semantică și geometria RESULT; J2 acceptă binarul după livrare |
 | 3 | [SQL](ATF_SQL_Feedback.md) | 85 | mapper aplicație corelat cu snapshot-urile generice și schema reală |
 | 4 | [Setup](ATF_Setup_Feedback.md) | 84 | cauza primară la eșecul receipt-ului, ownership fizic și reluare după restart |
 | 5 | [Documentație](ATF_Documentation_Feedback.md) | 81 | prevenirea contradicțiilor dintre deployment și afirmațiile curente din pagini |
@@ -24,9 +24,7 @@ preced certificarea saga sau idempotency business.
 - Topul cu implementare în J2 este Eventuate LIVE 90, idempotency reală 88 și
   witness-ul SQL al aplicației 85. Idempotency are drept precondiție laboratorul LIVE;
   citirea bounded 84 intră în primul increment, înaintea acceptanței rețelei.
-- Adoptarea Reporting 89 depinde de J0. SQL query/results este
-  [cerut în J0](ATF_Reporting_Consumer_Feedback.md#sql--handoff-către-j0-și-adoptare-ulterioară),
-  cu limite independente configurabile; nu este o funcționalitate J9 livrată.
+- Proiecția SQL depinde de contractul J0 pentru query, binds și rezultate cu limite independente. [Criteriul de adopție](ATF_Reporting_Consumer_Feedback.md#sql--handoff-către-j0-și-adoptare-ulterioară)
 - Precizia numerică Mock este închisă pe Core C2: aceeași probă publică
   selectează 201 pentru nominal și 409 pentru valoarea distinctă și control.
   [Contractul livrat](../../../atf_j0/atf-mock/README.md#json-strict-și-potrivire-numerică-exactă)
@@ -47,7 +45,7 @@ permanente; criteriile rezolvate sunt retrase din registrul activ. Snapshot-ul t
 | SQL-DIAGNOSTIC-CAPTURE-120 | 82 | mesaje și suppressed bounded în snapshot, originalul păstrat |
 | SQL-DRIVER-CONTRACT-119 | 77 | contracte negative pentru fiecare driver efectiv adoptat |
 | SETUP-PRIMARY-FAILURE-87 | 84 | eșecul scrierii receipt-ului păstrează cauza inițială |
-| DOC-DEPLOYMENT-FACTS-105 | 81 | mutanți pentru catalog/versiune curentă și istoric legitim; deriva este reconfirmată după J8 |
+| DOC-DEPLOYMENT-FACTS-105 | 81 | mutanți pentru versiunile binare curente și proveniență; istoricul legitim rămâne valid |
 | SETUP-REMOTE-TRANSPORT-84 | 80 | ownership, transport durabil și reluare după restart |
 | EVT-KAFKA-CAPTURE-121 | 84 | bounded keys, all retained fields and aggregate Kafka evidence |
 | SQL-HARNESS-DIAGNOSTICS-122 | 79 | original JUnit failure, exact counts and partial receipt retained |
@@ -60,7 +58,7 @@ permanente; criteriile rezolvate sunt retrase din registrul activ. Snapshot-ul t
 
 ## Feedback pentru biblioteci
 
-Orice constatare despre Core, Reporting, Console sau Mock se înregistrează direct la ownerul J0, conform [ghidului bibliotecilor](../../lib/README.md). Aici rămân problemele domeniului și dovezile acceptanței locale, cu o trimitere la criteriul comun.
+Constatările despre Core, Reporting, Console, Mock și Test Kit merg la ownerul J0. J2 păstrează criteriile domeniului și acceptanța locală. [Ghidul bibliotecilor](../../lib/README.md)
 
 
 ## Ce este livrat și unde se citește
@@ -68,7 +66,7 @@ Orice constatare despre Core, Reporting, Console sau Mock se înregistrează dir
 - Coeziunea Kit este verificată în [contractul ownerului](../../lib/README.TestKit.md#scope-și-integrare); criteriul închis nu rămâne în registrul activ.
 - Cele trei componente MOCK, trei SQL embedded și matricile Extent/fallback au contract în [ghidul Eventuate](../ATF_Eventuate_Testing.md).
 - Hostul și provisioning-ul silent au contract în [Setup](../../atf-setup/README.md) și [atlasul său](../ATF_Setup_Atlas.md).
-- Catalogul explicit cu opt module și retragerea browserului sunt în [scopul J2](../ATF_J2_Scope.md); criteriul închis nu rămâne ToDo.
+- Catalogul de cinci module și perimetrul fără browser sunt în [scopul J2](../ATF_J2_Scope.md).
 - [Verificarea executată](../ATF_J2_Verification.md) păstrează limitele dovezilor; MOCK nu certifică broker sau efecte persistente.
 - Infrastructura Kafka validată nu este redeschisă; gap-urile noi sunt reguli semantice ori contracte operaționale distincte.
 
@@ -157,18 +155,8 @@ owner registers. Close neither real LIVE acceptance nor a generic J0 criterion
 from these controlled results. [Shared support handoff](../../../atf_j0/docs/feedback/ATF_Common_Test_Support_Feedback.md)
 keeps the reusable boundary explicit; it is a proposal, not delivered code.
 
-## Producer correlation — Core and Kit
+<a id="producer-correlation--core-and-kit"></a>
 
-[The J0 producer audit](../../../atf_j0/docs/feedback/README.md)
-adds Core console-channel/cancellation and Kit Unicode-preview findings.
-These are external source-owner criteria, not duplicate J2 TODO definitions.
+## Frontiera Core și Test Kit
 
-- J2 reaccepts a future Core cancellation candidate against the real read
-  boundary; it does not infer write rollback from future cancellation.
-- Kit preview adoption preserves Unicode and the configured 240 limit.
-- No generic fix closes SQL capture budgets, Kafka keys, readiness, CDC or saga.
-- The existing J2 89/89/82 review grades are not increased by producer tests.
-
-The Test Kit code score is reconciled to **92** after the producer Unicode
-counterexample; this supersedes its earlier consumer-only 94. Deployment
-totals retain their stated scope, with no new saga/ASR/device acceptance.
+Contractele de transport, redactare și preview Unicode se citesc în [ghidurile locale](../../lib/README.md). Deadline-ul HTTP real, cleanup-ul și rezultatul incert după anulare rămân criterii de acceptanță J2. [Feedback Eventuate](ATF_Eventuate_Feedback.md#evt-convergence-contract-86--deadline-al-citirii-live)
