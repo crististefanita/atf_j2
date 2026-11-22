@@ -77,8 +77,8 @@ Constatările despre Core, Reporting, Console, Mock și Test Kit merg la ownerul
 | Core și validarea documentului JSON | [J0 Core](../../../atf_j0/docs/feedback/ATF_Core_Feedback.md) |
 | Reporting și mesagerie în renderer | [J0 Reporting](../../../atf_j0/docs/feedback/ATF_Reporting_Feedback.md) |
 | regresii generice Reporting | [J0 Reporting Tests](../../../atf_j0/docs/feedback/ATF_Reporting_Tests_Feedback.md) |
-| Shop/AutoEx | [J1 business](../../../atf_j1/docs/ATF_Testing_Guide.md#acceptanța-business-individual-și-prin-suită) |
-| Debug UI | [J1 Debug](../../../atf_j1/atf-debug-ui/README.md#identitatea-path-ului-uri) |
+| Shop/AutoEx | [J1 business](https://github.com/crististefanita/atf_j1/blob/main_RO/docs/ATF_Testing_Guide.md#acceptanța-business-individual-și-prin-suită) |
+| Debug UI | [J1 Debug](https://github.com/crististefanita/atf_j1/blob/main_RO/atf-debug-ui/README.md#identitatea-path-ului-uri) |
 
 Fișierele scurte Validation, Reporting și AI păstrează orientarea către
 ownerii contractelor și țintele existente; nu conțin ToDo-uri J2 active.

@@ -53,7 +53,7 @@ Nu se șterg controale doar fiindcă o cerință a fost implementată.
 ## Owneri externi
 
 - [J0 Reporting](../../atf_j0/docs/feedback/README.md): implementare, renderer, documentele bibliotecii și regresii generice.
-- [J1 web și platformă](../../atf_j1/docs/ATF_Context_Atlas.md): Shop/AutoEx, UI și Debug UI.
+- [J1 web și platformă](https://github.com/crististefanita/atf_j1/blob/main_RO/docs/ATF_Architecture.md): Shop/AutoEx, UI și Debug UI.
 - Designul AI și extinderile browser nu fac parte din planul activ J2.
 
 Două ținte documentare de compatibilitate rămân până la reconcilierea
