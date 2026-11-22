@@ -6,6 +6,7 @@ J2 dezvoltă framework-ul Kafka/mesagerie în jurul unui singur modul de test, c
 
 J2 testează contracte Eventuate și mesagerie. Începe cu sursa și callerul
 indicate mai jos; extinde contextul numai când apare o dependență concretă.
+
 J2 are cinci module și exclude UI/Debug. Auditul HTML rămâne extern.
 
 | Subiect | Intrare în cod / hartă | Invariant și limită |
