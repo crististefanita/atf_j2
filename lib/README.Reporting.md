@@ -66,3 +66,8 @@ Durata HTTP provine din `ReportResponse.duration()`; `detail(...)` păstrează t
 ---
 
 J0: [cod, teste și feedback](README.md#mentenanță-și-feedback).
+
+<a id="shared-library-source"></a>
+
+> **Sursa bibliotecii:** [Reporting · ATF J0](https://github.com/crististefanita/atf_j0/blob/HEAD/lib/README.Reporting.md).
+> POM-ul, proveniența și testele acestui proiect stabilesc versiunea consumată și acceptanța locală.

@@ -36,3 +36,8 @@ public static void verifyState(RecordedAssertions audit, String actual) {
 ---
 
 Mentenanță, cod, teste și feedback: [atf_j0](README.md#mentenanță-și-feedback).
+
+<a id="shared-library-source"></a>
+
+> **Sursa bibliotecii:** [Test Kit · ATF J0](https://github.com/crististefanita/atf_j0/blob/HEAD/lib/README.TestKit.md).
+> POM-ul, proveniența și testele acestui proiect stabilesc versiunea consumată și acceptanța locală.

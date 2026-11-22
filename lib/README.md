@@ -43,3 +43,8 @@ Declarați, de exemplu, `atf.api:atf-reporting:<versiunea din POM>` în dependen
 ## Mentenanță și feedback
 
 Codul, testele native și feedback-ul bibliotecilor aparțin `atf_j0` (`atf_j0/docs/feedback/README.md`). Remedierea și regresia în J0 preced sincronizarea și acceptanța locală; feedback-ul include JAR/hash, reproducere și așteptat/observat.
+
+<a id="shared-library-source"></a>
+
+> **Sursa bibliotecilor:** [Catalog · ATF J0](https://github.com/crististefanita/atf_j0/blob/HEAD/lib/README.md).
+> POM-ul, proveniența și testele acestui proiect stabilesc versiunea consumată și acceptanța locală.

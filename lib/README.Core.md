@@ -42,3 +42,8 @@ var total = body.path("total").decimalValue();
 ---
 
 Mentenanța codului și testelor Core aparține proiectului separat `atf_j0/atf-core`; [feedback-ul și sincronizarea](README.md#mentenanță-și-feedback) pornesc de la J0.
+
+<a id="shared-library-source"></a>
+
+> **Sursa bibliotecii:** [Core · ATF J0](https://github.com/crististefanita/atf_j0/blob/HEAD/lib/README.Core.md).
+> POM-ul, proveniența și testele acestui proiect stabilesc versiunea consumată și acceptanța locală.

@@ -43,3 +43,8 @@ Console depinde de Core; Kit este opțional pentru legătura JUnit. Proiecția r
 ---
 
 Mentenanța codului și testelor Console aparține proiectului separat `atf_j0/atf-console`; [feedback-ul și sincronizarea](README.md#mentenanță-și-feedback) pornesc de la J0.
+
+<a id="shared-library-source"></a>
+
+> **Sursa bibliotecii:** [Console · ATF J0](https://github.com/crististefanita/atf_j0/blob/HEAD/lib/README.Console.md).
+> POM-ul, proveniența și testele acestui proiect stabilesc versiunea consumată și acceptanța locală.
